@@ -1,4 +1,6 @@
 package id.manlyman.petto
 
-class Pengguna {
-}
+data class Pengguna (
+    val email:String?,
+    val pass:String?
+)

@@ -3,8 +3,6 @@ package id.manlyman.petto
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import id.manlyman.petto.databinding.ActivityAwalBinding
 import kotlinx.android.synthetic.main.activity_awal.*
@@ -22,15 +20,27 @@ class Awal : AppCompatActivity() {
 //            Toast.makeText(this, "Activity Dokter", Toast.LENGTH_SHORT).show()
 //        }
 
-        btnPengguna.setOnClickListener {
+        btnLoginPengguna.setOnClickListener {
             val intent = Intent(this, LogReg::class.java)
-            intent.putExtra("Judul", "Pengguna")
+            intent.putExtra("Judul", "Login Pengguna")
             startActivity(intent)
         }
 
-        btnDokter.setOnClickListener {
+        btnRegisterPengguna.setOnClickListener {
             val intent = Intent(this, LogReg::class.java)
-            intent.putExtra("Judul", "Dokter")
+            intent.putExtra("Judul", "Register Pengguna")
+            startActivity(intent)
+        }
+
+        btnLoginDokter.setOnClickListener {
+            val intent = Intent(this, LogReg::class.java)
+            intent.putExtra("Judul", "Login Dokter")
+            startActivity(intent)
+        }
+
+        btnRegisterDokter.setOnClickListener {
+            val intent = Intent(this, LogReg::class.java)
+            intent.putExtra("Judul", "Register Dokter")
             startActivity(intent)
         }
     }

@@ -24,7 +24,7 @@
     function insertPengguna($db, $satu, $dua){
       global $connect;
 
-      $result = $connect -> prepare("INSERT INTO $db VALUES(NULL,?,?)");
+      $result = $connect -> prepare("INSERT INTO $db VALUES(NULL,?,?,NULL,0)");
       $result -> bindParam(1, $satu);
       $result -> bindParam(2, $dua);
       return $result -> execute();
@@ -37,6 +37,27 @@
       $result -> bindParam(1, $satu);
       $result -> bindParam(2, $dua);
       $result -> bindParam(3, $id);
+      return $result -> execute();
+    }
+
+    function insertDokter($db, $satu, $dua, $tiga){
+      global $connect;
+
+      $result = $connect -> prepare("INSERT INTO $db VALUES(NULL,?,?,?,1)");
+      $result -> bindParam(1, $satu);
+      $result -> bindParam(2, $dua);
+      $result -> bindParam(3, $tiga);
+      return $result -> execute();
+    }
+
+    function updateDokter($db, $satu, $dua, $tiga, $id, $sql){
+      global $connect;
+
+      $result = $connect -> prepare("UPDATE $db SET $sql WHERE id=?");
+      $result -> bindParam(1, $satu);
+      $result -> bindParam(2, $dua);
+      $result -> bindParam(3, $tiga);
+      $result -> bindParam(4, $id);
       return $result -> execute();
     }
 
