@@ -15,8 +15,9 @@ class AdapterPengguna (private val context: Context, private val arrayList: Arra
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.view.email.text = "Nama : " + arrayList?.get(position)?.email
-        holder.view.pass.text = "Password : " + arrayList?.get(position)?.pass
+        holder.view.judul.text = "Judul : " + arrayList?.get(position)?.judul
+        holder.view.deskripsi.text = "Deskripsi : " + arrayList?.get(position)?.deskripsi
+        holder.view.penulis.text = "Penulis : " + arrayList?.get(position)?.penulis
     }
 
     override fun getItemCount(): Int = arrayList!!.size

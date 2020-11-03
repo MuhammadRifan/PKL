@@ -1,6 +1,9 @@
 package id.manlyman.petto
 
 import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,15 +17,21 @@ import kotlinx.android.synthetic.main.activity_home.*
 import org.json.JSONObject
 
 class Home : AppCompatActivity() {
+
     var arrayList = ArrayList<Pengguna>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        supportActionBar?.title = "Data Pengguna"
+        supportActionBar?.title = "Artikel"
 
         hRecyclerView.setHasFixedSize(true)
         hRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        btnLogout.setOnClickListener {
+            Logout()
+        }
     }
 
     private fun loadPengguna(){
@@ -30,7 +39,8 @@ class Home : AppCompatActivity() {
             loading.setMessage("Loading...")
             loading.show()
 
-        AndroidNetworking.get(ApiEndPoint.Read)
+        AndroidNetworking.post(ApiEndPoint.Read)
+            .addBodyParameter("table", "artikel")
             .setPriority(Priority.MEDIUM)
             .build()
             .getAsJSONObject(object : JSONObjectRequestListener{
@@ -45,8 +55,9 @@ class Home : AppCompatActivity() {
 
                     for (i in 0 until jsonArray?.length()!!) {
                         val jsonObject = jsonArray?.optJSONObject(i)
-                        arrayList.add(Pengguna(jsonObject.getString("email"),
-                            jsonObject.getString("pass")))
+                        arrayList.add(Pengguna(jsonObject.getString("judul"),
+                            jsonObject.getString("deskripsi"),
+                            jsonObject.getString("penulis")))
 
                         if (jsonArray?.length() - 1 == i) {
                             loading.dismiss()
@@ -63,6 +74,21 @@ class Home : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_LONG).show()
                 }
             })
+    }
+
+    private fun Logout(){
+        val loading = ProgressDialog(this)
+        loading.setMessage("Logout ...")
+        loading.show()
+
+        val Config = FConfig(this)
+        Config.delCustom()
+
+        loading.dismiss()
+
+        Toast.makeText(this, "Logout berhasil", Toast.LENGTH_LONG).show()
+        val intent = Intent(this, Login::class.java)
+        startActivity(intent)
     }
 
     override fun onResume() {

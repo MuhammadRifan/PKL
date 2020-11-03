@@ -27,21 +27,29 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/email"
+                    android:id="@+id/judul"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Email : " />
+                    android:text="Judul : " />
 
                 <TextView
-                    android:id="@+id/pass"
+                    android:id="@+id/deskripsi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="5dp"
-                    android:text="Pass : " />
+                    android:text="Deskripsi : " />
+
+                <TextView
+                    android:id="@+id/penulis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:text="Penulis : " />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

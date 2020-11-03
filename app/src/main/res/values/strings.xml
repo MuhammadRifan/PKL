@@ -4,4 +4,5 @@
     <string name="btn_register">Register</string>
     <string name="dokter">Dokter</string>
     <string name="pengguna">Pengguna</string>
+    <string name="logout">Logout</string>
 </resources>

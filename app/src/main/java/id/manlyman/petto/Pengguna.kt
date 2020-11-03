@@ -1,6 +1,7 @@
 package id.manlyman.petto
 
 data class Pengguna (
-    val email:String?,
-    val pass:String?
+    val judul:String?,
+    val deskripsi:String?,
+    val penulis:String?
 )
