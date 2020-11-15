@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/left_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="id.manlyman.petto.ui.home.HomeFragment"
+        android:label="@string/menu_beranda"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_akun"
+            app:destination="@id/nav_akun" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_akun"
+        android:name="id.manlyman.petto.ui.account.AccountFragment"
+        android:label="@string/menu_akun_saya"
+        tools:layout="@layout/fragment_akun" >
+        <action
+            android:id="@+id/action_nav_akun_to_nav_setting"
+            app:destination="@id/nav_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_setting"
+        android:name="id.manlyman.petto.ui.setting.SettingFragment"
+        android:label="@string/menu_pengaturan"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_nav_setting_to_nav_logout"
+            app:destination="@id/nav_logout" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="id.manlyman.petto.ui.logout.LogoutFragment"
+        android:label="@string/menu_keluar"
+        tools:layout="@layout/fragment_logout"/>
+
+</navigation>

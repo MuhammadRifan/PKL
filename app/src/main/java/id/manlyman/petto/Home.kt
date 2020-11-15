@@ -26,12 +26,12 @@ class Home : AppCompatActivity() {
 
         supportActionBar?.title = "Artikel"
 
-        hRecyclerView.setHasFixedSize(true)
-        hRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        btnLogout.setOnClickListener {
-            Logout()
-        }
+//        hRecyclerView.setHasFixedSize(true)
+//        hRecyclerView.layoutManager = LinearLayoutManager(this)
+//
+//        btnLogout.setOnClickListener {
+//            Logout()
+//        }
     }
 
     private fun loadPengguna(){
@@ -63,7 +63,7 @@ class Home : AppCompatActivity() {
                             loading.dismiss()
                             val adapter = AdapterPengguna(applicationContext, arrayList)
                             adapter.notifyDataSetChanged()
-                            hRecyclerView.adapter = adapter
+//                            hRecyclerView.adapter = adapter
                         }
                     }
                 }

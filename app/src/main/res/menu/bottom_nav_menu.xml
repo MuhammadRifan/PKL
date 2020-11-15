@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_article"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="@string/title_artikel" />
+
+    <item
+        android:id="@+id/navigation_facilty"
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="@string/title_facility" />
+
+    <item
+        android:id="@+id/navigation_community"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="@string/title_community" />
+
+    <item
+        android:id="@+id/navigation_adopt"
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="@string/title_adopt_breed" />
+</menu>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@+id/navigation_article">
+
+    <fragment
+        android:id="@+id/navigation_article"
+        android:name="id.manlyman.petto.ui.article.ArticleFragment"
+        android:label="@string/title_artikel"
+        tools:layout="@layout/fragment_article" >
+        <action
+            android:id="@+id/action_navigation_article_to_navigation_facilty2"
+            app:destination="@id/navigation_facilty" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_facilty"
+        android:name="id.manlyman.petto.ui.facility.FacilityFragment"
+        android:label="@string/title_facility"
+        tools:layout="@layout/fragment_facilty" >
+        <action
+            android:id="@+id/action_navigation_facilty_to_navigation_community2"
+            app:destination="@id/navigation_community" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_community"
+        android:name="id.manlyman.petto.ui.community.CommunityFragment"
+        android:label="@string/title_community"
+        tools:layout="@layout/fragment_community" >
+        <action
+            android:id="@+id/action_navigation_community_to_navigation_adopt2"
+            app:destination="@id/navigation_adopt" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_adopt"
+        android:name="id.manlyman.petto.ui.adoptbreed.AdoptBreedFragment"
+        android:label="@string/title_adopt_breed"
+        tools:layout="@layout/fragment_adopt_breed"/>
+</navigation>

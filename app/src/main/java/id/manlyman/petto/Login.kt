@@ -60,12 +60,9 @@ class Login : AppCompatActivity() {
                     Toast.makeText(applicationContext, response?.getString("message"), Toast.LENGTH_LONG).show()
                     val Config = FConfig(applicationContext)
                     Config.setCustom("is_login", "1")
-//                    editor.apply{
-//                        putString("is_login", "1")
-//                    }.apply()
 
                     if (response?.getString("message")?.contains("berhasil")!!) {
-                        startActivity(Intent(applicationContext, Home::class.java))
+                        startActivity(Intent(applicationContext, HomeActivity::class.java))
                     }
                 }
 

@@ -19,15 +19,6 @@ class Register : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-//        val binding: ActivityRegisterBinding = DataBindingUtil.
-
-//        binding.btnPengguna.setOnClickListener {
-//            Toast.makeText(this, "Pindah Activity", Toast.LENGTH_SHORT).show()
-//        }
-//
-//        btnDokter.setOnClickListener {
-//            Toast.makeText(this, "Activity Dokter", Toast.LENGTH_SHORT).show()
-//        }
 
         btnRegisterPengguna.setOnClickListener {
             Register()
@@ -59,7 +50,7 @@ class Register : AppCompatActivity() {
                         loading.dismiss()
                         Toast.makeText(applicationContext, response?.getString("message"), Toast.LENGTH_LONG).show()
                         if (response?.getString("message")?.contains("berhasil")!!) {
-                            startActivity(Intent(applicationContext, Home::class.java))
+                            startActivity(Intent(applicationContext, HomeActivity::class.java))
                         }
                     }
 
