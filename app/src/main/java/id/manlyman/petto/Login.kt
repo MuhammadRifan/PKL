@@ -38,7 +38,7 @@ class Login : AppCompatActivity() {
 
         if (login.equals("1")) {
             Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, Home::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
     }
@@ -75,4 +75,15 @@ class Login : AppCompatActivity() {
             })
     }
 
+    override fun onResume() {
+        super.onResume()
+        val Config = FConfig(this)
+        val login = Config.getCustom("is_login", "")
+
+        if (login.equals("1")) {
+            Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
+    }
 }

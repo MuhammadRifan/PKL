@@ -27,29 +27,33 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/judul"
+                    android:id="@+id/nama"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Judul : " />
+                    android:text="Nama : " />
+
+                <TextView
+                    android:id="@+id/alamat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Alamat : " />
 
                 <TextView
                     android:id="@+id/deskripsi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
                     android:layout_marginBottom="5dp"
+                    android:layout_marginStart="15dp"
                     android:text="Deskripsi : " />
 
-                <TextView
-                    android:id="@+id/penulis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:text="Penulis : " />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

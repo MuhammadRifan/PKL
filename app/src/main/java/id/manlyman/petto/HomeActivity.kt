@@ -1,17 +1,18 @@
 package id.manlyman.petto
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
-import com.google.android.material.navigation.NavigationView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import com.google.android.material.navigation.NavigationView
 
 class HomeActivity : AppCompatActivity() {
 
@@ -44,5 +45,17 @@ class HomeActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val Config = FConfig(this)
+        val login = Config.getCustom("is_login", "")
+
+        if (!login.equals("1")) {
+            Toast.makeText(this, "Mohon Login Terlebih Dahulu", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
     }
 }

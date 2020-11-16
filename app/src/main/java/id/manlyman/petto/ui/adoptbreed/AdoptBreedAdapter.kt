@@ -3,6 +3,8 @@ package id.manlyman.petto.ui.adoptbreed
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import id.manlyman.petto.ui.adoptbreed.adopt.AdoptFragment
+import id.manlyman.petto.ui.adoptbreed.breed.BreedFragment
 
 class AdoptBreedAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
     // sebuah list yang menampung objek Fragment
@@ -20,7 +22,7 @@ class AdoptBreedAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
         return pages.size
     }
 
-    // judul untuk tabs
+    // nama untuk tabs
     override fun getPageTitle(position: Int): CharSequence? {
         return when(position){
             0 -> "Adopt"

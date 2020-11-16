@@ -8,6 +8,7 @@ class ApiEndPoint {
         val Register = SERVER + "?p=Register"
         val Login = SERVER + "?p=Login"
         val Read = SERVER + "?p=Read"
+        val ReadFacility = SERVER + "?p=ReadFacility"
         val Delete = SERVER + "?p=delete"
         val Update = SERVER + "?p=update"
         val Find_ID = SERVER + "?p=findID"

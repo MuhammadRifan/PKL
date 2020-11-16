@@ -1,15 +1,15 @@
 package id.manlyman.petto.ui.home
 
+import android.app.ActionBar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import id.manlyman.petto.HomeActivity
 import id.manlyman.petto.R
 
 class HomeFragment : Fragment() {
@@ -20,7 +20,6 @@ class HomeFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
         return view
     }
 

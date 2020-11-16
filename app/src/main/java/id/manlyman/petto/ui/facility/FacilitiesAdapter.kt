@@ -3,6 +3,9 @@ package id.manlyman.petto.ui.facility
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import id.manlyman.petto.ui.facility.animalcare.AnimalCareFragment
+import id.manlyman.petto.ui.facility.health.HealthFragment
+import id.manlyman.petto.ui.facility.shop.ShopFragment
 
 class FacilitiesAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
     // sebuah list yang menampung objek Fragment
@@ -21,7 +24,7 @@ class FacilitiesAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
         return pages.size
     }
 
-    // judul untuk tabs
+    // nama untuk tabs
     override fun getPageTitle(position: Int): CharSequence? {
         return when(position){
             0 -> "Health"

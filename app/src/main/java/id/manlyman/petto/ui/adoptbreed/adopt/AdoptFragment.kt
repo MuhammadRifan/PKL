@@ -1,4 +1,4 @@
-package id.manlyman.petto.ui.adoptbreed
+package id.manlyman.petto.ui.adoptbreed.adopt
 
 import android.os.Bundle
 import android.view.LayoutInflater
