@@ -36,7 +36,7 @@ class HomeActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-//        userProfilePic
+//        userProfilePic.asdasdada
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
