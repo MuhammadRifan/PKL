@@ -13,6 +13,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.nav_header_main.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -34,6 +35,8 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_akun, R.id.nav_setting, R.id.nav_logout), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+//        userProfilePic
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

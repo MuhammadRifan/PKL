@@ -3,7 +3,7 @@ package id.manlyman.petto
 class ApiEndPoint {
     companion object {
 
-        private val SERVER = "http://192.168.1.6/PKL/"
+        private val SERVER = "http://192.168.1.7/PKL/"
 //        private val SERVER = "http://10.0.3.2:80/PKL/"
         val Register = SERVER + "?p=Register"
         val Login = SERVER + "?p=Login"
