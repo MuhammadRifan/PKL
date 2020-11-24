@@ -18,28 +18,18 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-//        val message = intent.getStringExtra("Judul")
-//
-//        titleAct.apply {
-//            text = message
-//        }
+        supportActionBar?.hide()
 
         btnLogin.setOnClickListener {
             Login()
         }
 
-        Bawah.setOnClickListener{
-            val intent = Intent(this, Register::class.java)
-            startActivity(intent)
+        txtRegister.setOnClickListener{
+            startActivity(Intent(this, Register::class.java))
         }
-        val Config = FConfig(this)
-        val login = Config.getCustom("is_login", "")
 
-        if (login.equals("1")) {
-            Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+        luPass.setOnClickListener {
+            Toast.makeText(this, "Coming Soon", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -58,10 +48,15 @@ class Login : AppCompatActivity() {
                     loading.dismiss()
 
                     Toast.makeText(applicationContext, response?.getString("message"), Toast.LENGTH_LONG).show()
-                    val Config = FConfig(applicationContext)
-                    Config.setCustom("is_login", "1")
 
                     if (response?.getString("message")?.contains("berhasil")!!) {
+                        val Config = FConfig(applicationContext)
+                        Config.setCustom("is_login", "1")
+                        Config.setCustom("id", response?.getString("id_pengguna").toString())
+                        Config.setCustom("nama", response?.getString("nama_pengguna").toString())
+                        Config.setCustom("email", response?.getString("email_pengguna").toString())
+                        Config.setCustom("foto", response?.getString("foto").toString())
+
                         startActivity(Intent(applicationContext, HomeActivity::class.java))
                     }
                 }
@@ -82,8 +77,7 @@ class Login : AppCompatActivity() {
 
         if (login.equals("1")) {
             Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, HomeActivity::class.java))
         }
     }
 }

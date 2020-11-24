@@ -8,11 +8,17 @@
         case 'Read':
             Read();
             break;
+        case 'ReadFacility':
+            ReadFacility();
+            break;
         case 'Login':
             Login();
             break;
         case 'Register':
             Register();
+            break;
+        case 'Upload':
+            Upload();
             break;
         case 'Pengguna2Dokter':
             Pengguna2Dokter();
@@ -25,6 +31,17 @@
     function Read() {
         $table = $_POST['table'];
         $query = select($table);
+        while($row = $query -> fetch()){
+            $result[] = $row;
+        }
+
+        echo json_encode(array('result'=>$result));
+    }
+
+    function ReadFacility() {
+        $table = $_POST['table'];
+        $facility = $_POST['facility'];
+        $query = select_custom($table, "jenis_fasilitas = '$facility'");
         while($row = $query -> fetch()){
             $result[] = $row;
         }
@@ -70,13 +87,55 @@
         $notelp = $_POST['notelp'];
         $foto = $_POST['foto'];
 
-        if(!$email || !$pass || !$nama || !$alamat || !$notelp || !$foto){
+        if(!$nama || !$email || !$pass || !$alamat || !$notelp || !$foto){
             echo json_encode(array('message' => 'Form ada yang kosong'));
         }else{
             if(insertPengguna($nama, $email, $pass, $alamat, $notelp, $foto)){
                 echo json_encode(array('message' => 'Register pengguna berhasil'));
             }else{
                 echo json_encode(array('message' => 'Register pengguna gagal'));
+            }
+        }
+    }
+
+    function Upload()
+    {
+        if(isset($_FILES['image'])){
+            $file = $_FILES['image'];
+
+            // Properties
+            $name = $file['name'];
+            $tmp = $file['tmp_name'];
+            $size = $file['size'];
+            $error = $file['error'];
+
+            // Extension
+            $ext = explode("." , $name);
+            $ext = strtolower(end($ext));
+
+            $allowed = ['png', 'jpg', 'jpeg'];
+
+            if(in_array($ext , $allowed)){
+                if($error == 0){
+                    if($size <= 2097152 /* 2 MB */){
+
+                        $name_new = uniqid("" , true) . "." . $ext;
+                        $destination = "assets/images/" . $name_new;
+
+                        if(move_uploaded_file($tmp , $destination)){
+                            echo "$name_new";
+                        }else{
+                            echo 'Upload Gagal';
+                        }
+
+                    }else{
+                        echo 'File terlalu besar (max 2 MB)';
+                    }
+                }else{
+                    echo 'Error';
+                }
+            }else{
+                echo 'Upload Gagal';
             }
         }
     }
@@ -129,20 +188,6 @@
                 echo json_encode(array('message'=>'delete berhasil.'));
             }else{
                 echo json_encode(array('message'=>'delete gagal.'));
-            }
-        }
-    } else if ($page == "registDokter") {
-        $email = $_POST['email'];
-        $pass = $_POST['pass'];
-        $nip = $_POST['nip'];
-
-        if(!$email || !$pass || !$nip){
-            echo json_encode(array('message'=>'required field is empty.'));
-        }else{
-            if(insertDokter("test", $email, $pass, $nip)){
-                echo json_encode(array('message'=>'Register dokter berhasil.'));
-            }else{
-                echo json_encode(array('message'=>'Register dokter gagal.'));
             }
         }
     } else if ($page == "findID") {

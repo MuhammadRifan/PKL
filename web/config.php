@@ -11,6 +11,15 @@
         return $result;
     }
 
+    function select_custom($db, $sql){
+        global $connect;
+
+        $result = $connect -> prepare("SELECT * FROM $db WHERE $sql");
+        $result -> execute();
+
+        return $result;
+    }
+
     function find_by_id($db, $idname, $id){
         global $connect;
 
@@ -64,25 +73,25 @@
         return $result -> execute();
     }
 
-    function insertDokter($db, $satu, $dua, $tiga){
-      global $connect;
+    // function insertDokter($db, $satu, $dua, $tiga){
+    //   global $connect;
+    //
+    //   $result = $connect -> prepare("INSERT INTO $db VALUES(NULL,?,?,?,1)");
+    //   $result -> bindParam(1, $satu);
+    //   $result -> bindParam(2, $dua);
+    //   $result -> bindParam(3, $tiga);
+    //   return $result -> execute();
+    // }
 
-      $result = $connect -> prepare("INSERT INTO $db VALUES(NULL,?,?,?,1)");
-      $result -> bindParam(1, $satu);
-      $result -> bindParam(2, $dua);
-      $result -> bindParam(3, $tiga);
-      return $result -> execute();
-    }
-
-    function updateDokter($db, $satu, $dua, $tiga, $id, $sql){
-      global $connect;
-
-      $result = $connect -> prepare("UPDATE $db SET $sql WHERE id=?");
-      $result -> bindParam(1, $satu);
-      $result -> bindParam(2, $dua);
-      $result -> bindParam(3, $tiga);
-      $result -> bindParam(4, $id);
-      return $result -> execute();
-    }
+    // function updateDokter($db, $satu, $dua, $tiga, $id, $sql){
+    //   global $connect;
+    //
+    //   $result = $connect -> prepare("UPDATE $db SET $sql WHERE id=?");
+    //   $result -> bindParam(1, $satu);
+    //   $result -> bindParam(2, $dua);
+    //   $result -> bindParam(3, $tiga);
+    //   $result -> bindParam(4, $id);
+    //   return $result -> execute();
+    // }
 
 ?>

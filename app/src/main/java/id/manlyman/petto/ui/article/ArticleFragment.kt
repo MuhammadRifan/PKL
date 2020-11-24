@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article.view.*
 import org.json.JSONObject
 
-class ArticleFragment : Fragment() {
+class ArticleFragment : Fragment(), OnItemClickListener {
 
     var arrayList = ArrayList<Article>()
 
@@ -34,7 +34,14 @@ class ArticleFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_article, container, false)
         root.aRecyclerView.setHasFixedSize(true)
         root.aRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         return root
+    }
+
+    override fun onItemClicked(article: Article) {
+        Toast.makeText(requireContext(), "User name ${article.judul}", Toast.LENGTH_LONG)
+            .show()
+        Log.i("USER_", article.judul.toString())
     }
 
     private fun loadArticle(){
@@ -64,7 +71,7 @@ class ArticleFragment : Fragment() {
 
                             if (jsonArray?.length() - 1 == i) {
                                 loading.dismiss()
-                                val adapter = AdapterArticle(requireContext(), arrayList)
+                                val adapter = AdapterArticle(this@ArticleFragment, arrayList)
                                 adapter.notifyDataSetChanged()
                                 aRecyclerView.adapter = adapter
                             }
