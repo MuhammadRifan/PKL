@@ -13,46 +13,75 @@
         tools:layout_editor_absoluteY="245dp">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:layout_width="360dp"
+            android:layout_height="88dp"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#ED5656">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/nama"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Nama : " />
+                <ImageView
+                    android:id="@+id/gambarSC"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    tools:src="@tools:sample/avatars" />
 
-                <TextView
-                    android:id="@+id/alamat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Alamat : " />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/deskripsi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginStart="15dp"
-                    android:text="Deskripsi : " />
+                    <TextView
+                        android:id="@+id/namaSC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Nama fasilitas kesehatan"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/bukaSC"
+                            android:layout_width="84dp"
+                            android:layout_height="43dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Buka"
+                            android:textSize="10sp" />
+
+                        <ImageView
+                            android:id="@+id/logoLokasi"
+                            android:layout_width="15dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="120dp"
+                            android:layout_marginBottom="8dp"
+                            tools:src="@tools:sample/avatars" />
+
+                        <TextView
+                            android:id="@+id/jarak"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="5Km"
+                            android:textColor="@color/purple" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

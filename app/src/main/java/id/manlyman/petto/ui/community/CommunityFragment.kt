@@ -1,6 +1,7 @@
 package id.manlyman.petto.ui.community
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_community.*
 import kotlinx.android.synthetic.main.fragment_community.view.*
 import org.json.JSONObject
 
-class CommunityFragment : Fragment() {
+class CommunityFragment : Fragment(), OnItemClickListener {
 
     var arrayList = ArrayList<Community>()
 
@@ -32,6 +33,16 @@ class CommunityFragment : Fragment() {
         root.cRecyclerView.setHasFixedSize(true)
         root.cRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         return root
+    }
+
+    override fun onItemClicked(community: Community) {
+        val intent = Intent(requireContext(), ClickedCommunity::class.java)
+        intent.putExtra("ID", community.id.toString())
+        startActivity(intent)
+
+//        Toast.makeText(requireContext(), "ID : ${community.id}", Toast.LENGTH_LONG)
+//                .show()
+//        Log.i("USER_", community.id.toString())
     }
 
     private fun loadCommunity(){
@@ -55,14 +66,15 @@ class CommunityFragment : Fragment() {
 
                         for (i in 0 until jsonArray?.length()!!) {
                             val jsonObject = jsonArray?.optJSONObject(i)
-                            arrayList.add(Community(jsonObject.getString("nama_komunitas"),
+                            arrayList.add(Community(jsonObject.getInt("id_komunitas"),
+                                    jsonObject.getString("nama_komunitas"),
                                     jsonObject.getString("deskripsi_komunitas"),
                                     jsonObject.getString("foto_komunitas"),
                                     jsonObject.getString("kontak")))
 
                             if (jsonArray?.length() - 1 == i) {
                                 loading.dismiss()
-                                val adapter = AdapterCommunity(requireContext(), arrayList)
+                                val adapter = AdapterCommunity(this@CommunityFragment, arrayList)
                                 adapter.notifyDataSetChanged()
                             cRecyclerView.adapter = adapter
                             }

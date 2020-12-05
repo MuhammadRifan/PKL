@@ -1,27 +1,23 @@
 package id.manlyman.petto.ui.article
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import id.manlyman.petto.R
 import kotlinx.android.synthetic.main.list_article.view.*
 
 class Holder(view: View) : RecyclerView.ViewHolder(view){
-    val judul = view.judul
-    val penulis = view.penulis
-    val deskripsi = view.deskripsi
-
+    val nama = view.namaKomu
+    val deskripsi = view.isiSekilas
+    val more = view.readMore
 
     fun bind(article: Article,clickListener: OnItemClickListener)
     {
-        judul.text = "Judul : " + article.judul
-        penulis.text = "Foto : " + article.penulis
-        deskripsi.text = "Deskripsi : " + article.deskripsi
+        nama.text = article.judul
+        deskripsi.text = article.deskripsi
 
-        itemView.setOnClickListener {
+        more.setOnClickListener {
             clickListener.onItemClicked(article)
         }
     }

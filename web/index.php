@@ -11,6 +11,9 @@
         case 'ReadFacility':
             ReadFacility();
             break;
+        case 'ReadID':
+            ReadID();
+            break;
         case 'Login':
             Login();
             break;
@@ -47,6 +50,22 @@
         }
 
         echo json_encode(array('result'=>$result));
+    }
+
+    function ReadID() {
+        $table = $_POST['table'];
+        $id = $_POST['id'];
+        if ($table == "artikel") {
+            $idname = "id_artikel";
+        } else if($table == "fasilitas") {
+            $idname = "id_fasilitas";
+        } else if($table == "komunitas") {
+            $idname = "id_komunitas";
+        }
+
+        $result = find_by_id($table, $idname, $id) -> fetch();
+
+        echo json_encode($result);
     }
 
     function Login() {

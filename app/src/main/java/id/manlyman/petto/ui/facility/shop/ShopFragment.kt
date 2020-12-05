@@ -1,6 +1,7 @@
 package id.manlyman.petto.ui.facility.shop
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,14 +16,14 @@ import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import id.manlyman.petto.ApiEndPoint
 import id.manlyman.petto.R
-import id.manlyman.petto.ui.facility.ShopCare
+import id.manlyman.petto.ui.facility.Facility
 import kotlinx.android.synthetic.main.fragment_shop.*
 import kotlinx.android.synthetic.main.fragment_shop.view.*
 import org.json.JSONObject
 
-class ShopFragment : Fragment() {
+class ShopFragment : Fragment(), OnItemClickListener {
 
-    var arrayList = ArrayList<ShopCare>()
+    var arrayList = ArrayList<Facility>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +33,16 @@ class ShopFragment : Fragment() {
         view.sRecyclerView.setHasFixedSize(true)
         view.sRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         return view
+    }
+
+    override fun onItemClicked(facility: Facility) {
+        val intent = Intent(requireContext(), ClickedShop::class.java)
+        intent.putExtra("ID", facility.id.toString())
+        startActivity(intent)
+
+//        Toast.makeText(requireContext(), "ID : ${facility.id}", Toast.LENGTH_LONG)
+//                .show()
+//        Log.i("USER_", facility.id.toString())
     }
 
     private fun loadShop(){
@@ -56,13 +67,14 @@ class ShopFragment : Fragment() {
 
                         for (i in 0 until jsonArray?.length()!!) {
                             val jsonObject = jsonArray?.optJSONObject(i)
-                            arrayList.add(ShopCare(jsonObject.getString("nama_fasilitas"),
+                            arrayList.add(Facility(jsonObject.getInt("id_fasilitas"),
+                                    jsonObject.getString("nama_fasilitas"),
                                     jsonObject.getString("alamat_fasilitas"),
                                     jsonObject.getString("deskripsi_fasilitas")))
 
                             if (jsonArray?.length() - 1 == i) {
                                 loading.dismiss()
-                                val adapter = AdapterShop(requireContext(), arrayList)
+                                val adapter = AdapterShop(this@ShopFragment, arrayList)
                                 adapter.notifyDataSetChanged()
                                 sRecyclerView.adapter = adapter
                             }
@@ -77,8 +89,8 @@ class ShopFragment : Fragment() {
                 })
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         loadShop()
     }
 }

@@ -1,16 +1,14 @@
 package id.manlyman.petto.ui.article
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
@@ -21,6 +19,7 @@ import id.manlyman.petto.R
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article.view.*
 import org.json.JSONObject
+
 
 class ArticleFragment : Fragment(), OnItemClickListener {
 
@@ -39,9 +38,12 @@ class ArticleFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClicked(article: Article) {
-        Toast.makeText(requireContext(), "User name ${article.judul}", Toast.LENGTH_LONG)
-            .show()
-        Log.i("USER_", article.judul.toString())
+        val intent = Intent(requireContext(), ClickedArticle::class.java)
+        intent.putExtra("ID", article.id.toString())
+        startActivity(intent)
+
+//        Toast.makeText(requireContext(), "ID : ${article.id}", Toast.LENGTH_LONG).show()
+//        Log.i("USER_", article.judul.toString())
     }
 
     private fun loadArticle(){
@@ -65,7 +67,8 @@ class ArticleFragment : Fragment(), OnItemClickListener {
 
                         for (i in 0 until jsonArray?.length()!!) {
                             val jsonObject = jsonArray?.optJSONObject(i)
-                            arrayList.add(Article(jsonObject.getString("penulis"),
+                            arrayList.add(Article(jsonObject.getInt("id_artikel"),
+                                    jsonObject.getString("penulis"),
                                     jsonObject.getString("judul"),
                                     jsonObject.getString("deskripsi")))
 

@@ -18,41 +18,76 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#ED5656">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/judul"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Judul : " />
+                <LinearLayout
+                    android:layout_width="344dp"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/fotoProfilPengguna"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        tools:src="@tools:sample/avatars" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/namaKomu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="1dp"
+                            android:text="Judul Artikel"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/alamatKomu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="1dp"
+                            android:text="20-20-2020"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/fotoKomu"
+                    android:layout_width="match_parent"
+                    android:layout_height="194dp"
+                    tools:src="@tools:sample/backgrounds/scenic" />
 
                 <TextView
-                    android:id="@+id/penulis"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/isiSekilas"
+                    android:layout_width="312dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Penulis : " />
+                    android:layout_marginTop="16dp"
+                    android:layout_gravity="center"
+                    android:text="isi sekilas artikel" />
 
                 <TextView
-                    android:id="@+id/deskripsi"
+                    android:id="@+id/readMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginStart="15dp"
-                    android:text="Deskripsi : " />
+                    android:layout_marginTop="36dp"
+                    android:layout_marginLeft="8dp"
+                    android:padding="8dp"
+                    android:textColor="@color/purple_500"
+                    android:text="READ MORE >>" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

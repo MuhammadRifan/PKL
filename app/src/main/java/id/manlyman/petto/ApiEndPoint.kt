@@ -9,6 +9,7 @@ class ApiEndPoint {
         val Login = SERVER + "?p=Login"
         val Read = SERVER + "?p=Read"
         val ReadFacility = SERVER + "?p=ReadFacility"
+        val ReadID = SERVER + "?p=ReadID"
         val Pictures = SERVER + "assets/images/"
         val Upload = SERVER + "?p=Upload"
         val Delete = SERVER + "?p=delete"
