@@ -12,9 +12,8 @@ class ApiEndPoint {
         val ReadID = SERVER + "?p=ReadID"
         val Pictures = SERVER + "assets/images/"
         val Upload = SERVER + "?p=Upload"
+        val Update = SERVER + "?p=Update"
         val Delete = SERVER + "?p=delete"
-        val Update = SERVER + "?p=update"
         val Find_ID = SERVER + "?p=findID"
-
     }
 }

@@ -21,7 +21,27 @@ class Login : AppCompatActivity() {
         supportActionBar?.hide()
 
         btnLogin.setOnClickListener {
-            Login()
+            var error = 0
+
+            if (txtEmail.text.toString().length == 0) {
+                txtEmail.setError("Mohon masukan email")
+                error++
+            } else if (!txtEmail.text.toString().trim().matches(Regex("[a-zA-Z0-9._-]+@[a-z]+.com+"))) {
+                txtEmail.setError("Mohon masukkan email dengan benar")
+                error++
+            }
+
+            if (txtPass.text.toString().length < 5) {
+                txtPass.setError("Mohon masukan password dengan benar")
+                error++
+            }
+
+            if (error == 0) {
+                Login()
+            } else {
+                Toast.makeText(this, "Form tidak lengkap", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         txtRegister.setOnClickListener{
@@ -55,7 +75,12 @@ class Login : AppCompatActivity() {
                         Config.setCustom("id", response?.getString("id_pengguna").toString())
                         Config.setCustom("nama", response?.getString("nama_pengguna").toString())
                         Config.setCustom("email", response?.getString("email_pengguna").toString())
+                        Config.setCustom("pass", response?.getString("password_pengguna").toString())
+                        Config.setCustom("alamat", response?.getString("alamat").toString())
+                        Config.setCustom("notelp", response?.getString("no_telp").toString())
                         Config.setCustom("foto", response?.getString("foto").toString())
+                        Config.setCustom("nip", response?.getString("nip").toString())
+                        Config.setCustom("spesialis", response?.getString("spesialis").toString())
 
                         startActivity(Intent(applicationContext, HomeActivity::class.java))
                     }
@@ -76,7 +101,6 @@ class Login : AppCompatActivity() {
         val login = Config.getCustom("is_login", "")
 
         if (login.equals("1")) {
-            Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, HomeActivity::class.java))
         }
     }

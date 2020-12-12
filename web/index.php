@@ -23,6 +23,9 @@
         case 'Upload':
             Upload();
             break;
+        case 'Update':
+            Update();
+            break;
         case 'Pengguna2Dokter':
             Pengguna2Dokter();
             break;
@@ -159,6 +162,30 @@
         }
     }
 
+    function Update() {
+        $id = $_POST['id'];
+        $nama = $_POST['nama'];
+        $email = $_POST['email'];
+        $pass = $_POST['pass'];
+        $alamat = $_POST['alamat'];
+        $notelp = $_POST['notelp'];
+        $foto = $_POST['foto'];
+        $nip = $_POST['nip'];
+        $spesialis = $_POST['spesialis'];
+
+        if(!$id || !$nama || !$email || !$pass || !$alamat || !$notelp || !$foto){
+            echo json_encode(array('message' => 'Form ada yang kosong'));
+        }else{
+            if(updatePengguna($id, $nama, $email, $pass, $alamat, $notelp, $foto, $nip, $spesialis)){
+                $result = find_by_id("pengguna", "id_pengguna", $id) -> fetch();
+                $result['message'] = "Update berhasil";
+                echo json_encode($result);
+            }else{
+                echo json_encode(array('message' => 'Update gagal'));
+            }
+        }
+    }
+
     function Pengguna2Dokter() {
         $id = $_POST['id'];
         $nip = $_POST['nip'];
@@ -178,22 +205,7 @@
         }
     }
 
-    if ($page == "update") {
-        $email = $_POST['email'];
-        $pass = $_POST['pass'];
-        $id = $_POST['id'];
-
-        if(!$email || !$pass || !$id){
-            echo json_encode(array('message'=>'required field is empty.'));
-        }else{
-            $query = updatePengguna("test", $email, $pass, $id, "email=?, pass=?");
-            if($query){
-                echo json_encode(array('message'=>'update berhasil.'));
-            }else{
-                echo json_encode(array('message'=>'update gagal.'));
-            }
-        }
-    } else if ($page == "delete") {
+    if ($page == "deleteyy") {
         $id = $_POST['id'];
 
         if( !$id ){
