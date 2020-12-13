@@ -50,12 +50,17 @@ class AccountFragment : Fragment() {
         piew = root
         Data()
 
+        val Config = FConfig(requireContext())
         var error = 0
         val edit = root.btnAcEdit
         val floatButt = root.changePict
         val cancel = root.btnAcCancel
         val nama = root.acNama
         val email = root.acEmail
+        var pass = ""
+        val oPass = root.acOldPass
+        val nPass = root.acNewPass
+        val cPass = root.acConfirmPass
         val alamat = root.acAlamat
         val telp = root.acNoTelp
 
@@ -71,43 +76,76 @@ class AccountFragment : Fragment() {
                 nama.isFocusableInTouchMode = true
                 email.isFocusable = true
                 email.isFocusableInTouchMode = true
+                oPass.isFocusable = true
+                oPass.isFocusableInTouchMode = true
+                nPass.isFocusable = true
+                nPass.isFocusableInTouchMode = true
+                cPass.isFocusable = true
+                cPass.isFocusableInTouchMode = true
                 alamat.isFocusable = true
                 alamat.isFocusableInTouchMode = true
                 telp.isFocusable = true
                 telp.isFocusableInTouchMode = true
             } else {
                 error = 0
+                pass = ""
 
                 if (nama.text.toString().length < 3) {
-                    nama.setError("Mohon masukan nama dengan benar")
+                    nama.error = "Mohon masukan nama dengan benar"
                     error++
                 }
 
-                if (email.text.toString().length == 0) {
-                    email.setError("Mohon masukan email")
+                if (email.text.toString().isEmpty()) {
+                    email.error = "Mohon masukan email"
                     error++
                 } else if (!email.text.toString().trim().matches(Regex("[a-zA-Z0-9._-]+@[a-z]+.com+"))) {
-                    email.setError("Mohon masukkan email dengan benar")
+                    email.error = "Mohon masukkan email dengan benar"
                     error++
+                }
+
+                if (oPass.text.toString().isNotEmpty() || nPass.text.toString().isNotEmpty() || cPass.text.toString().isNotEmpty()) {
+                    if (oPass.text.toString().length < 5) {
+                        oPass.error = "Mohon masukan password dengan benar"
+                        error++
+                    } else if (oPass.text.toString() != Config.getCustom("pass", "")) {
+                        oPass.error = "Password lama tidak sama"
+                        error++
+                    } else if (nPass.text.toString().length < 5) {
+                        nPass.error = "Mohon masukan password dengan benar"
+                        error++
+                    } else if (cPass.text.toString().length < 5) {
+                        cPass.error = "Mohon masukan password dengan benar"
+                        error++
+                    } else if (nPass.text.toString() != cPass.text.toString()) {
+                        cPass.error = "Password baru tidak sama"
+                        error++
+                    } else if (nPass.text.toString() == oPass.text.toString()) {
+                        nPass.error = "Password baru tidak boleh sama dengan password lama"
+                        error++
+                    } else {
+                         pass = nPass.text.toString()
+                    }
+                } else {
+                    pass = Config.getCustom("pass", "")
                 }
 
                 if (alamat.text.toString().length == 0) {
-                    alamat.setError("Mohon masukan alamat")
+                    alamat.error = "Mohon masukan alamat"
                     error++
                 }
 
                 if (telp.text.toString().length != 12) {
-                    telp.setError("Mohon masukan nomor telfon dengan benar")
+                    telp.error = "Mohon masukan nomor telfon dengan benar"
                     error++
                 }
 
                 if (error == 0) {
                     if (pict == 0) {
 //                        Toast.makeText(requireContext(), "no image", Toast.LENGTH_SHORT).show()
-                        UpdateWoImage()
+                        UpdateWoImage(pass)
                     } else {
 //                        Toast.makeText(requireContext(), "wi image", Toast.LENGTH_SHORT).show()
-                        UpdateWiImage(imageFile!!)
+                        UpdateWiImage(pass, imageFile!!)
                         pict = 0
                     }
                 } else {
@@ -127,16 +165,28 @@ class AccountFragment : Fragment() {
 
             nama.isFocusable = false
             nama.isFocusableInTouchMode = false
-            nama.setError(null)
+            nama.error = null
             email.isFocusable = false
             email.isFocusableInTouchMode = false
-            email.setError(null)
+            email.error = null
+            oPass.isFocusable = false
+            oPass.isFocusableInTouchMode = false
+            oPass.error = null
+            oPass.text = null
+            nPass.isFocusable = false
+            nPass.isFocusableInTouchMode = false
+            nPass.error = null
+            nPass.text = null
+            cPass.isFocusable = false
+            cPass.isFocusableInTouchMode = false
+            cPass.error = null
+            cPass.text = null
             alamat.isFocusable = false
             alamat.isFocusableInTouchMode = false
-            alamat.setError(null)
+            alamat.error = null
             telp.isFocusable = false
             telp.isFocusableInTouchMode = false
-            telp.setError(null)
+            telp.error = null
         }
 
         floatButt.setOnClickListener {
@@ -248,18 +298,56 @@ class AccountFragment : Fragment() {
         userEmail.text = Config.getCustom("email", "")
     }
 
-    private fun UpdateWoImage(){
+    private fun restoreBack(response: JSONObject){
+        val Config = FConfig(requireContext())
+        piew?.btnAcEdit?.text = "Edit"
+        piew?.changePict?.visibility = View.INVISIBLE
+        piew?.btnAcCancel?.visibility = View.INVISIBLE
+
+        piew?.acNama?.isFocusable = false
+        piew?.acNama?.isFocusableInTouchMode = false
+        piew?.acEmail?.isFocusable = false
+        piew?.acEmail?.isFocusableInTouchMode = false
+        piew?.acOldPass?.isFocusable = false
+        piew?.acOldPass?.isFocusableInTouchMode = false
+        piew?.acOldPass?.text = null
+        piew?.acNewPass?.isFocusable = false
+        piew?.acNewPass?.isFocusableInTouchMode = false
+        piew?.acNewPass?.text = null
+        piew?.acConfirmPass?.isFocusable = false
+        piew?.acConfirmPass?.isFocusableInTouchMode = false
+        piew?.acConfirmPass?.text = null
+        piew?.acAlamat?.isFocusable = false
+        piew?.acAlamat?.isFocusableInTouchMode = false
+        piew?.acNoTelp?.isFocusable = false
+        piew?.acNoTelp?.isFocusableInTouchMode = false
+
+        Config.setCustom("nama", response.getString("nama_pengguna").toString())
+        Config.setCustom("email", response.getString("email_pengguna").toString())
+        Config.setCustom("pass", response.getString("password_pengguna").toString())
+        Config.setCustom("alamat", response.getString("alamat").toString())
+        Config.setCustom("notelp", response.getString("no_telp").toString())
+        Config.setCustom("foto", response.getString("foto").toString())
+        Config.setCustom("nip", response.getString("nip").toString())
+        Config.setCustom("spesialis", response.getString("spesialis").toString())
+
+        piew?.acProfile?.setImageUrl("")
+        Data()
+        changeNavHead()
+    }
+
+    private fun UpdateWoImage(pass: String){
         val Config = FConfig(requireContext())
         val loading = ProgressDialog(requireContext())
-        loading.setTitle("Updating...")
-        loading.setMessage("Saving data (0/100)")
+        loading.setTitle("Updating ...")
+        loading.setMessage("Saving data ...")
         loading.show()
 
         AndroidNetworking.post(ApiEndPoint.Update)
                 .addBodyParameter("id", Config.getCustom("id", ""))
                 .addBodyParameter("nama", piew?.acNama?.text.toString())
                 .addBodyParameter("email", piew?.acEmail?.text.toString())
-                .addBodyParameter("pass", Config.getCustom("pass", ""))
+                .addBodyParameter("pass", pass)
                 .addBodyParameter("alamat", piew?.acAlamat?.text.toString())
                 .addBodyParameter("notelp", piew?.acNoTelp?.text.toString())
                 .addBodyParameter("foto", Config.getCustom("foto", ""))
@@ -270,33 +358,9 @@ class AccountFragment : Fragment() {
                 .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
                         if (response?.getString("message")?.contains("berhasil")!!) {
-                            loading.setMessage("Saving data (100/100)")
+                            loading.setMessage("Saving data ...")
 
-                            piew?.btnAcEdit?.text = "Edit"
-                            piew?.changePict?.visibility = View.INVISIBLE
-                            piew?.btnAcCancel?.visibility = View.INVISIBLE
-
-                            piew?.acNama?.isFocusable = false
-                            piew?.acNama?.isFocusableInTouchMode = false
-                            piew?.acEmail?.isFocusable = false
-                            piew?.acEmail?.isFocusableInTouchMode = false
-                            piew?.acAlamat?.isFocusable = false
-                            piew?.acAlamat?.isFocusableInTouchMode = false
-                            piew?.acNoTelp?.isFocusable = false
-                            piew?.acNoTelp?.isFocusableInTouchMode = false
-
-                            Config.setCustom("nama", response?.getString("nama_pengguna").toString())
-                            Config.setCustom("email", response?.getString("email_pengguna").toString())
-                            Config.setCustom("pass", response?.getString("password_pengguna").toString())
-                            Config.setCustom("alamat", response?.getString("alamat").toString())
-                            Config.setCustom("notelp", response?.getString("no_telp").toString())
-                            Config.setCustom("foto", response?.getString("foto").toString())
-                            Config.setCustom("nip", response?.getString("nip").toString())
-                            Config.setCustom("spesialis", response?.getString("spesialis").toString())
-
-                            piew?.acProfile?.setImageUrl("")
-                            Data()
-                            changeNavHead()
+                            restoreBack(response)
                         }
                         loading.dismiss()
                         Toast.makeText(requireContext(), response.getString("message"), Toast.LENGTH_LONG).show()
@@ -311,10 +375,10 @@ class AccountFragment : Fragment() {
                 })
     }
 
-    private fun UpdateWiImage(file: File) {
+    private fun UpdateWiImage(pass: String, file: File) {
         val Config = FConfig(requireContext())
         val loading = ProgressDialog(requireContext())
-        loading.setTitle("Updating...")
+        loading.setTitle("Updating ...")
         loading.setMessage("Uploading image (0/100)")
         loading.show()
 
@@ -323,7 +387,7 @@ class AccountFragment : Fragment() {
                 .setPriority(Priority.HIGH)
                 .build()
                 .setUploadProgressListener { bytesUploaded, totalBytes -> // do anything with progress
-                    loading.setMessage("Uploading image (" + (((bytesUploaded / totalBytes) * 100) - 20).toString() + "/100)")
+                    loading.setMessage("Uploading image (" + ((bytesUploaded / totalBytes) * 100).toString() + "/100)")
                 }
                 .getAsString(object : StringRequestListener {
                     override fun onResponse(response: String) {
@@ -332,7 +396,7 @@ class AccountFragment : Fragment() {
                                     .addBodyParameter("id", Config.getCustom("id", ""))
                                     .addBodyParameter("nama", piew?.acNama?.text.toString())
                                     .addBodyParameter("email", piew?.acEmail?.text.toString())
-                                    .addBodyParameter("pass", Config.getCustom("pass", ""))
+                                    .addBodyParameter("pass", pass)
                                     .addBodyParameter("alamat", piew?.acAlamat?.text.toString())
                                     .addBodyParameter("notelp", piew?.acNoTelp?.text.toString())
                                     .addBodyParameter("foto", response)
@@ -343,33 +407,9 @@ class AccountFragment : Fragment() {
                                     .getAsJSONObject(object : JSONObjectRequestListener {
                                         override fun onResponse(response: JSONObject?) {
                                             if (response?.getString("message")?.contains("berhasil")!!) {
-                                                loading.setMessage("Saving data (100/100)")
+                                                loading.setMessage("Saving data ...")
 
-                                                piew?.btnAcEdit?.text = "Edit"
-                                                piew?.changePict?.visibility = View.INVISIBLE
-                                                piew?.btnAcCancel?.visibility = View.INVISIBLE
-
-                                                piew?.acNama?.isFocusable = false
-                                                piew?.acNama?.isFocusableInTouchMode = false
-                                                piew?.acEmail?.isFocusable = false
-                                                piew?.acEmail?.isFocusableInTouchMode = false
-                                                piew?.acAlamat?.isFocusable = false
-                                                piew?.acAlamat?.isFocusableInTouchMode = false
-                                                piew?.acNoTelp?.isFocusable = false
-                                                piew?.acNoTelp?.isFocusableInTouchMode = false
-
-                                                Config.setCustom("nama", response?.getString("nama_pengguna").toString())
-                                                Config.setCustom("email", response?.getString("email_pengguna").toString())
-                                                Config.setCustom("pass", response?.getString("password_pengguna").toString())
-                                                Config.setCustom("alamat", response?.getString("alamat").toString())
-                                                Config.setCustom("notelp", response?.getString("no_telp").toString())
-                                                Config.setCustom("foto", response?.getString("foto").toString())
-                                                Config.setCustom("nip", response?.getString("nip").toString())
-                                                Config.setCustom("spesialis", response?.getString("spesialis").toString())
-
-                                                piew?.acProfile?.setImageUrl("")
-                                                Data()
-                                                changeNavHead()
+                                                restoreBack(response)
                                             }
                                             loading.dismiss()
                                             Toast.makeText(requireContext(), response.getString("message"), Toast.LENGTH_LONG).show()
