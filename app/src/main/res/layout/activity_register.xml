@@ -20,6 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <com.mikhaellopez.circularimageview.CircularImageView
@@ -53,47 +54,26 @@
                 app:srcCompat="@android:drawable/ic_input_add" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtNamaLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="32dp"
-                app:boxBackgroundColor="@color/purple"
-                app:boxBackgroundMode="filled"
-                app:hintTextColor="#FFFFFF"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/circularImageView">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtNama"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Nama"
-                    android:inputType="textPersonName"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:paddingStart="1dp"
-                    android:paddingEnd="1dp"
-                    android:paddingBottom="1dp"
-                    android:textColor="@color/kuninghijau"
-                    android:textColorHint="#FFFFFF" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtRegistEmailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
+<<<<<<< HEAD
+                android:layout_marginTop="50dp"
+=======
+                android:layout_marginTop="64dp"
+>>>>>>> 918874d4ade02e04264fb66bcfe4eb6c74af2db6
                 android:layout_marginEnd="32dp"
+                android:focusableInTouchMode="true"
+                android:nextFocusDown="@id/txtNamaLayout"
+                android:textColorHint="@color/white"
                 app:boxBackgroundColor="@color/purple"
                 app:boxBackgroundMode="filled"
-                app:hintTextColor="#FFFFFF"
+                app:boxStrokeColor="@color/white"
+                app:hintTextColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtNamaLayout">
+                app:layout_constraintTop_toBottomOf="@+id/circularImageView">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtRegistEmail"
@@ -105,7 +85,41 @@
                     android:maxLines="1"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
-                    android:paddingBottom="1dp"
+                    android:paddingBottom="5dp"
+                    android:textColor="@color/kuninghijau"
+                    android:textColorHint="#FFFFFF" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtNamaLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@id/txtRegistEmailLayout"
+                android:nextFocusDown="@id/txtRegistPassLayout"
+                android:textColorHint="@color/white"
+                app:boxBackgroundColor="@color/purple"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/white"
+                app:hintTextColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtRegistEmailLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtNama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nama"
+                    android:inputType="textFilter|textPersonName"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:paddingStart="1dp"
+                    android:paddingEnd="1dp"
+                    android:paddingBottom="5dp"
                     android:textColor="@color/kuninghijau"
                     android:textColorHint="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -117,12 +131,17 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@id/txtNamaLayout"
+                android:nextFocusDown="@id/txtConfirmPassLayout"
+                android:textColorHint="@color/white"
                 app:boxBackgroundColor="@color/purple"
                 app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/white"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtRegistEmailLayout">
+                app:layout_constraintTop_toBottomOf="@+id/txtNamaLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtRegistPass"
@@ -134,7 +153,7 @@
                     android:maxLines="1"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
-                    android:paddingBottom="1dp"
+                    android:paddingBottom="5dp"
                     android:textColor="@color/kuninghijau"
                     android:textColorHint="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -146,8 +165,13 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@id/txtRegistPassLayout"
+                android:nextFocusDown="@id/txtAlamatLayout"
+                android:textColorHint="@color/white"
                 app:boxBackgroundColor="@color/purple"
                 app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/white"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +187,7 @@
                     android:maxLines="1"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
-                    android:paddingBottom="1dp"
+                    android:paddingBottom="5dp"
                     android:textColor="@color/kuninghijau"
                     android:textColorHint="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -175,8 +199,13 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@id/txtConfirmPassLayout"
+                android:nextFocusDown="@id/txtNoTelpLayout"
+                android:textColorHint="@color/white"
                 app:boxBackgroundColor="@color/purple"
                 app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/white"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -192,7 +221,7 @@
                     android:maxLines="1"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
-                    android:paddingBottom="1dp"
+                    android:paddingBottom="5dp"
                     android:textColor="@color/kuninghijau"
                     android:textColorHint="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -204,8 +233,13 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@id/txtAlamatLayout"
+                android:nextFocusDown="@id/btnRegisterPengguna"
+                android:textColorHint="@color/white"
                 app:boxBackgroundColor="@color/purple"
                 app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/white"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -216,12 +250,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Phone"
-                    android:inputType="phone"
+                    android:inputType="number"
                     android:lines="1"
                     android:maxLines="1"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
-                    android:paddingBottom="1dp"
+                    android:paddingBottom="5dp"
                     android:textColor="@color/kuninghijau"
                     android:textColorHint="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -254,6 +288,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnRegisterPengguna" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

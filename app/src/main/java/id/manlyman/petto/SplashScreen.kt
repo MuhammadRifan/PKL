@@ -25,12 +25,11 @@ class SplashScreen : AppCompatActivity() {
 
                     if (login.equals("1")) {
                         pesan.setText("Login Berhasil")
+                        pesan.show()
                         startActivity(Intent(applicationContext, HomeActivity::class.java))
                     } else {
-                        pesan.setText("Mohon Login Terlebih Dahulu")
                         startActivity(Intent(applicationContext, Login::class.java))
                     }
-                    pesan.show()
                     finish()
                 }
             }

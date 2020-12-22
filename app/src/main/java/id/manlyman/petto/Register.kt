@@ -37,36 +37,36 @@ class Register : AppCompatActivity() {
             var error = 0
 
             if (txtNama.text.toString().length < 3) {
-                txtNama.error = "Mohon masukan nama dengan benar"
+                txtNama.setError("Mohon masukan nama dengan benar")
                 error++
             }
 
             if (txtRegistEmail.text.toString().length == 0) {
-                txtRegistEmail.error = "Mohon masukan email"
+                txtRegistEmail.setError("Mohon masukan email")
                 error++
             } else if (!txtRegistEmail.text.toString().trim().matches(Regex("[a-zA-Z0-9._-]+@[a-z]+.com+"))) {
-                txtRegistEmail.setError("Mohon masukkan email dengan benar");
+                txtRegistEmail.setError("Mohon masukkan email dengan benar")
                 error++
             }
 
             if (txtRegistPass.text.toString().length < 5) {
-                txtRegistPass.error = "Mohon masukan password dengan benar"
+                txtRegistPass.setError("Mohon masukan password dengan benar")
                 error++
             } else if (txtConfirmPass.text.toString().length < 5) {
-                txtConfirmPass.error = "Mohon masukan password dengan benar"
+                txtConfirmPass.setError("Mohon masukan password dengan benar")
                 error++
             } else if (!txtRegistPass.text.toString().equals(txtConfirmPass.text.toString())) {
-                txtConfirmPass.error = "Password tidak sama"
+                txtConfirmPass.setError("Password tidak sama")
                 error++
             }
 
             if (txtAlamat.text.toString().length == 0) {
-                txtAlamat.error = "Mohon masukan alamatr"
+                txtAlamat.setError("Mohon masukan alamat")
                 error++
             }
 
             if (txtNoTelp.text.toString().length != 12) {
-                txtNoTelp.error = "Mohon masukan nomor telfon dengan benar"
+                txtNoTelp.setError("Mohon masukan nomor telfon dengan benar")
                 error++
             }
 
@@ -153,9 +153,8 @@ class Register : AppCompatActivity() {
 
     private fun Register(file: File) {
         val loading = ProgressDialog(this)
-        loading.setMessage("Registering...")
-        loading.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
-        loading.progress = 0
+        loading.setTitle("Registering...")
+        loading.setMessage("Uploading image (0/100)")
         loading.show()
 
         AndroidNetworking.upload(ApiEndPoint.Upload)
@@ -163,7 +162,7 @@ class Register : AppCompatActivity() {
             .setPriority(Priority.HIGH)
             .build()
             .setUploadProgressListener { bytesUploaded, totalBytes -> // do anything with progress
-                loading.progress = (((bytesUploaded / totalBytes) * 100)-30).toInt()
+                loading.setMessage("Uploading image (" + (((bytesUploaded / totalBytes) * 100)-20).toString() + "/100)")
             }
             .getAsString(object : StringRequestListener {
                 override fun onResponse(response: String) {
@@ -180,7 +179,7 @@ class Register : AppCompatActivity() {
                                 .getAsJSONObject(object : JSONObjectRequestListener {
                                     override fun onResponse(response: JSONObject?) {
                                         if (response?.getString("message")?.contains("berhasil")!!) {
-                                            loading.progress = 100
+                                            loading.setMessage("Saving data (100/100)")
                                             Toast.makeText(applicationContext, "Silahkan Login", Toast.LENGTH_LONG).show()
                                             startActivity(Intent(applicationContext, Login::class.java))
                                         } else {

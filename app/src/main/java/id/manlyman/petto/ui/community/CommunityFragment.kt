@@ -76,7 +76,7 @@ class CommunityFragment : Fragment(), OnItemClickListener {
                                 loading.dismiss()
                                 val adapter = AdapterCommunity(this@CommunityFragment, arrayList)
                                 adapter.notifyDataSetChanged()
-                            cRecyclerView.adapter = adapter
+                                cRecyclerView.adapter = adapter
                             }
                         }
                     }
