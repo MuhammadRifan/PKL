@@ -9,7 +9,7 @@ import id.manlyman.petto.ui.facility.Facility
 import kotlinx.android.synthetic.main.list_health.view.*
 
 class Holder(view: View) : RecyclerView.ViewHolder(view){
-    val nama = view.namaSC
+    val nama = view.namaPaket
     val btn = view.bukaSC
 
     fun bind(facility: Facility, clickListener: OnItemClickListener)

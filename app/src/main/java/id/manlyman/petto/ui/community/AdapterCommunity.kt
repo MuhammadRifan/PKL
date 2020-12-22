@@ -1,6 +1,5 @@
 package id.manlyman.petto.ui.community
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,8 @@ import id.manlyman.petto.R
 import kotlinx.android.synthetic.main.list_community.view.*
 
 class Holder(val view: View) : RecyclerView.ViewHolder(view){
-    val nama = view.namaKomu
-    val deskripsi = view.isiSekilas
+    val nama = view.namaKomunitas
+    val deskripsi = view.deskripsiFaskes
     val more = view.readMore
 
     fun bind(community: Community, clickListener: OnItemClickListener)

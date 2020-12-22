@@ -38,9 +38,9 @@ class ClickedHealth : AppCompatActivity() {
                 override fun onResponse(response: JSONObject?) {
                     loading.dismiss()
 
-                    txtNamaH.text = response?.getString("nama_fasilitas").toString()
-                    txtDeskripsiH.text = response?.getString("deskripsi_fasilitas").toString()
-                    txtAlamatH.text = response?.getString("alamat_fasilitas").toString()
+                    namaKomunitas.text = response?.getString("nama_fasilitas").toString()
+                    deskripsiFaskes.text = response?.getString("deskripsi_fasilitas").toString()
+                    alamatAC.text = response?.getString("alamat_fasilitas").toString()
                 }
 
                 override fun onError(anError: ANError?) {

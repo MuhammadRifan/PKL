@@ -46,7 +46,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/namaKomu"
+                            android:id="@+id/namaKomunitas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="1dp"
@@ -55,7 +55,7 @@
                             android:textSize="20sp" />
 
                         <TextView
-                            android:id="@+id/alamatKomu"
+                            android:id="@+id/tanggalArtikel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
@@ -66,13 +66,13 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/fotoKomu"
+                    android:id="@+id/fotoKomunias"
                     android:layout_width="match_parent"
                     android:layout_height="194dp"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <TextView
-                    android:id="@+id/isiSekilas"
+                    android:id="@+id/deskripsiFaskes"
                     android:layout_width="312dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

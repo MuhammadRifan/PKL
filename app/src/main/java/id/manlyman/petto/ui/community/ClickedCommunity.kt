@@ -39,9 +39,9 @@ class ClickedCommunity : AppCompatActivity() {
                 override fun onResponse(response: JSONObject?) {
                     loading.dismiss()
 
-                    txtNamaKomu.text = response?.getString("nama_komunitas").toString()
-                    txtDeskripsiKomu.text = response?.getString("deskripsi_komunitas").toString()
-                    txtNoTelp.text = response?.getString("kontak").toString()
+                    namaKomunitas.text = response?.getString("nama_komunitas").toString()
+                    deskripsiFaskes.text = response?.getString("deskripsi_komunitas").toString()
+                    jamAC.text = response?.getString("kontak").toString()
                 }
 
                 override fun onError(anError: ANError?) {

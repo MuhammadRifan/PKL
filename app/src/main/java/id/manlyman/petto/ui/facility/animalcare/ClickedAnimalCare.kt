@@ -38,8 +38,8 @@ class ClickedAnimalCare : AppCompatActivity() {
                 override fun onResponse(response: JSONObject?) {
                     loading.dismiss()
 
-                    txtNamaAC.text = response?.getString("nama_fasilitas").toString()
-                    txtAlamatAC.text = response?.getString("alamat_fasilitas").toString()
+                    namaKomunitas.text = response?.getString("nama_fasilitas").toString()
+                    alamatAC.text = response?.getString("alamat_fasilitas").toString()
                     txtDeskripsiAC.text = response?.getString("deskripsi_fasilitas").toString()
                 }
 

@@ -39,8 +39,8 @@ class ClickedArticle : AppCompatActivity() {
                 override fun onResponse(response: JSONObject?) {
                     loading.dismiss()
 
-                    txtJudul.text = response?.getString("judul").toString()
-                    txtDeskripsi.text = response?.getString("deskripsi").toString()
+                    namaKomunitas.text = response?.getString("judul").toString()
+                    deskripsiFaskes.text = response?.getString("deskripsi").toString()
                 }
 
                 override fun onError(anError: ANError?) {

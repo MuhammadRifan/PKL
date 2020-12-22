@@ -8,8 +8,8 @@ import id.manlyman.petto.R
 import kotlinx.android.synthetic.main.list_article.view.*
 
 class Holder(view: View) : RecyclerView.ViewHolder(view){
-    val nama = view.namaKomu
-    val deskripsi = view.isiSekilas
+    val nama = view.namaKomunitas
+    val deskripsi = view.deskripsiFaskes
     val more = view.readMore
 
     fun bind(article: Article,clickListener: OnItemClickListener)
