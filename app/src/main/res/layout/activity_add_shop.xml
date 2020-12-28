@@ -4,6 +4,232 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.facility.shop.ActivityAddShop">
+    android:background="@color/white"
+    tools:context=".ui.facility.animalcare.ActivityAddAC">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/kategoriToko"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="32dp"
+            android:nextFocusDown="@id/namaToko"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeColor="@color/white"
+            app:hintTextColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtkategoriToko"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Category (drop down)"
+                android:inputType="textEmailAddress"
+                android:lines="1"
+                android:maxLines="1"
+                android:paddingStart="1dp"
+                android:paddingEnd="1dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/kuninghijau"
+                android:textColorHint="#FFFFFF" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/namaToko"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="32dp"
+            android:nextFocusUp="@id/kategoriToko"
+            android:nextFocusDown="@id/alamatToko"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeColor="@color/white"
+            app:hintTextColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtnamaToko"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Store's name"
+                android:inputType="textEmailAddress"
+                android:lines="1"
+                android:maxLines="1"
+                android:paddingStart="1dp"
+                android:paddingEnd="1dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/kuninghijau"
+                android:textColorHint="#FFFFFF" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/alamatToko"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="32dp"
+            android:nextFocusUp="@id/namaToko"
+            android:nextFocusDown="@id/bukaToko"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeColor="@color/white"
+            app:hintTextColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtalamatToko"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                android:inputType="textEmailAddress"
+                android:lines="1"
+                android:maxLines="1"
+                android:paddingStart="1dp"
+                android:paddingEnd="1dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/kuninghijau"
+                android:textColorHint="#FFFFFF" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bukaToko"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="32dp"
+                android:nextFocusUp="@id/alamatToko"
+                android:nextFocusRight="@id/tutupToko"
+                android:textColorHint="@color/black"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/white"
+                app:hintTextColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtbukaToko"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Schedule"
+                    android:inputType="textEmailAddress"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:paddingStart="1dp"
+                    android:paddingEnd="1dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/kuninghijau"
+                    android:textColorHint="#FFFFFF" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tutupToko"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="32dp"
+                android:nextFocusLeft="@id/bukaToko"
+                android:nextFocusDown="@id/nomorToko"
+                android:textColorHint="@color/black"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/white"
+                app:hintTextColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txttutupToko"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Schedule"
+                    android:inputType="textEmailAddress"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:paddingStart="1dp"
+                    android:paddingEnd="1dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/kuninghijau"
+                    android:textColorHint="#FFFFFF" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nomorToko"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="32dp"
+            android:nextFocusUp="@id/tutupToko"
+            android:nextFocusDown="@id/addimage"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeColor="@color/white"
+            app:hintTextColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtnomorToko"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone Number"
+                android:inputType="textEmailAddress"
+                android:lines="1"
+                android:maxLines="1"
+                android:paddingStart="1dp"
+                android:paddingEnd="1dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/kuninghijau"
+                android:textColorHint="#FFFFFF" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/addimage"
+            android:layout_marginTop="25dp"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusUp="@id/phoneNumberAC"
+            android:textSize="25sp"
+            android:textColor="@color/purple"
+            android:text="Add Image +" />
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
