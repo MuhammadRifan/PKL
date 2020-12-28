@@ -32,6 +32,11 @@ class HealthFragment : Fragment(), OnItemClickListener {
         val view = inflater.inflate(R.layout.fragment_health, container, false)
         view.hRecyclerView.setHasFixedSize(true)
         view.hRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        view.addHealth.setOnClickListener {
+            startActivity(Intent(requireContext(), ActivityAddHealth::class.java))
+        }
+
         return view
     }
 

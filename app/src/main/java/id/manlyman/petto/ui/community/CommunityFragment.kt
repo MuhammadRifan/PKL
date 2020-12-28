@@ -32,6 +32,11 @@ class CommunityFragment : Fragment(), OnItemClickListener {
         val root = inflater.inflate(R.layout.fragment_community, container, false)
         root.cRecyclerView.setHasFixedSize(true)
         root.cRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        root.addCommunity.setOnClickListener {
+            startActivity(Intent(requireContext(), ActivityAddCommunity::class.java))
+        }
+
         return root
     }
 

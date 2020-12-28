@@ -32,6 +32,11 @@ class AnimalCareFragment : Fragment(), OnItemClickListener {
         val view = inflater.inflate(R.layout.fragment_animal_care, container, false)
         view.acRecyclerView.setHasFixedSize(true)
         view.acRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        view.addAC.setOnClickListener {
+            startActivity(Intent(requireContext(), ActivityAddAC::class.java))
+        }
+
         return view
     }
 

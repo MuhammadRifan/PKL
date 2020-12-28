@@ -29,15 +29,6 @@
         android:id="@+id/navigation_community"
         android:name="id.manlyman.petto.ui.community.CommunityFragment"
         android:label="@string/title_community"
-        tools:layout="@layout/fragment_community" >
-        <action
-            android:id="@+id/action_navigation_community_to_navigation_adopt2"
-            app:destination="@id/navigation_adopt" />
-    </fragment>
+        tools:layout="@layout/fragment_community" />
 
-    <fragment
-        android:id="@+id/navigation_adopt"
-        android:name="id.manlyman.petto.ui.adoptbreed.AdoptBreedFragment"
-        android:label="@string/title_adopt_breed"
-        tools:layout="@layout/fragment_adopt_breed"/>
 </navigation>

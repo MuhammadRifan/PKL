@@ -32,6 +32,11 @@ class ShopFragment : Fragment(), OnItemClickListener {
         val view = inflater.inflate(R.layout.fragment_shop, container, false)
         view.sRecyclerView.setHasFixedSize(true)
         view.sRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        view.addShop.setOnClickListener {
+            startActivity(Intent(requireContext(), ActivityAddShop::class.java))
+        }
+
         return view
     }
 
