@@ -21,17 +21,7 @@
         android:label="@string/menu_akun_saya"
         tools:layout="@layout/fragment_akun" >
         <action
-            android:id="@+id/action_nav_akun_to_nav_setting"
-            app:destination="@id/nav_setting" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_setting"
-        android:name="id.manlyman.petto.ui.setting.SettingFragment"
-        android:label="@string/menu_pengaturan"
-        tools:layout="@layout/fragment_setting" >
-        <action
-            android:id="@+id/action_nav_setting_to_nav_logout"
+            android:id="@+id/action_nav_akun_to_nav_logout"
             app:destination="@id/nav_logout" />
     </fragment>
 

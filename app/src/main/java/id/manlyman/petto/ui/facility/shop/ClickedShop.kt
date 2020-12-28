@@ -40,7 +40,7 @@ class ClickedShop : AppCompatActivity() {
 
                     namaKomunitas.text = response?.getString("nama_fasilitas").toString()
                     alamatAC.text = response?.getString("alamat_fasilitas").toString()
-                    txtDeskripsiS.text = response?.getString("deskripsi_fasilitas").toString()
+//                    txtDeskripsiS.text = response?.getString("deskripsi_fasilitas").toString()
                 }
 
                 override fun onError(anError: ANError?) {

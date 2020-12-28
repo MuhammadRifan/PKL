@@ -9,9 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="104dp"
-        tools:layout_editor_absoluteY="245dp">
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -107,9 +105,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
+                        android:text="Jl. Kenangan no.1"
                         android:textColor="@color/purple"
-                        android:textSize="14sp"
-                        android:text="Jl. Kenangan no.1" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -131,9 +129,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
+                        android:text="08.00-20.00"
                         android:textColor="@color/purple"
-                        android:textSize="14sp"
-                        android:text="08.00-20.00" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 

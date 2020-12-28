@@ -15,6 +15,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import id.manlyman.petto.ui.community.ClickedCommunity
 import kotlinx.android.synthetic.main.activity_register.*
 import org.json.JSONObject
 import pub.devrel.easypermissions.EasyPermissions
@@ -180,8 +181,9 @@ class Register : AppCompatActivity() {
                                     override fun onResponse(response: JSONObject?) {
                                         if (response?.getString("message")?.contains("berhasil")!!) {
                                             loading.setMessage("Saving data (100/100)")
-                                            Toast.makeText(applicationContext, "Silahkan Login", Toast.LENGTH_LONG).show()
-                                            startActivity(Intent(applicationContext, Login::class.java))
+                                            val intent = Intent(applicationContext, Areyou::class.java)
+                                            intent.putExtra("email", txtRegistEmail.text.toString())
+                                            startActivity(intent)
                                         } else {
                                             Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_LONG).show()
                                         }

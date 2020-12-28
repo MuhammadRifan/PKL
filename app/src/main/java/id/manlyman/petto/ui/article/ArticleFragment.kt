@@ -34,6 +34,10 @@ class ArticleFragment : Fragment(), OnItemClickListener {
         root.aRecyclerView.setHasFixedSize(true)
         root.aRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        root.addArticle.setOnClickListener {
+            startActivity(Intent(requireContext(), ActivityAddArticle::class.java))
+        }
+
         return root
     }
 
