@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     android:background="@color/white"
     tools:context=".ui.facility.animalcare.ActivityAddAC">
 
@@ -232,4 +233,8 @@
 
 
     </LinearLayout>
+=======
+    tools:context=".ui.facility.animalcare.ActivityAddAC">
+
+>>>>>>> 95930c0f04ce91dae8bd3d097193cf23e68711be
 </androidx.constraintlayout.widget.ConstraintLayout>
