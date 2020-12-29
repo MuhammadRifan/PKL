@@ -19,19 +19,19 @@
         android:theme="@style/Theme.Petto">
         <activity
             android:name=".ui.facility.shop.ActivityAddShop"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".ui.facility.health.ActivityAddHealth"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".ui.facility.animalcare.ActivityAddAC"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".ui.community.ActivityAddCommunity"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".ui.article.ActivityAddArticle"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".HomeActivity" />
         <activity android:name=".Areyou" />
         <activity
             android:name=".SplashScreen"
