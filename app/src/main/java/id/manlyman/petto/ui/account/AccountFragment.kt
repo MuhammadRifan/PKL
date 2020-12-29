@@ -64,6 +64,22 @@ class AccountFragment : Fragment() {
         val alamat = root.acAlamat
         val telp = root.acNoTelp
 
+        val Lnip = root.acNIPLayout
+        val Lspe = root.acSpesLayout
+
+        val nip = root.acNIP
+        val spesial = root.acSpesialis
+
+        val level = Config.getCustom("level", "")
+
+        if (level == "1") {
+            Lnip.visibility = View.VISIBLE
+            Lspe.visibility = View.VISIBLE
+        } else {
+            Lnip.visibility = View.GONE
+            Lspe.visibility = View.GONE
+        }
+
         edit.setOnClickListener {
             if (edit.text == "Edit") {
                 pict = 0
@@ -86,6 +102,13 @@ class AccountFragment : Fragment() {
                 alamat.isFocusableInTouchMode = true
                 telp.isFocusable = true
                 telp.isFocusableInTouchMode = true
+
+                if (level == "1") {
+                    nip.isFocusable = true
+                    nip.isFocusableInTouchMode = true
+                    spesial.isFocusable = true
+                    spesial.isFocusableInTouchMode = true
+                }
             } else {
                 error = 0
                 pass = ""
@@ -129,7 +152,7 @@ class AccountFragment : Fragment() {
                     pass = Config.getCustom("pass", "")
                 }
 
-                if (alamat.text.toString().length == 0) {
+                if (alamat.text.toString().isEmpty()) {
                     alamat.error = "Mohon masukan alamat"
                     error++
                 }
@@ -139,12 +162,22 @@ class AccountFragment : Fragment() {
                     error++
                 }
 
+                if (level == "1") {
+                    if (nip.text.toString().length < 3) {
+                        nip.error = "Mohon masukan nomor telfon dengan benar"
+                        error++
+                    }
+
+                    if (spesial.text.toString().isEmpty()) {
+                        spesial.error = "Mohon masukan nomor telfon dengan benar"
+                        error++
+                    }
+                }
+
                 if (error == 0) {
                     if (pict == 0) {
-//                        Toast.makeText(requireContext(), "no image", Toast.LENGTH_SHORT).show()
                         UpdateWoImage(pass)
                     } else {
-//                        Toast.makeText(requireContext(), "wi image", Toast.LENGTH_SHORT).show()
                         UpdateWiImage(pass, imageFile!!)
                         pict = 0
                     }
@@ -187,6 +220,15 @@ class AccountFragment : Fragment() {
             telp.isFocusable = false
             telp.isFocusableInTouchMode = false
             telp.error = null
+
+            if (level == "1") {
+                nip.isFocusable = false
+                nip.isFocusableInTouchMode = false
+                nip.error = null
+                spesial.isFocusable = false
+                spesial.isFocusableInTouchMode = false
+                spesial.error = null
+            }
         }
 
         floatButt.setOnClickListener {
@@ -250,7 +292,6 @@ class AccountFragment : Fragment() {
                     imageFile = File(selectedImageUri.getPath().toString())
                     pict = 1
                 }
-                Log.d("DEBUG", "Keluar Crop")
 
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
@@ -267,7 +308,7 @@ class AccountFragment : Fragment() {
         loading.show()
 
         val Config = FConfig(requireContext())
-        Log.d("DEBUG", "Masuk Data")
+
         piew?.acProfile?.setDefaultImageResId(R.drawable.ic_launcher_background)
         piew?.acProfile?.setErrorImageResId(R.drawable.ic_launcher_background)
         piew?.acProfile?.setImageUrl(ApiEndPoint.Pictures + Config.getCustom("foto", ""))
@@ -276,6 +317,11 @@ class AccountFragment : Fragment() {
         piew?.acEmail?.setText(Config.getCustom("email", ""))
         piew?.acAlamat?.setText(Config.getCustom("alamat", ""))
         piew?.acNoTelp?.setText(Config.getCustom("notelp", ""))
+
+        if (Config.getCustom("level", "") == "1") {
+            piew?.acNIP?.setText(Config.getCustom("nip", ""))
+            piew?.acSpesialis?.setText(Config.getCustom("spesialis", ""))
+        }
 
         loading.dismiss()
     }
@@ -322,14 +368,21 @@ class AccountFragment : Fragment() {
         piew?.acNoTelp?.isFocusable = false
         piew?.acNoTelp?.isFocusableInTouchMode = false
 
+        if (Config.getCustom("level", "") == "1") {
+            piew?.acNIP?.isFocusable = false
+            piew?.acNIP?.isFocusableInTouchMode = false
+            piew?.acSpesialis?.isFocusable = false
+            piew?.acSpesialis?.isFocusableInTouchMode = false
+
+            Config.setCustom("nip", response.getString("nip").toString())
+            Config.setCustom("spesialis", response.getString("spesialis").toString())
+        }
         Config.setCustom("nama", response.getString("nama_pengguna").toString())
         Config.setCustom("email", response.getString("email_pengguna").toString())
         Config.setCustom("pass", response.getString("password_pengguna").toString())
         Config.setCustom("alamat", response.getString("alamat").toString())
         Config.setCustom("notelp", response.getString("no_telp").toString())
         Config.setCustom("foto", response.getString("foto").toString())
-        Config.setCustom("nip", response.getString("nip").toString())
-        Config.setCustom("spesialis", response.getString("spesialis").toString())
 
         piew?.acProfile?.setImageUrl("")
         Data()

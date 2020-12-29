@@ -81,6 +81,7 @@ class Login : AppCompatActivity() {
                         Config.setCustom("foto", response?.getString("foto").toString())
                         Config.setCustom("nip", response?.getString("nip").toString())
                         Config.setCustom("spesialis", response?.getString("spesialis").toString())
+                        Config.setCustom("level", response?.getString("level").toString())
 
                         startActivity(Intent(applicationContext, HomeActivity::class.java))
                     }
