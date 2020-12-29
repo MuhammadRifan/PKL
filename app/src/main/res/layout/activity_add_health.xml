@@ -7,127 +7,61 @@
     android:background="@color/white"
     tools:context=".ui.facility.animalcare.ActivityAddAC">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/kategoriFasilitas"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="32dp"
-            android:nextFocusDown="@id/namaFasilitas"
-            android:textColorHint="@color/black"
-            app:boxBackgroundColor="@color/white"
-            app:boxBackgroundMode="filled"
-            app:boxStrokeColor="@color/white"
-            app:hintTextColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtkategoriFasilitas"
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/pictureProfile"
+                android:layout_width="138dp"
+                android:layout_height="138dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_width="6dp"
+                app:civ_shadow="true"
+                app:civ_shadow_color="#8BC34A"
+                app:civ_shadow_radius="10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/choosePict"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="90dp"
+                android:clickable="true"
+                app:layout_constraintStart_toStartOf="@+id/pictureProfile"
+                app:layout_constraintTop_toTopOf="@+id/pictureProfile"
+                app:srcCompat="@android:drawable/ic_input_add" />
+
+            <Spinner
+                android:id="@+id/categoryHealth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Category (drop down)"
-                android:inputType="textEmailAddress"
-                android:lines="1"
-                android:maxLines="1"
-                android:paddingStart="1dp"
-                android:paddingEnd="1dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/kuninghijau"
-                android:textColorHint="#FFFFFF" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/namaFasilitas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="32dp"
-            android:nextFocusUp="@id/kategoriFasilitas"
-            android:nextFocusDown="@id/alamatFasilitas"
-            android:textColorHint="@color/black"
-            app:boxBackgroundColor="@color/white"
-            app:boxBackgroundMode="filled"
-            app:boxStrokeColor="@color/white"
-            app:hintTextColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtnamaFasilitas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Facillity's name"
-                android:inputType="textEmailAddress"
-                android:lines="1"
-                android:maxLines="1"
-                android:paddingStart="1dp"
-                android:paddingEnd="1dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/kuninghijau"
-                android:textColorHint="#FFFFFF" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/alamatFasilitas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="32dp"
-            android:nextFocusUp="@id/namaFasilitas"
-            android:nextFocusDown="@id/bukaFasilitas"
-            android:textColorHint="@color/black"
-            app:boxBackgroundColor="@color/white"
-            app:boxBackgroundMode="filled"
-            app:boxStrokeColor="@color/white"
-            app:hintTextColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtalamatFasilitas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Address"
-                android:inputType="textEmailAddress"
-                android:lines="1"
-                android:maxLines="1"
-                android:paddingStart="1dp"
-                android:paddingEnd="1dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/kuninghijau"
-                android:textColorHint="#FFFFFF" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                android:layout_marginTop="60dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pictureProfile" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/bukaFasilitas"
-                android:layout_width="140dp"
+                android:id="@+id/namaFasilitas"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="25dp"
                 android:layout_marginEnd="32dp"
-                android:nextFocusUp="@id/alamatFasilitas"
-                android:nextFocusRight="@id/tutupFasilitas"
+                android:nextFocusUp="@id/categoryHealth"
+                android:nextFocusDown="@id/alamatFasilitas"
                 android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="filled"
@@ -135,32 +69,32 @@
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView">
+                app:layout_constraintTop_toBottomOf="@+id/categoryHealth">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtbukaFasilitas"
+                    android:id="@+id/txtnamaFasilitas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Schedule"
-                    android:inputType="textEmailAddress"
+                    android:hint="Facillity's name"
+                    android:inputType="text"
                     android:lines="1"
                     android:maxLines="1"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
                     android:paddingBottom="10dp"
-                    android:textColor="@color/kuninghijau"
+                    android:textColor="@color/black"
                     android:textColorHint="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tutupFasilitas"
-                android:layout_width="140dp"
+                android:id="@+id/alamatFasilitas"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="25dp"
                 android:layout_marginEnd="32dp"
-                android:nextFocusLeft="@id/bukaFasilitas"
-                android:nextFocusDown="@id/nomorSIP"
+                android:nextFocusUp="@id/namaFasilitas"
+                android:nextFocusDown="@id/bukaFasilitas"
                 android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="filled"
@@ -168,134 +102,198 @@
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView">
+                app:layout_constraintTop_toBottomOf="@+id/namaFasilitas">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txttutupFasilitas"
+                    android:id="@+id/txtalamatFasilitas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Schedule"
-                    android:inputType="textEmailAddress"
+                    android:hint="Address"
+                    android:inputType="text"
                     android:lines="1"
                     android:maxLines="1"
+                    android:paddingStart="1dp"
+                    android:paddingEnd="1dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#FFFFFF" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/alamatFasilitas">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bukaFasilitas"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="32dp"
+                    android:nextFocusRight="@id/tutupFasilitas"
+                    android:nextFocusUp="@id/alamatFasilitas"
+                    android:textColorHint="@color/black"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="@color/white"
+                    app:hintTextColor="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtbukaFasilitas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Schedule"
+                        android:inputType="textEmailAddress"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:paddingStart="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="#FFFFFF" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tutupFasilitas"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="32dp"
+                    android:nextFocusLeft="@id/bukaFasilitas"
+                    android:nextFocusDown="@id/nomorSIP"
+                    android:textColorHint="@color/black"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="@color/white"
+                    app:hintTextColor="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txttutupFasilitas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Schedule"
+                        android:inputType="textEmailAddress"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:paddingStart="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="#FFFFFF" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nomorSIP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:nextFocusUp="@id/tutupFasilitas"
+                android:nextFocusDown="@id/nomorFasilitas"
+                android:textColorHint="@color/black"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/white"
+                app:hintTextColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtnomorSIP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="SIP's number"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:paddingStart="1dp"
+                    android:paddingEnd="1dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#FFFFFF" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nomorFasilitas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:nextFocusUp="@id/scheduleAC2"
+                android:nextFocusDown="@id/deskripsiFasilitas"
+                android:textColorHint="@color/black"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/white"
+                app:hintTextColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nomorSIP">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtnomorFasilitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone number"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:paddingStart="1dp"
+                    android:paddingEnd="1dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#FFFFFF" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/deskripsiFasilitas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:nextFocusUp="@id/nomorFasilitas"
+                android:textColorHint="@color/black"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/white"
+                app:hintTextColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nomorFasilitas">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtdeskripsiFasilitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Deskripsi Fasilitas"
+                    android:inputType="textMultiLine"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
                     android:paddingBottom="10dp"
                     android:textColor="@color/kuninghijau"
                     android:textColorHint="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nomorSIP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="32dp"
-            android:nextFocusUp="@id/tutupFasilitas"
-            android:nextFocusDown="@id/nomorFasilitas"
-            android:textColorHint="@color/black"
-            app:boxBackgroundColor="@color/white"
-            app:boxBackgroundMode="filled"
-            app:boxStrokeColor="@color/white"
-            app:hintTextColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtnomorSIP"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="SIP's number"
-                android:inputType="textEmailAddress"
-                android:lines="1"
-                android:maxLines="1"
-                android:paddingStart="1dp"
-                android:paddingEnd="1dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/kuninghijau"
-                android:textColorHint="#FFFFFF" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nomorFasilitas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="32dp"
-            android:nextFocusUp="@id/scheduleAC2"
-            android:nextFocusDown="@id/deskripsiFasilitas"
-            android:textColorHint="@color/black"
-            app:boxBackgroundColor="@color/white"
-            app:boxBackgroundMode="filled"
-            app:boxStrokeColor="@color/white"
-            app:hintTextColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtnomorFasilitas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Phone number"
-                android:inputType="textEmailAddress"
-                android:lines="1"
-                android:maxLines="1"
-                android:paddingStart="1dp"
-                android:paddingEnd="1dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/kuninghijau"
-                android:textColorHint="#FFFFFF" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/deskripsiFasilitas"
-            android:layout_width="match_parent"
-            android:layout_height="255dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="32dp"
-            android:nextFocusUp="@id/nomorFasilitas"
-            android:nextFocusDown="@id/addImage"
-            android:textColorHint="@color/black"
-            app:boxBackgroundColor="@color/white"
-            app:boxBackgroundMode="filled"
-            app:boxStrokeColor="@color/white"
-            app:hintTextColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtdeskripsiFasilitas"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Deskripsi Fasilitas"
-                android:inputType="textEmailAddress"
-                android:lines="1"
-                android:maxLines="1"
-                android:paddingStart="1dp"
-                android:paddingEnd="1dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/kuninghijau"
-                android:textColorHint="#FFFFFF" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/addimage"
-            android:layout_marginTop="25dp"
-            android:textAlignment="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nextFocusUp="@id/phoneNumberAC"
-            android:textSize="25sp"
-            android:textColor="@color/purple"
-            android:text="Add Image +" />
-
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

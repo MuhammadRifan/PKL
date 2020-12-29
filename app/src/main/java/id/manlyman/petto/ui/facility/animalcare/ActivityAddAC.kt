@@ -19,7 +19,6 @@ class ActivityAddAC : AppCompatActivity() {
         setContentView(R.layout.activity_add_a_c)
 
         option = findViewById(R.id.categoryAC1) as Spinner
-        result = findViewById(R.id.result) as TextView
 
         val options = arrayOf("Option 1", "Option 2", "Option 3")
 
