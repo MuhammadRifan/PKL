@@ -227,6 +227,19 @@
                     android:textColor="@color/black"
                     android:textColorHint="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnTambahShop"
+                android:layout_width="139dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:backgroundTint="@color/purple"
+                android:text="Tambahkan"
+                android:textColor="@color/white"
+                app:cornerRadius="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nomorToko" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

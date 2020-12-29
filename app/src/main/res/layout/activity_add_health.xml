@@ -268,8 +268,8 @@
                 android:id="@+id/deskripsiFasilitas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="32dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="32dp"
                 android:nextFocusUp="@id/nomorFasilitas"
                 android:textColorHint="@color/black"
@@ -293,6 +293,19 @@
                     android:textColor="@color/kuninghijau"
                     android:textColorHint="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnTambahHealth"
+                android:layout_width="139dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:backgroundTint="@color/purple"
+                android:text="Tambahkan"
+                android:textColor="@color/white"
+                app:cornerRadius="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deskripsiFasilitas" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
