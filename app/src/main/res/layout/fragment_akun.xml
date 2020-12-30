@@ -245,17 +245,81 @@
                     app:textInputLayoutFocusedRectEnabled="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/acNIPLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:focusableInTouchMode="false"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="filled"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/acNoTelpLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/acNIP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="NIP"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:paddingStart="1dp"
+                    android:paddingEnd="1dp"
+                    android:paddingBottom="5dp"
+                    android:selectAllOnFocus="false"
+                    app:textInputLayoutFocusedRectEnabled="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/acSpesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:focusableInTouchMode="false"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="filled"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/acNIPLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/acSpesialis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="Spesialis"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:paddingStart="1dp"
+                    android:paddingEnd="1dp"
+                    android:paddingBottom="5dp"
+                    android:selectAllOnFocus="false"
+                    app:textInputLayoutFocusedRectEnabled="false" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/btnAcEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginBottom="64dp"
+                android:layout_marginBottom="32dp"
                 android:backgroundTint="#9024B8"
                 android:text="Edit"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/acNoTelpLayout"
-                app:layout_constraintTop_toBottomOf="@+id/acNoTelpLayout" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/acSpesLayout" />
 
             <Button
                 android:id="@+id/btnAcCancel"
@@ -266,10 +330,9 @@
                 android:backgroundTint="#9024B8"
                 android:text="Cancel"
                 android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/btnAcEdit"
-                app:layout_constraintTop_toBottomOf="@+id/acNoTelpLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/acSpesLayout" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
