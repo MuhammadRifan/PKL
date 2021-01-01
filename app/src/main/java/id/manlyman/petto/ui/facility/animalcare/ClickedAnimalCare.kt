@@ -29,9 +29,10 @@ class ClickedAnimalCare : AppCompatActivity() {
         loading.setMessage("Loading data...")
         loading.show()
 
-        AndroidNetworking.post(ApiEndPoint.ReadID)
-            .addBodyParameter("table", "fasilitas")
+        AndroidNetworking.post(ApiEndPoint.ReadByID)
+            .addBodyParameter("table", "animalcare")
             .addBodyParameter("id", ID)
+            .addBodyParameter("idname", "id")
             .setPriority(Priority.MEDIUM)
             .build()
             .getAsJSONObject(object : JSONObjectRequestListener {

@@ -29,9 +29,10 @@ class ClickedHealth : AppCompatActivity() {
         loading.setMessage("Loading data...")
         loading.show()
 
-        AndroidNetworking.post(ApiEndPoint.ReadID)
-            .addBodyParameter("table", "fasilitas")
+        AndroidNetworking.post(ApiEndPoint.ReadByID)
+            .addBodyParameter("table", "faskes")
             .addBodyParameter("id", ID)
+            .addBodyParameter("idname", "sip")
             .setPriority(Priority.MEDIUM)
             .build()
             .getAsJSONObject(object : JSONObjectRequestListener {

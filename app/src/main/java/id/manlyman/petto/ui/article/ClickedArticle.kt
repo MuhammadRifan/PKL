@@ -30,9 +30,10 @@ class ClickedArticle : AppCompatActivity() {
         loading.setMessage("Loading data...")
         loading.show()
 
-        AndroidNetworking.post(ApiEndPoint.ReadID)
+        AndroidNetworking.post(ApiEndPoint.ReadByID)
             .addBodyParameter("table", "artikel")
             .addBodyParameter("id", ID)
+            .addBodyParameter("idname", "id")
             .setPriority(Priority.MEDIUM)
             .build()
             .getAsJSONObject(object : JSONObjectRequestListener {

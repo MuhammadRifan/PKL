@@ -55,33 +55,44 @@ class ShopFragment : Fragment(), OnItemClickListener {
         loading.setMessage("Loading...")
         loading.show()
 
-        AndroidNetworking.post(ApiEndPoint.ReadFacility)
-                .addBodyParameter("table", "fasilitas")
-                .addBodyParameter("facility", "Shop")
+        AndroidNetworking.post(ApiEndPoint.Read)
+                .addBodyParameter("table", "toko")
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
-                        arrayList.clear()
-                        val jsonArray = response?.optJSONArray("result")
-
-                        if (jsonArray?.length() == 0) {
+                        if (response?.getString("result").toString() == "Data kosong") {
                             loading.dismiss()
-                            Toast.makeText(requireContext(), "Data Kosong", Toast.LENGTH_LONG).show()
-                        }
 
-                        for (i in 0 until jsonArray?.length()!!) {
-                            val jsonObject = jsonArray?.optJSONObject(i)
-                            arrayList.add(Facility(jsonObject.getInt("id_fasilitas"),
-                                    jsonObject.getString("nama_fasilitas"),
-                                    jsonObject.getString("alamat_fasilitas"),
-                                    jsonObject.getString("deskripsi_fasilitas")))
+                            sEmpty.visibility = View.VISIBLE
+                            sRecyclerView.visibility = View.GONE
+                        } else {
+                            sEmpty.visibility = View.GONE
+                            sRecyclerView.visibility = View.VISIBLE
 
-                            if (jsonArray?.length() - 1 == i) {
-                                loading.dismiss()
-                                val adapter = AdapterShop(this@ShopFragment, arrayList)
-                                adapter.notifyDataSetChanged()
-                                sRecyclerView.adapter = adapter
+                            arrayList.clear()
+                            val jsonArray = response?.optJSONArray("result")
+
+                            for (i in 0 until jsonArray?.length()!!) {
+                                val jsonObject = jsonArray.optJSONObject(i)
+                                arrayList.add(Facility(jsonObject.getInt("id"),
+                                    jsonObject.getString("nama"),
+                                    jsonObject.getString("city"),
+                                    jsonObject.getString("picture"),
+                                    jsonObject.getInt("hari_buka1"),
+                                    jsonObject.getInt("hari_buka2"),
+                                    jsonObject.getInt("hari_buka3"),
+                                    jsonObject.getInt("hari_buka4"),
+                                    jsonObject.getInt("hari_buka5"),
+                                    jsonObject.getInt("hari_buka6"),
+                                    jsonObject.getInt("hari_buka7")))
+
+                                if (jsonArray.length() - 1 == i) {
+                                    loading.dismiss()
+                                    val adapter = AdapterShop(this@ShopFragment, arrayList)
+                                    adapter.notifyDataSetChanged()
+                                    sRecyclerView.adapter = adapter
+                                }
                             }
                         }
                     }

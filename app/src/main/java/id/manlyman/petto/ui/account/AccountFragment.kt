@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
@@ -47,37 +46,31 @@ class AccountFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_akun, container, false)
+        var error = 0
         piew = root
         Data()
 
         val Config = FConfig(requireContext())
-        var error = 0
         val edit = root.btnAcEdit
         val floatButt = root.changePict
         val cancel = root.btnAcCancel
         val nama = root.acNama
         val email = root.acEmail
         var pass = ""
-        val oPass = root.acOldPass
         val nPass = root.acNewPass
         val cPass = root.acConfirmPass
-        val alamat = root.acAlamat
         val telp = root.acNoTelp
 
-        val Lnip = root.acNIPLayout
-        val Lspe = root.acSpesLayout
-
-        val nip = root.acNIP
-        val spesial = root.acSpesialis
+        val Lsrtv = root.acSRTVLayout
+        val srtv = root.acSRTV
+        var Nsrtv = ""
 
         val level = Config.getCustom("level", "")
 
         if (level == "1") {
-            Lnip.visibility = View.VISIBLE
-            Lspe.visibility = View.VISIBLE
+            Lsrtv.visibility = View.VISIBLE
         } else {
-            Lnip.visibility = View.GONE
-            Lspe.visibility = View.GONE
+            Lsrtv.visibility = View.GONE
         }
 
         edit.setOnClickListener {
@@ -92,22 +85,16 @@ class AccountFragment : Fragment() {
                 nama.isFocusableInTouchMode = true
                 email.isFocusable = true
                 email.isFocusableInTouchMode = true
-                oPass.isFocusable = true
-                oPass.isFocusableInTouchMode = true
                 nPass.isFocusable = true
                 nPass.isFocusableInTouchMode = true
                 cPass.isFocusable = true
                 cPass.isFocusableInTouchMode = true
-                alamat.isFocusable = true
-                alamat.isFocusableInTouchMode = true
                 telp.isFocusable = true
                 telp.isFocusableInTouchMode = true
 
                 if (level == "1") {
-                    nip.isFocusable = true
-                    nip.isFocusableInTouchMode = true
-                    spesial.isFocusable = true
-                    spesial.isFocusableInTouchMode = true
+                    srtv.isFocusable = true
+                    srtv.isFocusableInTouchMode = true
                 }
             } else {
                 error = 0
@@ -126,35 +113,21 @@ class AccountFragment : Fragment() {
                     error++
                 }
 
-                if (oPass.text.toString().isNotEmpty() || nPass.text.toString().isNotEmpty() || cPass.text.toString().isNotEmpty()) {
-                    if (oPass.text.toString().length < 5) {
-                        oPass.error = "Mohon masukan password dengan benar"
-                        error++
-                    } else if (oPass.text.toString() != Config.getCustom("pass", "")) {
-                        oPass.error = "Password lama tidak sama"
-                        error++
-                    } else if (nPass.text.toString().length < 5) {
+                if (nPass.text.toString().isNotEmpty() || cPass.text.toString().isNotEmpty()) {
+                    if (nPass.text.toString().length < 5) {
                         nPass.error = "Mohon masukan password dengan benar"
                         error++
                     } else if (cPass.text.toString().length < 5) {
                         cPass.error = "Mohon masukan password dengan benar"
                         error++
-                    } else if (nPass.text.toString() != cPass.text.toString()) {
+                    } else if (!nPass.text.toString().equals(cPass.text.toString())) {
                         cPass.error = "Password baru tidak sama"
                         error++
-                    } else if (nPass.text.toString() == oPass.text.toString()) {
-                        nPass.error = "Password baru tidak boleh sama dengan password lama"
-                        error++
                     } else {
-                         pass = nPass.text.toString()
+                        pass = nPass.text.toString()
                     }
                 } else {
                     pass = Config.getCustom("pass", "")
-                }
-
-                if (alamat.text.toString().isEmpty()) {
-                    alamat.error = "Mohon masukan alamat"
-                    error++
                 }
 
                 if (telp.text.toString().length != 12) {
@@ -163,29 +136,27 @@ class AccountFragment : Fragment() {
                 }
 
                 if (level == "1") {
-                    if (nip.text.toString().length < 3) {
-                        nip.error = "Mohon masukan nomor telfon dengan benar"
+                    if (srtv.text.toString().length < 3) {
+                        srtv.error = "Mohon masukan STRV dengan benar"
                         error++
+                    } else {
+                        Nsrtv = srtv.text.toString()
                     }
-
-                    if (spesial.text.toString().isEmpty()) {
-                        spesial.error = "Mohon masukan nomor telfon dengan benar"
-                        error++
-                    }
+                } else {
+                    Nsrtv = Config.getCustom("srtv", "")
                 }
 
                 if (error == 0) {
                     if (pict == 0) {
-                        UpdateWoImage(pass)
+                        UpdateWoImage(pass, Nsrtv)
                     } else {
-                        UpdateWiImage(pass, imageFile!!)
+                        UpdateWiImage(pass, Nsrtv, imageFile!!)
                         pict = 0
                     }
                 } else {
                     Toast.makeText(requireContext(), "Form ada yang salah", Toast.LENGTH_SHORT).show()
                 }
             }
-
         }
 
         cancel.setOnClickListener {
@@ -202,10 +173,6 @@ class AccountFragment : Fragment() {
             email.isFocusable = false
             email.isFocusableInTouchMode = false
             email.error = null
-            oPass.isFocusable = false
-            oPass.isFocusableInTouchMode = false
-            oPass.error = null
-            oPass.text = null
             nPass.isFocusable = false
             nPass.isFocusableInTouchMode = false
             nPass.error = null
@@ -214,64 +181,57 @@ class AccountFragment : Fragment() {
             cPass.isFocusableInTouchMode = false
             cPass.error = null
             cPass.text = null
-            alamat.isFocusable = false
-            alamat.isFocusableInTouchMode = false
-            alamat.error = null
             telp.isFocusable = false
             telp.isFocusableInTouchMode = false
             telp.error = null
 
             if (level == "1") {
-                nip.isFocusable = false
-                nip.isFocusableInTouchMode = false
-                nip.error = null
-                spesial.isFocusable = false
-                spesial.isFocusableInTouchMode = false
-                spesial.error = null
+                srtv.isFocusable = false
+                srtv.isFocusableInTouchMode = false
+                srtv.error = null
             }
         }
 
         floatButt.setOnClickListener {
             if (EasyPermissions.hasPermissions(
-                            requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) && EasyPermissions.hasPermissions(
-                            requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) && EasyPermissions.hasPermissions(
-                            requireContext(), android.Manifest.permission.CAMERA
-                    ))
+                    requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ) && EasyPermissions.hasPermissions(
+                    requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) && EasyPermissions.hasPermissions(
+                    requireContext(), android.Manifest.permission.CAMERA
+                ))
             {
-                Log.d("DEBUG", "Masuk Crop")
                 val picName = Uri.fromFile(
-                        File(
-                                requireContext().externalCacheDir, "tmp_"
-                                + System.currentTimeMillis().toString() + ".jpg"
-                        )
+                    File(
+                        requireContext().externalCacheDir, "tmp_"
+                        + System.currentTimeMillis().toString() + ".jpg"
+                    )
                 )
                 CropImage.activity()
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(1, 1)
-                        .setFixAspectRatio(true)
-                        .setCropShape(CropImageView.CropShape.OVAL)
-                        .setOutputUri(picName)
-                        .start(requireContext(), this)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1, 1)
+                    .setFixAspectRatio(true)
+                    .setCropShape(CropImageView.CropShape.OVAL)
+                    .setOutputUri(picName)
+                    .start(requireContext(), this)
             } else {
                 EasyPermissions.requestPermissions(
-                        this,
-                        "This application need your permission to access photo gallery.",
-                        IMAGE_PICK_CODE,
-                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    this,
+                    "This application need your permission to access photo gallery.",
+                    IMAGE_PICK_CODE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
                 )
                 EasyPermissions.requestPermissions(
-                        this,
-                        "This application need your permission to access photo gallery.",
-                        IMAGE_PICK_CODE,
-                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    this,
+                    "This application need your permission to access photo gallery.",
+                    IMAGE_PICK_CODE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
                 EasyPermissions.requestPermissions(
-                        this,
-                        "This application need your permission to access photo gallery.",
-                        IMAGE_PICK_CODE,
-                        android.Manifest.permission.CAMERA
+                    this,
+                    "This application need your permission to access photo gallery.",
+                    IMAGE_PICK_CODE,
+                    android.Manifest.permission.CAMERA
                 )
             }
         }
@@ -281,8 +241,8 @@ class AccountFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK
-                && requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
-                && data != null) {
+            && requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
+            && data != null) {
 
             val result = CropImage.getActivityResult(data)
             try {
@@ -292,12 +252,10 @@ class AccountFragment : Fragment() {
                     imageFile = File(selectedImageUri.getPath().toString())
                     pict = 1
                 }
-
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
                 Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_LONG).show()
             }
-
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -311,16 +269,14 @@ class AccountFragment : Fragment() {
 
         piew?.acProfile?.setDefaultImageResId(R.drawable.ic_launcher_background)
         piew?.acProfile?.setErrorImageResId(R.drawable.ic_launcher_background)
-        piew?.acProfile?.setImageUrl(ApiEndPoint.Pictures + Config.getCustom("foto", ""))
+        piew?.acProfile?.setImageUrl(ApiEndPoint.Pictures + Config.getCustom("picture", ""))
 
-        piew?.acNama?.setText(Config.getCustom("nama", ""))
+        piew?.acNama?.setText(Config.getCustom("uname", ""))
         piew?.acEmail?.setText(Config.getCustom("email", ""))
-        piew?.acAlamat?.setText(Config.getCustom("alamat", ""))
-        piew?.acNoTelp?.setText(Config.getCustom("notelp", ""))
+        piew?.acNoTelp?.setText(Config.getCustom("phone", ""))
 
         if (Config.getCustom("level", "") == "1") {
-            piew?.acNIP?.setText(Config.getCustom("nip", ""))
-            piew?.acSpesialis?.setText(Config.getCustom("spesialis", ""))
+            piew?.acSRTV?.setText(Config.getCustom("srtv", ""))
         }
 
         loading.dismiss()
@@ -338,9 +294,9 @@ class AccountFragment : Fragment() {
 
         userProfilePic.setDefaultImageResId(R.mipmap.ic_launcher)
         userProfilePic.setErrorImageResId(R.mipmap.ic_launcher)
-        userProfilePic.setImageUrl(ApiEndPoint.Pictures + Config.getCustom("foto", ""))
+        userProfilePic.setImageUrl(ApiEndPoint.Pictures + Config.getCustom("picture", ""))
 
-        userName.text = Config.getCustom("nama", "")
+        userName.text = Config.getCustom("uname", "")
         userEmail.text = Config.getCustom("email", "")
     }
 
@@ -354,42 +310,34 @@ class AccountFragment : Fragment() {
         piew?.acNama?.isFocusableInTouchMode = false
         piew?.acEmail?.isFocusable = false
         piew?.acEmail?.isFocusableInTouchMode = false
-        piew?.acOldPass?.isFocusable = false
-        piew?.acOldPass?.isFocusableInTouchMode = false
-        piew?.acOldPass?.text = null
         piew?.acNewPass?.isFocusable = false
         piew?.acNewPass?.isFocusableInTouchMode = false
         piew?.acNewPass?.text = null
         piew?.acConfirmPass?.isFocusable = false
         piew?.acConfirmPass?.isFocusableInTouchMode = false
         piew?.acConfirmPass?.text = null
-        piew?.acAlamat?.isFocusable = false
-        piew?.acAlamat?.isFocusableInTouchMode = false
         piew?.acNoTelp?.isFocusable = false
         piew?.acNoTelp?.isFocusableInTouchMode = false
 
         if (Config.getCustom("level", "") == "1") {
-            piew?.acNIP?.isFocusable = false
-            piew?.acNIP?.isFocusableInTouchMode = false
-            piew?.acSpesialis?.isFocusable = false
-            piew?.acSpesialis?.isFocusableInTouchMode = false
+            piew?.acSRTV?.isFocusable = false
+            piew?.acSRTV?.isFocusableInTouchMode = false
 
-            Config.setCustom("nip", response.getString("nip").toString())
-            Config.setCustom("spesialis", response.getString("spesialis").toString())
+            Config.setCustom("srtv", response.getString("srtv").toString())
         }
-        Config.setCustom("nama", response.getString("nama_pengguna").toString())
-        Config.setCustom("email", response.getString("email_pengguna").toString())
-        Config.setCustom("pass", response.getString("password_pengguna").toString())
-        Config.setCustom("alamat", response.getString("alamat").toString())
-        Config.setCustom("notelp", response.getString("no_telp").toString())
-        Config.setCustom("foto", response.getString("foto").toString())
+
+        Config.setCustom("uname", response.getString("username").toString())
+        Config.setCustom("email", response.getString("email").toString())
+        Config.setCustom("pass", response.getString("pass").toString())
+        Config.setCustom("phone", response.getString("phone").toString())
+        Config.setCustom("picture", response.getString("picture").toString())
 
         piew?.acProfile?.setImageUrl("")
         Data()
         changeNavHead()
     }
 
-    private fun UpdateWoImage(pass: String){
+    private fun UpdateWoImage(pass: String, Nsrtv: String){
         val Config = FConfig(requireContext())
         val loading = ProgressDialog(requireContext())
         loading.setTitle("Updating ...")
@@ -397,38 +345,38 @@ class AccountFragment : Fragment() {
         loading.show()
 
         AndroidNetworking.post(ApiEndPoint.Update)
-                .addBodyParameter("id", Config.getCustom("id", ""))
-                .addBodyParameter("nama", piew?.acNama?.text.toString())
-                .addBodyParameter("email", piew?.acEmail?.text.toString())
-                .addBodyParameter("pass", pass)
-                .addBodyParameter("alamat", piew?.acAlamat?.text.toString())
-                .addBodyParameter("notelp", piew?.acNoTelp?.text.toString())
-                .addBodyParameter("foto", Config.getCustom("foto", ""))
-                .addBodyParameter("nip", Config.getCustom("nip", ""))
-                .addBodyParameter("spesialis", Config.getCustom("spesialis", ""))
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(object : JSONObjectRequestListener {
-                    override fun onResponse(response: JSONObject?) {
-                        if (response?.getString("message")?.contains("berhasil")!!) {
-                            loading.setMessage("Saving data ...")
+            .addBodyParameter("id", Config.getCustom("uname", ""))
+            .addBodyParameter("nama", piew?.acNama?.text.toString())
+            .addBodyParameter("email", piew?.acEmail?.text.toString())
+            .addBodyParameter("pass", pass)
+            .addBodyParameter("notelp", piew?.acNoTelp?.text.toString())
+            .addBodyParameter("foto", Config.getCustom("picture", ""))
+            .addBodyParameter("strv", Nsrtv)
+            .addBodyParameter("level", Config.getCustom("level", ""))
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("message")?.contains("berhasil")!!) {
+                        loading.setMessage("Saving data ...")
 
-                            restoreBack(response)
-                        }
-                        loading.dismiss()
-                        Toast.makeText(requireContext(), response.getString("message"), Toast.LENGTH_LONG).show()
+                        restoreBack(response)
                     }
+                    loading.dismiss()
+                    Toast.makeText(requireContext(), response.getString("message"), Toast.LENGTH_LONG).show()
+                }
 
-                    override fun onError(anError: ANError?) {
-                        loading.dismiss()
-                        Log.d("OnError", anError?.errorDetail?.toString()!!)
-                        Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
-                    }
+                override fun onError(anError: ANError?) {
+                    loading.dismiss()
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                    Log.d("OnError","Bromance")
+                    Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
+                }
 
-                })
+            })
     }
 
-    private fun UpdateWiImage(pass: String, file: File) {
+    private fun UpdateWiImage(pass: String, Nsrtv: String, file: File) {
         val Config = FConfig(requireContext())
         val loading = ProgressDialog(requireContext())
         loading.setTitle("Updating ...")
@@ -436,55 +384,56 @@ class AccountFragment : Fragment() {
         loading.show()
 
         AndroidNetworking.upload(ApiEndPoint.Upload)
-                .addMultipartFile("image", file)
-                .setPriority(Priority.HIGH)
-                .build()
-                .setUploadProgressListener { bytesUploaded, totalBytes -> // do anything with progress
-                    loading.setMessage("Uploading image (" + ((bytesUploaded / totalBytes) * 100).toString() + "/100)")
-                }
-                .getAsString(object : StringRequestListener {
-                    override fun onResponse(response: String) {
-                        if (!response.contains("Error") && !response.contains("Gagal") && !response.contains("File")) {
-                            AndroidNetworking.post(ApiEndPoint.Update)
-                                    .addBodyParameter("id", Config.getCustom("id", ""))
-                                    .addBodyParameter("nama", piew?.acNama?.text.toString())
-                                    .addBodyParameter("email", piew?.acEmail?.text.toString())
-                                    .addBodyParameter("pass", pass)
-                                    .addBodyParameter("alamat", piew?.acAlamat?.text.toString())
-                                    .addBodyParameter("notelp", piew?.acNoTelp?.text.toString())
-                                    .addBodyParameter("foto", response)
-                                    .addBodyParameter("nip", Config.getCustom("nip", ""))
-                                    .addBodyParameter("spesialis", Config.getCustom("spesialis", ""))
-                                    .setPriority(Priority.MEDIUM)
-                                    .build()
-                                    .getAsJSONObject(object : JSONObjectRequestListener {
-                                        override fun onResponse(response: JSONObject?) {
-                                            if (response?.getString("message")?.contains("berhasil")!!) {
-                                                loading.setMessage("Saving data ...")
+            .addMultipartFile("image", file)
+            .addMultipartParameter("folder", "img_user")
+            .setPriority(Priority.HIGH)
+            .build()
+            .setUploadProgressListener { bytesUploaded, totalBytes -> // do anything with progress
+                loading.setMessage("Uploading image (" + ((bytesUploaded / totalBytes) * 100).toString() + "/100)")
+            }
+            .getAsString(object : StringRequestListener {
+                override fun onResponse(response: String) {
+                    if (!response.contains("Error") && !response.contains("Gagal") && !response.contains("File")) {
+                        AndroidNetworking.post(ApiEndPoint.Update)
+                            .addBodyParameter("id", Config.getCustom("uname", ""))
+                            .addBodyParameter("nama", piew?.acNama?.text.toString())
+                            .addBodyParameter("email", piew?.acEmail?.text.toString())
+                            .addBodyParameter("pass", pass)
+                            .addBodyParameter("notelp", piew?.acNoTelp?.text.toString())
+                            .addBodyParameter("foto", response)
+                            .addBodyParameter("strv", Nsrtv)
+                            .addBodyParameter("level", Config.getCustom("level", ""))
+                            .setPriority(Priority.MEDIUM)
+                            .build()
+                            .getAsJSONObject(object : JSONObjectRequestListener {
+                                override fun onResponse(response: JSONObject?) {
+                                    if (response?.getString("message")?.contains("berhasil")!!) {
+                                        loading.setMessage("Saving data ...")
 
-                                                restoreBack(response)
-                                            }
-                                            loading.dismiss()
-                                            Toast.makeText(requireContext(), response.getString("message"), Toast.LENGTH_LONG).show()
-                                        }
+                                        restoreBack(response)
+                                    }
+                                    loading.dismiss()
+                                    Toast.makeText(requireContext(), response.getString("message"), Toast.LENGTH_LONG).show()
+                                }
 
-                                        override fun onError(anError: ANError?) {
-                                            loading.dismiss()
-                                            Log.d("OnError", anError?.errorDetail?.toString()!!)
-                                            Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
-                                        }
+                                override fun onError(anError: ANError?) {
+                                    loading.dismiss()
+                                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                                    Log.d("OnError","Brodor")
+                                    Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
+                                }
 
-                                    })
-                        } else {
-                            loading.dismiss()
-                            Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
-                        }
-                    }
-
-                    override fun onError(anError: ANError) {
+                            })
+                    } else {
                         loading.dismiss()
-                        Toast.makeText(requireContext(), "Error : " + anError.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
                     }
-                })
+                }
+
+                override fun onError(anError: ANError) {
+                    loading.dismiss()
+                    Toast.makeText(requireContext(), "Error : " + anError.message, Toast.LENGTH_LONG).show()
+                }
+            })
     }
 }

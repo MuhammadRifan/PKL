@@ -18,33 +18,30 @@ class Areyou : AppCompatActivity() {
         setContentView(R.layout.activity_areyou)
         supportActionBar?.hide()
 
-        val emailRegis = intent.getStringExtra("email")
+        val uname = intent.getStringExtra("uname")
 
         btnYes.setOnClickListener {
             AndroidNetworking.post(ApiEndPoint.Pengguna2Dokter)
-                .addBodyParameter("email", emailRegis)
+                .addBodyParameter("uname", uname)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
-                        if (response?.getString("message")?.contains("berhasil")!!) {
-                            startActivity(Intent(applicationContext, Login::class.java))
-                        } else {
+                        if (!response?.getString("message")?.contains("berhasil")!!) {
                             Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_LONG).show()
                         }
+                        startActivity(Intent(applicationContext, Login::class.java))
                     }
 
                     override fun onError(anError: ANError?) {
                         Log.d("OnError", anError?.errorDetail?.toString()!!)
                         Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_LONG).show()
                     }
-
                 })
-            startActivity(Intent(this, Login::class.java))
         }
 
         btnNo.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
+            startActivity(Intent(this, Login::class.java))
         }
     }
 }

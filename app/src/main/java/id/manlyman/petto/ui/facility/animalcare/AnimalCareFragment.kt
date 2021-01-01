@@ -60,33 +60,44 @@ class AnimalCareFragment : Fragment(), OnItemClickListener {
         loading.setMessage("Loading...")
         loading.show()
 
-        AndroidNetworking.post(ApiEndPoint.ReadFacility)
-                .addBodyParameter("table", "fasilitas")
-                .addBodyParameter("facility", "Animal Care")
+        AndroidNetworking.post(ApiEndPoint.Read)
+                .addBodyParameter("table", "animalcare")
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
-                        arrayList.clear()
-                        val jsonArray = response?.optJSONArray("result")
-
-                        if (jsonArray?.length() == 0) {
+                        if (response?.getString("result").toString() == "Data kosong") {
                             loading.dismiss()
-                            Toast.makeText(requireContext(), "Data Kosong", Toast.LENGTH_LONG).show()
-                        }
 
-                        for (i in 0 until jsonArray?.length()!!) {
-                            val jsonObject = jsonArray?.optJSONObject(i)
-                            arrayList.add(Facility(jsonObject.getInt("id_fasilitas"),
-                                    jsonObject.getString("nama_fasilitas"),
-                                    jsonObject.getString("alamat_fasilitas"),
-                                    jsonObject.getString("deskripsi_fasilitas")))
+                            acEmpty.visibility = View.VISIBLE
+                            acRecyclerView.visibility = View.GONE
+                        } else {
+                            acEmpty.visibility = View.GONE
+                            acRecyclerView.visibility = View.VISIBLE
 
-                            if (jsonArray?.length() - 1 == i) {
-                                loading.dismiss()
-                                val adapter = AdapterAnimalCare(this@AnimalCareFragment, arrayList)
-                                adapter.notifyDataSetChanged()
-                                acRecyclerView.adapter = adapter
+                            arrayList.clear()
+                            val jsonArray = response?.optJSONArray("result")
+
+                            for (i in 0 until jsonArray?.length()!!) {
+                                val jsonObject = jsonArray?.optJSONObject(i)
+                                arrayList.add(Facility(jsonObject.getInt("id"),
+                                    jsonObject.getString("nama"),
+                                    jsonObject.getString("city"),
+                                    jsonObject.getString("picture"),
+                                    jsonObject.getInt("hari_buka1"),
+                                    jsonObject.getInt("hari_buka2"),
+                                    jsonObject.getInt("hari_buka3"),
+                                    jsonObject.getInt("hari_buka4"),
+                                    jsonObject.getInt("hari_buka5"),
+                                    jsonObject.getInt("hari_buka6"),
+                                    jsonObject.getInt("hari_buka7")))
+
+                                if (jsonArray?.length() - 1 == i) {
+                                    loading.dismiss()
+                                    val adapter = AdapterAnimalCare(this@AnimalCareFragment, arrayList)
+                                    adapter.notifyDataSetChanged()
+                                    acRecyclerView.adapter = adapter
+                                }
                             }
                         }
                     }

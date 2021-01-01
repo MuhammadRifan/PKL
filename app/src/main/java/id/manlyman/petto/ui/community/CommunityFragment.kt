@@ -61,27 +61,33 @@ class CommunityFragment : Fragment(), OnItemClickListener {
                 .build()
                 .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
-                        arrayList.clear()
-                        val jsonArray = response?.optJSONArray("result")
-
-                        if (jsonArray?.length() == 0) {
+                        if (response?.getString("result").toString() == "Data kosong") {
                             loading.dismiss()
-                            Toast.makeText(requireContext(), "Data Kosong", Toast.LENGTH_LONG).show()
-                        }
 
-                        for (i in 0 until jsonArray?.length()!!) {
-                            val jsonObject = jsonArray?.optJSONObject(i)
-                            arrayList.add(Community(jsonObject.getInt("id_komunitas"),
-                                    jsonObject.getString("nama_komunitas"),
-                                    jsonObject.getString("deskripsi_komunitas"),
-                                    jsonObject.getString("foto_komunitas"),
-                                    jsonObject.getString("kontak")))
+                            cEmpty.visibility = View.VISIBLE
+                            cRecyclerView.visibility = View.GONE
+                        } else {
+                            cEmpty.visibility = View.GONE
+                            cRecyclerView.visibility = View.VISIBLE
 
-                            if (jsonArray?.length() - 1 == i) {
-                                loading.dismiss()
-                                val adapter = AdapterCommunity(this@CommunityFragment, arrayList)
-                                adapter.notifyDataSetChanged()
-                                cRecyclerView.adapter = adapter
+                            arrayList.clear()
+                            val jsonArray = response?.optJSONArray("result")
+
+                            for (i in 0 until jsonArray?.length()!!) {
+                                val jsonObject = jsonArray?.optJSONObject(i)
+                                arrayList.add(Community(jsonObject.getInt("id"),
+                                        jsonObject.getString("owner"),
+                                        jsonObject.getString("nama"),
+                                        jsonObject.getString("description"),
+                                        jsonObject.getString("kota"),
+                                        jsonObject.getString("picture")))
+
+                                if (jsonArray?.length() - 1 == i) {
+                                    loading.dismiss()
+                                    val adapter = AdapterCommunity(this@CommunityFragment, arrayList)
+                                    adapter.notifyDataSetChanged()
+                                    cRecyclerView.adapter = adapter
+                                }
                             }
                         }
                     }

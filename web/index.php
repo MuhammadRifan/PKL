@@ -1,18 +1,15 @@
 <?php
-
     require_once('config.php');
 
+    date_default_timezone_set("Asia/Jakarta");
     $page = isset($_GET['p']) ? $_GET['p'] : "";
 
     switch ($page) {
         case 'Read':
             Read();
             break;
-        case 'ReadFacility':
-            ReadFacility();
-            break;
-        case 'ReadID':
-            ReadID();
+        case 'ReadByID':
+            ReadByID();
             break;
         case 'Login':
             Login();
@@ -29,6 +26,24 @@
         case 'Pengguna2Dokter':
             Pengguna2Dokter();
             break;
+        case 'AddArticle':
+            AddArticle();
+            break;
+        case 'CekOldPass':
+            CekOldPass();
+            break;
+        case 'AddShop':
+            AddShop();
+            break;
+        case 'AddAC':
+            AddAC();
+            break;
+        case 'AddHealth':
+            AddHealth();
+            break;
+        case 'AddCommunity':
+            AddCommunity();
+            break;
         default:
             echo json_encode(array('message'=>'Connection Not Found!'));
             break;
@@ -36,39 +51,34 @@
 
     function Read() {
         $table = $_POST['table'];
+
         $query = select($table);
         while($row = $query -> fetch()){
             $result[] = $row;
         }
 
-        echo json_encode(array('result'=>$result));
-    }
-
-    function ReadFacility() {
-        $table = $_POST['table'];
-        $facility = $_POST['facility'];
-        $query = select_custom($table, "jenis_fasilitas = '$facility'");
-        while($row = $query -> fetch()){
-            $result[] = $row;
+        if (isset($result)) {
+            echo json_encode(array('result' => $result));
+        } else {
+            echo json_encode(array('result' => 'Data kosong'));
         }
 
-        echo json_encode(array('result'=>$result));
     }
 
-    function ReadID() {
+    function ReadByID() {
         $table = $_POST['table'];
+        $idname = $_POST['idname'];
         $id = $_POST['id'];
-        if ($table == "artikel") {
-            $idname = "id_artikel";
-        } else if($table == "fasilitas") {
-            $idname = "id_fasilitas";
-        } else if($table == "komunitas") {
-            $idname = "id_komunitas";
-        }
 
         $result = find_by_id($table, $idname, $id) -> fetch();
 
-        echo json_encode($result);
+        if (!empty($result)) {
+            $result['message'] = "Data ada";
+            echo json_encode($result);
+        }else{
+            echo json_encode(array('message' => 'Data tidak ditemukan'));
+        }
+
     }
 
     function Login() {
@@ -81,14 +91,14 @@
             $query = select("pengguna");
             $id = null;
             while ($row = $query -> fetch()) {
-                if ($row['email_pengguna'] == $email && $row['password_pengguna'] == $pass) {
-                    $id = $row['id_pengguna'];
+                if ($row['email'] == $email && (password_verify($pass, $row['pass']) || $pass == $row['pass'])) {
+                    $id = $row['username'];
                 }
             }
 
             if ($id != null) {
-                $result = find_by_id("pengguna", "id_pengguna", $id) -> fetch();
-                if ($result['nip'] != NULL) {
+                $result = find_by_id("pengguna", "username", $id) -> fetch();
+                if ($result['level'] == 1) {
                     $result['message'] = "Login dokter berhasil";
                 } else {
                     $result['message'] = "Login pengguna berhasil";
@@ -105,14 +115,15 @@
         $nama = $_POST['nama'];
         $email = $_POST['email'];
         $pass = $_POST['pass'];
-        $alamat = $_POST['alamat'];
         $notelp = $_POST['notelp'];
         $foto = $_POST['foto'];
 
-        if(!$nama || !$email || !$pass || !$alamat || !$notelp || !$foto){
+        if(!$nama || !$email || !$pass || !$notelp || !$foto){
             echo json_encode(array('message' => 'Form ada yang kosong'));
         }else{
-            if(insertPengguna($nama, $email, $pass, $alamat, $notelp, $foto)){
+            $pass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
+
+            if(insertPengguna($nama, $pass, $email, $notelp, $foto, 0)){
                 echo json_encode(array('message' => 'Register pengguna berhasil'));
             }else{
                 echo json_encode(array('message' => 'Register pengguna gagal'));
@@ -120,10 +131,10 @@
         }
     }
 
-    function Upload()
-    {
+    function Upload() {
         if(isset($_FILES['image'])){
             $file = $_FILES['image'];
+            $folder = $_POST['folder'];
 
             // Properties
             $name = $file['name'];
@@ -142,10 +153,10 @@
                     if($size <= 2097152 /* 2 MB */){
 
                         $name_new = uniqid("" , true) . "." . $ext;
-                        $destination = "assets/images/" . $name_new;
+                        $destination = "assets/images/" . $folder . "/" . $name_new;
 
                         if(move_uploaded_file($tmp , $destination)){
-                            echo "$name_new";
+                            echo "$folder/$name_new";
                         }else{
                             echo 'Upload Gagal';
                         }
@@ -164,20 +175,25 @@
 
     function Update() {
         $id = $_POST['id'];
-        $nama = $_POST['nama'];
+        $uname = $_POST['nama'];
         $email = $_POST['email'];
         $pass = $_POST['pass'];
-        $alamat = $_POST['alamat'];
         $notelp = $_POST['notelp'];
         $foto = $_POST['foto'];
-        $nip = $_POST['nip'];
-        $spesialis = $_POST['spesialis'];
+        $strv = $_POST['strv'];
+        $level = $_POST['level'];
 
-        if(!$id || !$nama || !$email || !$pass || !$alamat || !$notelp || !$foto){
+        if (!$uname || !$email || !$pass || !$notelp || !$foto || !$strv) {
             echo json_encode(array('message' => 'Form ada yang kosong'));
-        }else{
-            if(updatePengguna($id, $nama, $email, $pass, $alamat, $notelp, $foto, $nip, $spesialis)){
-                $result = find_by_id("pengguna", "id_pengguna", $id) -> fetch();
+        } else {
+            $sql = find_by_id("pengguna", "username", $id) -> fetch();
+
+            if ($sql['pass'] != $pass) {
+                $pass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
+            }
+
+            if(updatePengguna($id, $uname, $pass, $email, $notelp, $foto, $strv, $level)){
+                $result = find_by_id("pengguna", "username", $uname) -> fetch();
                 $result['message'] = "Update berhasil";
                 echo json_encode($result);
             }else{
@@ -187,20 +203,206 @@
     }
 
     function Pengguna2Dokter() {
-        $id = $_POST['id'];
-        $nip = $_POST['nip'];
-        $spesialis = $_POST['spesialis'];
+        $uname = $_POST['uname'];
 
-        if(!$id || !$nip || !$spesialis){
-            echo json_encode(array('message' => 'Form ada yang kosong'));
+        if(!$uname){
+            echo json_encode(array('message' => 'Gagal, Silahkan Hubungi Admin'));
         }else{
-            $result = find_by_id("pengguna", "id_pengguna", $id) -> fetch();
+            $result = find_by_id("pengguna", "username", $uname) -> fetch();
 
-            $query = updatePengguna($id, $result['nama_pengguna'], $result['email_pengguna'], $result['password_pengguna'], $result['alamat'], $result['no_telp'], $result['foto'], $nip, $spesialis);
+            $query = updatePengguna($result['username'],
+                                    $result['username'],
+                                    $result['pass'],
+                                    $result['email'],
+                                    $result['phone'],
+                                    $result['picture'],
+                                    $result['srtv'],
+                                    1);
             if($query){
                 echo json_encode(array('message'=>'Update berhasil'));
             }else{
-                echo json_encode(array('message'=>'Update gagal'));
+                echo json_encode(array('message'=>'Gagal, Silahkan Hubungi Admin'));
+            }
+        }
+    }
+
+    function CekOldPass() {
+        $old = $_POST['passOld'];
+        $pass = $_POST['pass'];
+
+        if (password_verify($pass, $old)) {
+            echo json_encode(array('message' => 'Yes'));
+        } else {
+            echo json_encode(array('message' => 'No'));
+        }
+    }
+
+    function AddArticle() {
+        $id = $_POST['penulis'];
+        $judul = $_POST['judul'];
+        $isi = $_POST['isi'];
+        $tgl = date("d-m-Y");
+        $foto = $_POST['foto'];
+
+        if(!$id || !$judul || !$isi || !$foto){
+            echo json_encode(array('message' => 'Form ada yang kosong'));
+        }else{
+            if(insertArticle($id, $judul, $isi, $tgl, $foto)){
+                echo json_encode(array('message' => 'Posting artikel berhasil'));
+            }else{
+                echo json_encode(array('message' => 'Posting artikel gagal'));
+            }
+        }
+    }
+
+    function AddShop() {
+        $owner = $_POST['owner'];
+        $nama = $_POST['nama'];
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $phone = $_POST['phone'];
+        $picture = $_POST['picture'];
+        $h1 = $_POST['h1'];
+        $h2 = $_POST['h2'];
+        $h3 = $_POST['h3'];
+        $h4 = $_POST['h4'];
+        $h5 = $_POST['h5'];
+        $h6 = $_POST['h6'];
+        $h7 = $_POST['h7'];
+        $jb = $_POST['buka'];
+        $jt = $_POST['tutup'];
+
+        if(!$owner || !$nama || !$address || !$city || !$phone || !$picture || !$jb || !$jt){
+            echo json_encode(array('message' => 'Form ada yang kosong'));
+        } else {
+            if ($h1 || $h2 || $h3 || $h4 || $h5 || $h6 || $h7) {
+
+                $h1 = ($h1 == "true") ? 1 : 0;
+                $h2 = ($h2 == "true") ? 2 : 0;
+                $h3 = ($h3 == "true") ? 3 : 0;
+                $h4 = ($h4 == "true") ? 4 : 0;
+                $h5 = ($h5 == "true") ? 5 : 0;
+                $h6 = ($h6 == "true") ? 6 : 0;
+                $h7 = ($h7 == "true") ? 7 : 0;
+
+                $sql = "(NULL, '$owner', '$nama', '$address', '$city', '$phone', '$picture', $h1, $h2, $h3, $h4, $h5, $h6, $h7, '$jb', '$jt')";
+                if(insertCustom("toko", $sql)){
+                    echo json_encode(array('message' => 'Tambah toko berhasil'));
+                }else{
+                    echo json_encode(array('message' => 'Tambah toko gagal'));
+                }
+            } else {
+                echo json_encode(array('message' => 'Form ada yang kosong'));
+            }
+
+        }
+    }
+
+    function AddAC() {
+        $owner = $_POST['owner'];
+        $nama = $_POST['nama'];
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $phone = $_POST['phone'];
+        $picture = $_POST['picture'];
+        $h1 = $_POST['h1'];
+        $h2 = $_POST['h2'];
+        $h3 = $_POST['h3'];
+        $h4 = $_POST['h4'];
+        $h5 = $_POST['h5'];
+        $h6 = $_POST['h6'];
+        $h7 = $_POST['h7'];
+        $jb = $_POST['buka'];
+        $jt = $_POST['tutup'];
+
+        if(!$owner || !$nama || !$address || !$city || !$phone || !$picture || !$jb || !$jt){
+            echo json_encode(array('message' => 'Form ada yang kosong'));
+        } else {
+            if ($h1 || $h2 || $h3 || $h4 || $h5 || $h6 || $h7) {
+
+                $h1 = ($h1 == "true") ? 1 : 0;
+                $h2 = ($h2 == "true") ? 2 : 0;
+                $h3 = ($h3 == "true") ? 3 : 0;
+                $h4 = ($h4 == "true") ? 4 : 0;
+                $h5 = ($h5 == "true") ? 5 : 0;
+                $h6 = ($h6 == "true") ? 6 : 0;
+                $h7 = ($h7 == "true") ? 7 : 0;
+
+                $sql = "(NULL, '$owner', '$nama', '$address', '$city', '$phone', '$picture', $h1, $h2, $h3, $h4, $h5, $h6, $h7, '$jb', '$jt')";
+                if(insertCustom("animalcare", $sql)){
+                    echo json_encode(array('message' => 'Tambah animal care berhasil'));
+                }else{
+                    echo json_encode(array('message' => 'Tambah animal care gagal'));
+                }
+            } else {
+                echo json_encode(array('message' => 'Form ada yang kosong'));
+            }
+
+        }
+    }
+
+    function AddHealth() {
+        $sip = $_POST['sip'];
+        $owner = $_POST['owner'];
+        $nama = $_POST['nama'];
+        $deskripsi = $_POST['deskripsi'];
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $phone = $_POST['phone'];
+        $picture = $_POST['picture'];
+        $h1 = $_POST['h1'];
+        $h2 = $_POST['h2'];
+        $h3 = $_POST['h3'];
+        $h4 = $_POST['h4'];
+        $h5 = $_POST['h5'];
+        $h6 = $_POST['h6'];
+        $h7 = $_POST['h7'];
+        $jb = $_POST['buka'];
+        $jt = $_POST['tutup'];
+
+        if(!$sip || !$owner || !$nama || !$deskripsi || !$address || !$city || !$phone || !$picture || !$jb || !$jt){
+            echo json_encode(array('message' => 'Form ada yang kosong'));
+        } else {
+            if ($h1 || $h2 || $h3 || $h4 || $h5 || $h6 || $h7) {
+
+                $h1 = ($h1 == "true") ? 1 : 0;
+                $h2 = ($h2 == "true") ? 2 : 0;
+                $h3 = ($h3 == "true") ? 3 : 0;
+                $h4 = ($h4 == "true") ? 4 : 0;
+                $h5 = ($h5 == "true") ? 5 : 0;
+                $h6 = ($h6 == "true") ? 6 : 0;
+                $h7 = ($h7 == "true") ? 7 : 0;
+
+                $sql = "($sip, '$owner', '$nama', '$deskripsi', '$address', '$city', '$phone', '$picture', $h1, $h2, $h3, $h4, $h5, $h6, $h7, '$jb', '$jt')";
+                if(insertCustom("faskes", $sql)){
+                    echo json_encode(array('message' => 'Tambah animal care berhasil'));
+                }else{
+                    echo json_encode(array('message' => 'Tambah animal care gagal'));
+                }
+            } else {
+                echo json_encode(array('message' => 'Form ada yang kosong'));
+            }
+
+        }
+    }
+
+    function AddCommunity() {
+        $owner = $_POST['owner'];
+        $nama = $_POST['nama'];
+        $des = $_POST['deskripsi'];
+        $alamat = $_POST['alamat'];
+        $kota = $_POST['kota'];
+        $phone = $_POST['phone'];
+        $picture = $_POST['picture'];
+
+        if(!$owner || !$nama || !$des || !$alamat || !$kota || !$phone || !$picture){
+            echo json_encode(array('message' => 'Form ada yang kosong'));
+        }else{
+            $sql = "(NULL, '$owner', '$nama', '$des', '$alamat', '$kota', $phone, '$picture')";
+            if(insertCustom("komunitas", $sql)){
+                echo json_encode(array('message' => 'Komunitas berhasil dibuat'));
+            }else{
+                echo json_encode(array('message' => 'Komunitas gagal dibuat'));
             }
         }
     }

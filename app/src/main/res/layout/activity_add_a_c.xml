@@ -13,25 +13,28 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
 
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/pictureProfile"
+                android:id="@+id/shopPict"
                 android:layout_width="138dp"
                 android:layout_height="138dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="60dp"
-                app:civ_border_color="@color/colorAccent"
-                app:civ_border_width="6dp"
-                app:civ_shadow="true"
-                app:civ_shadow_color="#8BC34A"
-                app:civ_shadow_radius="10"
+                app:civ_background_color="@color/purple_200"
+                app:civ_border_color="@color/purple"
+                app:civ_border_width="5dp"
+                app:civ_shadow="false"
+                app:civ_shadow_color="#7A7A7A"
+                app:civ_shadow_radius="5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/logo_ori_background" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/choosePict"
@@ -40,207 +43,311 @@
                 android:layout_marginStart="90dp"
                 android:layout_marginTop="90dp"
                 android:clickable="true"
-                app:layout_constraintStart_toStartOf="@+id/pictureProfile"
-                app:layout_constraintTop_toTopOf="@+id/pictureProfile"
+                app:layout_constraintStart_toStartOf="@+id/shopPict"
+                app:layout_constraintTop_toTopOf="@+id/shopPict"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
-            <Spinner
-                android:id="@+id/categoryAC1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pictureProfile" />
-
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ACName"
+                android:id="@+id/namaAC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="32dp"
+                android:layout_marginTop="64dp"
                 android:layout_marginEnd="32dp"
-                android:nextFocusUp="@id/categoryAC"
-                android:nextFocusDown="@id/addressAC"
+                android:nextFocusDown="@id/alamatAC"
                 android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="filled"
-                app:boxStrokeColor="@color/white"
-                app:hintTextColor="#FFFFFF"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/categoryAC1">
+                app:layout_constraintTop_toBottomOf="@+id/shopPict">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtACName"
+                    android:id="@+id/txtNamaAC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Animal care's name"
+                    android:hint="Nama Animal Care"
                     android:inputType="text"
                     android:lines="1"
                     android:maxLines="1"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="6dp"
                     android:textColor="@color/black"
-                    android:textColorHint="#FFFFFF" />
+                    android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/addressAC"
+                android:id="@+id/alamatAC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
-                android:nextFocusUp="@id/ACName"
-                android:nextFocusDown="@id/scheduleAC1"
+                android:nextFocusUp="@id/namaAC"
+                android:nextFocusDown="@id/kotaAC"
                 android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="filled"
-                app:boxStrokeColor="@color/white"
-                app:hintTextColor="#FFFFFF"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ACName">
+                app:layout_constraintTop_toBottomOf="@+id/namaAC">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtaddressAC"
+                    android:id="@+id/txtAlamatAC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Address"
+                    android:hint="Alamat Animal Care"
                     android:inputType="text"
                     android:lines="1"
                     android:maxLines="1"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="6dp"
                     android:textColor="@color/black"
-                    android:textColorHint="#FFFFFF" />
+                    android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/kotaAC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:nextFocusUp="@id/alamatAC"
+                android:nextFocusDown="@id/bukaAC"
+                android:textColorHint="@color/black"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/alamatAC">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtKotaAC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Kota Animal Care"
+                    android:paddingStart="1dp"
+                    android:paddingEnd="1dp"
+                    android:paddingBottom="6dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/txtHbAC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Hari Buka :"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/kotaAC" />
+
+            <CheckBox
+                android:id="@+id/cbACSenin"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Senin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtHbAC" />
+
+            <CheckBox
+                android:id="@+id/cbACSelasa"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Selasa"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cbACSenin" />
+
+            <CheckBox
+                android:id="@+id/cbACRabu"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Rabu"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cbACSelasa" />
+
+            <CheckBox
+                android:id="@+id/cbACKamis"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Kamis"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cbACRabu" />
+
+            <CheckBox
+                android:id="@+id/cbACJumat"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Jum'at"
+                app:layout_constraintStart_toEndOf="@+id/cbACSenin"
+                app:layout_constraintTop_toBottomOf="@+id/txtHbAC" />
+
+            <CheckBox
+                android:id="@+id/cbACSabtu"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Sabtu"
+                app:layout_constraintStart_toEndOf="@+id/cbACSelasa"
+                app:layout_constraintTop_toBottomOf="@+id/cbACJumat" />
+
+            <CheckBox
+                android:id="@+id/cbACMinggu"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Minggu"
+                app:layout_constraintStart_toEndOf="@+id/cbACRabu"
+                app:layout_constraintTop_toBottomOf="@+id/cbACSabtu" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressAC">
+                app:layout_constraintTop_toBottomOf="@+id/cbACKamis">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/scheduleAC1"
+                    android:id="@+id/bukaAC"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="25dp"
                     android:layout_marginEnd="32dp"
-                    android:nextFocusRight="@id/scheduleAC2"
-                    android:nextFocusUp="@id/addressAC"
+                    android:nextFocusRight="@id/tutupAC"
+                    android:nextFocusUp="@id/kotaAC"
                     android:textColorHint="@color/black"
                     app:boxBackgroundColor="@color/white"
                     app:boxBackgroundMode="filled"
-                    app:boxStrokeColor="@color/white"
-                    app:hintTextColor="#FFFFFF"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtScheduleAC1"
+                        android:id="@+id/txtBukaAC"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Schedule"
+                        android:clickable="true"
+                        android:focusableInTouchMode="false"
+                        android:hint="Jam Buka"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:paddingStart="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingBottom="6dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tutupAC"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:nextFocusLeft="@id/bukaAC"
+                    android:nextFocusDown="@id/nomorAC"
+                    android:textColorHint="@color/black"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtTutupAC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:hint="Jam Tutup"
                         android:inputType="time"
                         android:lines="1"
                         android:maxLines="1"
                         android:paddingStart="1dp"
                         android:paddingEnd="1dp"
-                        android:paddingBottom="10dp"
+                        android:paddingBottom="6dp"
                         android:textColor="@color/black"
-                        android:textColorHint="#FFFFFF" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/scheduleAC2"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="32dp"
-                    android:nextFocusLeft="@id/scheduleAC1"
-                    android:nextFocusDown="@id/txtPassLayout"
-                    android:textColorHint="@color/black"
-                    app:boxBackgroundColor="@color/white"
-                    app:boxBackgroundMode="filled"
-                    app:boxStrokeColor="@color/white"
-                    app:hintTextColor="#FFFFFF"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtscheduleAC2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Schedule"
-                        android:inputType="textEmailAddress"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:paddingStart="1dp"
-                        android:paddingEnd="1dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="@color/black"
-                        android:textColorHint="#FFFFFF" />
+                        android:textColorHint="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneNumberAC"
+                android:id="@+id/nomorAC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
-                android:nextFocusUp="@id/scheduleAC2"
+                android:nextFocusUp="@id/tutupAC"
+                android:nextFocusDown="@id/btnTambahAC"
                 android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="filled"
-                app:boxStrokeColor="@color/white"
-                app:hintTextColor="#FFFFFF"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtphoneNumberAC"
+                    android:id="@+id/txtNomorAC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Phone Number"
+                    android:hint="Nomor Telfon"
                     android:inputType="number"
                     android:lines="1"
                     android:maxLines="1"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="6dp"
                     android:textColor="@color/black"
-                    android:textColorHint="#FFFFFF" />
+                    android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btnTambahAC"
                 android:layout_width="139dp"
                 android:layout_height="56dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
                 android:backgroundTint="@color/purple"
                 android:text="Tambahkan"
                 android:textColor="@color/white"
                 app:cornerRadius="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneNumberAC" />
-
+                app:layout_constraintTop_toBottomOf="@+id/nomorAC" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

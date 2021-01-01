@@ -15,7 +15,6 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import id.manlyman.petto.ui.community.ClickedCommunity
 import kotlinx.android.synthetic.main.activity_register.*
 import org.json.JSONObject
 import pub.devrel.easypermissions.EasyPermissions
@@ -38,36 +37,31 @@ class Register : AppCompatActivity() {
             var error = 0
 
             if (txtNama.text.toString().length < 3) {
-                txtNama.setError("Mohon masukan nama dengan benar")
+                txtNama.error = "Mohon masukan nama dengan benar"
                 error++
             }
 
-            if (txtRegistEmail.text.toString().length == 0) {
-                txtRegistEmail.setError("Mohon masukan email")
+            if (txtRegistEmail.text.toString().isEmpty()) {
+                txtRegistEmail.error = "Mohon masukan email"
                 error++
             } else if (!txtRegistEmail.text.toString().trim().matches(Regex("[a-zA-Z0-9._-]+@[a-z]+.com+"))) {
-                txtRegistEmail.setError("Mohon masukkan email dengan benar")
+                txtRegistEmail.error = "Mohon masukkan email dengan benar"
                 error++
             }
 
             if (txtRegistPass.text.toString().length < 5) {
-                txtRegistPass.setError("Mohon masukan password dengan benar")
+                txtRegistPass.error = "Mohon masukan password dengan benar"
                 error++
             } else if (txtConfirmPass.text.toString().length < 5) {
-                txtConfirmPass.setError("Mohon masukan password dengan benar")
+                txtConfirmPass.error = "Mohon masukan password dengan benar"
                 error++
-            } else if (!txtRegistPass.text.toString().equals(txtConfirmPass.text.toString())) {
-                txtConfirmPass.setError("Password tidak sama")
-                error++
-            }
-
-            if (txtAlamat.text.toString().length == 0) {
-                txtAlamat.setError("Mohon masukan alamat")
+            } else if (txtRegistPass.text.toString() != txtConfirmPass.text.toString()) {
+                txtConfirmPass.error = "Password tidak sama"
                 error++
             }
 
             if (txtNoTelp.text.toString().length != 12) {
-                txtNoTelp.setError("Mohon masukan nomor telfon dengan benar")
+                txtNoTelp.error = "Mohon masukan nomor telfon dengan benar"
                 error++
             }
 
@@ -77,7 +71,7 @@ class Register : AppCompatActivity() {
             }
 
             if (error == 0) {
-                Register(imageFile!!)
+                register(imageFile!!)
             } else {
                 Toast.makeText(this, "Form tidak lengkap", Toast.LENGTH_SHORT).show()
             }
@@ -107,6 +101,7 @@ class Register : AppCompatActivity() {
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setAspectRatio(1, 1)
                     .setFixAspectRatio(true)
+                    .setCropShape(CropImageView.CropShape.OVAL)
                     .setOutputUri(picName)
                     .start(this)
             } else {
@@ -139,8 +134,8 @@ class Register : AppCompatActivity() {
             try {
                 val selectedImageUri = result.uri
                 if (selectedImageUri != null) {
-                    pictureProfile.setImageURI(selectedImageUri)
-                    imageFile = File(selectedImageUri.getPath().toString())
+                    profilePict.setImageURI(selectedImageUri)
+                    imageFile = File(selectedImageUri.path.toString())
                 }
 
             } catch (e: FileNotFoundException) {
@@ -152,7 +147,7 @@ class Register : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun Register(file: File) {
+    private fun register(file: File) {
         val loading = ProgressDialog(this)
         loading.setTitle("Registering...")
         loading.setMessage("Uploading image (0/100)")
@@ -160,6 +155,7 @@ class Register : AppCompatActivity() {
 
         AndroidNetworking.upload(ApiEndPoint.Upload)
             .addMultipartFile("image", file)
+            .addMultipartParameter("folder","img_user")
             .setPriority(Priority.HIGH)
             .build()
             .setUploadProgressListener { bytesUploaded, totalBytes -> // do anything with progress
@@ -172,7 +168,6 @@ class Register : AppCompatActivity() {
                                 .addBodyParameter("nama", txtNama.text.toString())
                                 .addBodyParameter("email", txtRegistEmail.text.toString())
                                 .addBodyParameter("pass", txtRegistPass.text.toString())
-                                .addBodyParameter("alamat", txtAlamat.text.toString())
                                 .addBodyParameter("notelp", txtNoTelp.text.toString())
                                 .addBodyParameter("foto", response)
                                 .setPriority(Priority.MEDIUM)
@@ -182,7 +177,7 @@ class Register : AppCompatActivity() {
                                         if (response?.getString("message")?.contains("berhasil")!!) {
                                             loading.setMessage("Saving data (100/100)")
                                             val intent = Intent(applicationContext, Areyou::class.java)
-                                            intent.putExtra("email", txtRegistEmail.text.toString())
+                                            intent.putExtra("uname", txtNama.text.toString())
                                             startActivity(intent)
                                         } else {
                                             Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_LONG).show()

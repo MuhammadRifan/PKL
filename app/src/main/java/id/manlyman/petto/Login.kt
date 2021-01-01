@@ -23,21 +23,21 @@ class Login : AppCompatActivity() {
         btnLogin.setOnClickListener {
             var error = 0
 
-            if (txtEmail.text.toString().length == 0) {
-                txtEmail.setError("Mohon masukan email")
+            if (txtEmail.text.toString().isEmpty()) {
+                txtEmail.error = "Mohon masukan email"
                 error++
             } else if (!txtEmail.text.toString().trim().matches(Regex("[a-zA-Z0-9._-]+@[a-z]+.com+"))) {
-                txtEmail.setError("Mohon masukkan email dengan benar")
+                txtEmail.error = "Mohon masukkan email dengan benar"
                 error++
             }
 
             if (txtPass.text.toString().length < 5) {
-                txtPass.setError("Mohon masukan password dengan benar")
+                txtPass.error = "Mohon masukan password dengan benar"
                 error++
             }
 
             if (error == 0) {
-                Login()
+                login(txtEmail.text.toString(), txtPass.text.toString())
             } else {
                 Toast.makeText(this, "Form tidak lengkap", Toast.LENGTH_SHORT).show()
             }
@@ -47,20 +47,16 @@ class Login : AppCompatActivity() {
         txtRegister.setOnClickListener{
             startActivity(Intent(this, Register::class.java))
         }
-
-        luPass.setOnClickListener {
-            Toast.makeText(this, "Coming Soon", Toast.LENGTH_LONG).show()
-        }
     }
 
-    private fun Login(){
+    private fun login(email: String, pass: String){
         val loading = ProgressDialog(this)
         loading.setMessage("Logging in...")
         loading.show()
 
         AndroidNetworking.post(ApiEndPoint.Login)
-            .addBodyParameter("email", txtEmail.text.toString())
-            .addBodyParameter("pass", txtPass.text.toString())
+            .addBodyParameter("email", email)
+            .addBodyParameter("pass", pass)
             .setPriority(Priority.MEDIUM)
             .build()
             .getAsJSONObject(object : JSONObjectRequestListener {
@@ -72,16 +68,13 @@ class Login : AppCompatActivity() {
                     if (response?.getString("message")?.contains("berhasil")!!) {
                         val Config = FConfig(applicationContext)
                         Config.setCustom("is_login", "1")
-                        Config.setCustom("id", response?.getString("id_pengguna").toString())
-                        Config.setCustom("nama", response?.getString("nama_pengguna").toString())
-                        Config.setCustom("email", response?.getString("email_pengguna").toString())
-                        Config.setCustom("pass", response?.getString("password_pengguna").toString())
-                        Config.setCustom("alamat", response?.getString("alamat").toString())
-                        Config.setCustom("notelp", response?.getString("no_telp").toString())
-                        Config.setCustom("foto", response?.getString("foto").toString())
-                        Config.setCustom("nip", response?.getString("nip").toString())
-                        Config.setCustom("spesialis", response?.getString("spesialis").toString())
-                        Config.setCustom("level", response?.getString("level").toString())
+                        Config.setCustom("uname", response.getString("username").toString())
+                        Config.setCustom("pass", response.getString("pass").toString())
+                        Config.setCustom("email", response.getString("email").toString())
+                        Config.setCustom("phone", response.getString("phone").toString())
+                        Config.setCustom("picture", response.getString("picture").toString())
+                        Config.setCustom("srtv", response.getString("srtv").toString())
+                        Config.setCustom("level", response.getString("level").toString())
 
                         startActivity(Intent(applicationContext, HomeActivity::class.java))
                     }
@@ -98,11 +91,11 @@ class Login : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val Config = FConfig(this)
-        val login = Config.getCustom("is_login", "")
+        val config = FConfig(this)
+        val isLogin = config.getCustom("is_login", "")
 
-        if (login.equals("1")) {
-            startActivity(Intent(this, HomeActivity::class.java))
+        if (isLogin == "1") {
+            login(config.getCustom("email", ""), config.getCustom("pass", ""))
         }
     }
 }

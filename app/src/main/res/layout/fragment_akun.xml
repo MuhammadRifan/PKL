@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:hint="Nama"
+                    android:hint="Username"
                     android:inputType="textPersonName"
                     android:lines="1"
                     android:maxLines="1"
@@ -97,35 +97,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/acOldPassLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
-                app:helperText="Kosongi bila tidak perlu"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/acEmailLayout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/acOldPass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:hint="Password Lama"
-                    android:inputType="textPassword"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:paddingStart="1dp"
-                    android:paddingEnd="1dp"
-                    android:paddingBottom="5dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/acNewPassLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,7 +108,7 @@
                 app:helperText="Kosongi bila tidak perlu"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/acOldPassLayout">
+                app:layout_constraintTop_toBottomOf="@+id/acEmailLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/acNewPass"
@@ -184,37 +155,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/acAlamatLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                android:focusableInTouchMode="false"
-                app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/acConfirmPassLayout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/acAlamat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:hint="Alamat"
-                    android:inputType="text"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:paddingStart="1dp"
-                    android:paddingEnd="1dp"
-                    android:paddingBottom="5dp"
-                    android:selectAllOnFocus="false"
-                    app:textInputLayoutFocusedRectEnabled="false" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/acNoTelpLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -226,7 +166,7 @@
                 app:boxBackgroundMode="filled"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/acAlamatLayout">
+                app:layout_constraintTop_toBottomOf="@+id/acConfirmPassLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/acNoTelp"
@@ -246,7 +186,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/acNIPLayout"
+                android:id="@+id/acSRTVLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -260,12 +200,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/acNoTelpLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/acNIP"
+                    android:id="@+id/acSRTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:hint="NIP"
+                    android:hint="SRTV"
                     android:inputType="number"
                     android:lines="1"
                     android:maxLines="1"
@@ -275,37 +215,6 @@
                     android:selectAllOnFocus="false"
                     app:textInputLayoutFocusedRectEnabled="false" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/acSpesLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                android:focusableInTouchMode="false"
-                app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/acNIPLayout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/acSpesialis"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:hint="Spesialis"
-                    android:inputType="text"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:paddingStart="1dp"
-                    android:paddingEnd="1dp"
-                    android:paddingBottom="5dp"
-                    android:selectAllOnFocus="false"
-                    app:textInputLayoutFocusedRectEnabled="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -319,7 +228,7 @@
                 android:text="Edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/acSpesLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/acSRTVLayout" />
 
             <Button
                 android:id="@+id/btnAcCancel"
@@ -331,7 +240,7 @@
                 android:text="Cancel"
                 android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/btnAcEdit"
-                app:layout_constraintTop_toBottomOf="@+id/acSpesLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/acSRTVLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

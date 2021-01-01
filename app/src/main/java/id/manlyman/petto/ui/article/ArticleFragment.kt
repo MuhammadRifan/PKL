@@ -15,6 +15,7 @@ import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import id.manlyman.petto.ApiEndPoint
+import id.manlyman.petto.FConfig
 import id.manlyman.petto.R
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article.view.*
@@ -34,8 +35,16 @@ class ArticleFragment : Fragment(), OnItemClickListener {
         root.aRecyclerView.setHasFixedSize(true)
         root.aRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        root.addArticle.setOnClickListener {
-            startActivity(Intent(requireContext(), ActivityAddArticle::class.java))
+        val config = FConfig(requireContext())
+
+        if (config.getCustom("level", "") == "1") {
+            root.addArticle.visibility = View.VISIBLE
+
+            root.addArticle.setOnClickListener {
+                startActivity(Intent(requireContext(), ActivityAddArticle::class.java))
+            }
+        } else {
+            root.addArticle.visibility = View.GONE
         }
 
         return root
@@ -61,26 +70,33 @@ class ArticleFragment : Fragment(), OnItemClickListener {
                 .build()
                 .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
-                        arrayList.clear()
-                        val jsonArray = response?.optJSONArray("result")
-
-                        if (jsonArray?.length() == 0) {
+                        if (response?.getString("result").toString() == "Data kosong") {
                             loading.dismiss()
-                            Toast.makeText(requireContext(), "Data Kosong", Toast.LENGTH_LONG).show()
-                        }
 
-                        for (i in 0 until jsonArray?.length()!!) {
-                            val jsonObject = jsonArray?.optJSONObject(i)
-                            arrayList.add(Article(jsonObject.getInt("id_artikel"),
+                            aEmpty.visibility = View.VISIBLE
+                            aRecyclerView.visibility = View.GONE
+                        } else {
+                            aEmpty.visibility = View.GONE
+                            aRecyclerView.visibility = View.VISIBLE
+
+                            arrayList.clear()
+                            val jsonArray = response?.optJSONArray("result")
+
+                            for (i in 0 until jsonArray?.length()!!) {
+                                val jsonObject = jsonArray.optJSONObject(i)
+                                arrayList.add(Article(jsonObject.getInt("id"),
                                     jsonObject.getString("penulis"),
                                     jsonObject.getString("judul"),
-                                    jsonObject.getString("deskripsi")))
+                                    jsonObject.getString("isi"),
+                                    jsonObject.getString("tanggal"),
+                                    jsonObject.getString("picture")))
 
-                            if (jsonArray?.length() - 1 == i) {
-                                loading.dismiss()
-                                val adapter = AdapterArticle(this@ArticleFragment, arrayList)
-                                adapter.notifyDataSetChanged()
-                                aRecyclerView.adapter = adapter
+                                if (jsonArray.length() - 1 == i) {
+                                    loading.dismiss()
+                                    val adapter = AdapterArticle(this@ArticleFragment, arrayList)
+                                    adapter.notifyDataSetChanged()
+                                    aRecyclerView.adapter = adapter
+                                }
                             }
                         }
                     }

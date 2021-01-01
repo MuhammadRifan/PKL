@@ -15,6 +15,7 @@ import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import id.manlyman.petto.ApiEndPoint
+import id.manlyman.petto.FConfig
 import id.manlyman.petto.R
 import id.manlyman.petto.ui.facility.Facility
 import kotlinx.android.synthetic.main.fragment_health.*
@@ -32,6 +33,18 @@ class HealthFragment : Fragment(), OnItemClickListener {
         val view = inflater.inflate(R.layout.fragment_health, container, false)
         view.hRecyclerView.setHasFixedSize(true)
         view.hRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val config = FConfig(requireContext())
+
+        if (config.getCustom("level", "") == "1") {
+            view.addHealth.visibility = View.VISIBLE
+
+            view.addHealth.setOnClickListener {
+                startActivity(Intent(requireContext(), ActivityAddHealth::class.java))
+            }
+        } else {
+            view.addHealth.visibility = View.GONE
+        }
 
         view.addHealth.setOnClickListener {
             startActivity(Intent(requireContext(), ActivityAddHealth::class.java))
@@ -55,33 +68,44 @@ class HealthFragment : Fragment(), OnItemClickListener {
         loading.setMessage("Loading...")
         loading.show()
 
-        AndroidNetworking.post(ApiEndPoint.ReadFacility)
-                .addBodyParameter("table", "fasilitas")
-                .addBodyParameter("facility", "Health")
+        AndroidNetworking.post(ApiEndPoint.Read)
+                .addBodyParameter("table", "faskes")
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
-                        arrayList.clear()
-                        val jsonArray = response?.optJSONArray("result")
-
-                        if (jsonArray?.length() == 0) {
+                        if (response?.getString("result").toString() == "Data kosong") {
                             loading.dismiss()
-                            Toast.makeText(requireContext(), "Data Kosong", Toast.LENGTH_LONG).show()
-                        }
 
-                        for (i in 0 until jsonArray?.length()!!) {
-                            val jsonObject = jsonArray?.optJSONObject(i)
-                            arrayList.add(Facility(jsonObject.getInt("id_fasilitas"),
-                                    jsonObject.getString("nama_fasilitas"),
-                                    jsonObject.getString("alamat_fasilitas"),
-                                    jsonObject.getString("deskripsi_fasilitas")))
+                            hEmpty.visibility = View.VISIBLE
+                            hRecyclerView.visibility = View.GONE
+                        } else {
+                            hEmpty.visibility = View.GONE
+                            hRecyclerView.visibility = View.VISIBLE
 
-                            if (jsonArray?.length() - 1 == i) {
-                                loading.dismiss()
-                                val adapter = AdapterHealth(this@HealthFragment, arrayList)
-                                adapter.notifyDataSetChanged()
-                                hRecyclerView.adapter = adapter
+                            arrayList.clear()
+                            val jsonArray = response?.optJSONArray("result")
+
+                            for (i in 0 until jsonArray!!.length()) {
+                                val jsonObject = jsonArray.optJSONObject(i)
+                                arrayList.add(Facility(jsonObject.getInt("sip"),
+                                    jsonObject.getString("nama"),
+                                    jsonObject.getString("city"),
+                                    jsonObject.getString("picture"),
+                                    jsonObject.getInt("hari_buka1"),
+                                    jsonObject.getInt("hari_buka2"),
+                                    jsonObject.getInt("hari_buka3"),
+                                    jsonObject.getInt("hari_buka4"),
+                                    jsonObject.getInt("hari_buka5"),
+                                    jsonObject.getInt("hari_buka6"),
+                                    jsonObject.getInt("hari_buka7")))
+
+                                if (jsonArray.length() - 1 == i) {
+                                    loading.dismiss()
+                                    val adapter = AdapterHealth(this@HealthFragment, arrayList)
+                                    adapter.notifyDataSetChanged()
+                                    hRecyclerView.adapter = adapter
+                                }
                             }
                         }
                     }

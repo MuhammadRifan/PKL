@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.androidnetworking.widget.ANImageView
 import com.google.android.material.navigation.NavigationView
-//import kotlinx.android.synthetic.main.nav_header_main.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -41,7 +39,7 @@ class HomeActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val Config = FConfig(this)
+        val config = FConfig(this)
 
         val header: View = navView.getHeaderView(0)
         val userProfilePic: ANImageView = header.findViewById(R.id.userProfilePic)
@@ -50,10 +48,10 @@ class HomeActivity : AppCompatActivity() {
 
         userProfilePic.setDefaultImageResId(R.mipmap.ic_launcher)
         userProfilePic.setErrorImageResId(R.mipmap.ic_launcher)
-        userProfilePic.setImageUrl(ApiEndPoint.Pictures + Config.getCustom("foto", ""))
+        userProfilePic.setImageUrl(ApiEndPoint.Pictures + config.getCustom("picture", ""))
 
-        userName.text = Config.getCustom("nama", "")
-        userEmail.text = Config.getCustom("email", "")
+        userName.text = config.getCustom("uname", "")
+        userEmail.text = config.getCustom("email", "")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -69,10 +67,10 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val Config = FConfig(this)
-        val login = Config.getCustom("is_login", "")
+        val config = FConfig(this)
+        val login = config.getCustom("is_login", "")
 
-        if (!login.equals("1")) {
+        if (login != "1") {
             Toast.makeText(this, "Mohon Login Terlebih Dahulu", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, Login::class.java))
         }

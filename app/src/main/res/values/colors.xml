@@ -10,4 +10,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="kuninghijau">#C7EB5E</color>
+    <color name="Buka">#33AF17</color>
+    <color name="Tutup">#CC0000</color>
 </resources>

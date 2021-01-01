@@ -25,7 +25,7 @@ class FacilitiesAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
     }
 
     // nama untuk tabs
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return when(position){
             0 -> "Health"
             1 -> "Shop"

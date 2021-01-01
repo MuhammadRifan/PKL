@@ -32,7 +32,9 @@
         <activity
             android:name=".ui.article.ActivityAddArticle"
             android:parentActivityName=".HomeActivity" />
-        <activity android:name=".Areyou" />
+        <activity
+            android:name=".Areyou"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait">

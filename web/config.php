@@ -41,7 +41,7 @@
     function insertPengguna($satu, $dua, $tiga, $empat, $lima, $enam){
         global $connect;
 
-        $result = $connect -> prepare("INSERT INTO pengguna VALUES(NULL,?,?,?,?,?,?,NULL,NULL)");
+        $result = $connect -> prepare("INSERT INTO pengguna VALUES(?,?,?,?,?,null,?)");
         $result -> bindParam(1, $satu);
         $result -> bindParam(2, $dua);
         $result -> bindParam(3, $tiga);
@@ -51,16 +51,16 @@
         return $result -> execute();
     }
 
-    function updatePengguna($id, $satu, $dua, $tiga, $empat, $lima, $enam, $tujuh, $delapan){
+    function updatePengguna($id, $satu, $dua, $tiga, $empat, $lima, $enam, $tujuh){
         global $connect;
 
-        $result = $connect -> prepare("UPDATE pengguna SET nama_pengguna=?,
-                                        email_pengguna=?,
-                                        password_pengguna=?,
-                                        alamat=?, no_telp=?,
-                                        foto=?,
-                                        nip=?,
-                                        spesialis=? WHERE id_pengguna=?");
+        $result = $connect -> prepare("UPDATE pengguna SET username=?,
+                                        pass=?,
+                                        email=?,
+                                        phone=?,
+                                        picture=?,
+                                        srtv=?,
+                                        level=? WHERE username=?");
         $result -> bindParam(1, $satu);
         $result -> bindParam(2, $dua);
         $result -> bindParam(3, $tiga);
@@ -68,8 +68,26 @@
         $result -> bindParam(5, $lima);
         $result -> bindParam(6, $enam);
         $result -> bindParam(7, $tujuh);
-        $result -> bindParam(8, $delapan);
-        $result -> bindParam(9, $id);
+        $result -> bindParam(8, $id);
+        return $result -> execute();
+    }
+
+    function insertArticle($satu, $dua, $tiga, $empat, $lima){
+        global $connect;
+
+        $result = $connect -> prepare("INSERT INTO artikel VALUES(NULL,?,?,?,?,?)");
+        $result -> bindParam(1, $satu);
+        $result -> bindParam(2, $dua);
+        $result -> bindParam(3, $tiga);
+        $result -> bindParam(4, $empat);
+        $result -> bindParam(5, $lima);
+        return $result -> execute();
+    }
+
+    function insertCustom($table, $sql){
+        global $connect;
+
+        $result = $connect -> prepare("INSERT INTO $table VALUES $sql");
         return $result -> execute();
     }
 
