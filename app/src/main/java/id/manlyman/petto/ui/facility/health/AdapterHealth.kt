@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
@@ -15,6 +16,8 @@ import id.manlyman.petto.ApiEndPoint
 import id.manlyman.petto.R
 import id.manlyman.petto.ui.facility.Facility
 import kotlinx.android.synthetic.main.list_facility.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Holder(view: View) : RecyclerView.ViewHolder(view){
     val foto = view.fotoFC
@@ -22,11 +25,41 @@ class Holder(view: View) : RecyclerView.ViewHolder(view){
     val alamat = view.alamatFC
     val btn = view.bukaFC
 
+    val dayNow = Calendar.getInstance()[Calendar.DAY_OF_WEEK]
+    val bukaCol = ContextCompat.getColor(btn.context, R.color.Buka)
+    val tutupCol = ContextCompat.getColor(btn.context, R.color.Tutup)
+
     fun bind(facility: Facility, clickListener: OnItemClickListener)
     {
         picture(facility.pict, foto)
         nama.text = facility.name
         alamat.text = facility.city
+
+        var buka = 0
+
+        if (facility.h1 == dayNow) {
+            buka = 1
+        } else if (facility.h2 == dayNow) {
+            buka = 1
+        } else if (facility.h3 == dayNow) {
+            buka = 1
+        } else if (facility.h4 == dayNow) {
+            buka = 1
+        } else if (facility.h5 == dayNow) {
+            buka = 1
+        } else if (facility.h6 == dayNow) {
+            buka = 1
+        } else if (facility.h7 == dayNow) {
+            buka = 1
+        }
+
+        if (buka == 1) {
+            btn.setBackgroundColor(bukaCol)
+            btn.text = "Buka"
+        } else {
+            btn.setBackgroundColor(tutupCol)
+            btn.text = "Tutup"
+        }
 
         btn.setOnClickListener {
             clickListener.onItemClicked(facility)

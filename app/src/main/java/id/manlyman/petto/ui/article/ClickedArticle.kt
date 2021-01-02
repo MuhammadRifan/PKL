@@ -1,13 +1,16 @@
 package id.manlyman.petto.ui.article
 
 import android.app.ProgressDialog
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.BitmapRequestListener
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import id.manlyman.petto.ApiEndPoint
 import id.manlyman.petto.R
@@ -40,8 +43,11 @@ class ClickedArticle : AppCompatActivity() {
                 override fun onResponse(response: JSONObject?) {
                     loading.dismiss()
 
-                    namaKomunitas.text = response?.getString("judul").toString()
-                    deskripsiFaskes.text = response?.getString("deskripsi").toString()
+                    judulArtikel.text = response?.getString("judul").toString()
+                    penulisArtikel.text = response?.getString("penulis").toString()
+                    tanggalArtikel.text = response?.getString("tanggal").toString()
+                    picture(response?.getString("picture").toString(), fotoArtikel)
+                    isiArtikel.text = response?.getString("isi").toString()
                 }
 
                 override fun onError(anError: ANError?) {
@@ -51,5 +57,22 @@ class ClickedArticle : AppCompatActivity() {
                 }
 
             })
+    }
+
+    private fun picture(url: String?, img: ImageView){
+        AndroidNetworking.get(ApiEndPoint.Pictures + url)
+                .setTag("Foto")
+                .setPriority(Priority.MEDIUM)
+                .setBitmapConfig(Bitmap.Config.ARGB_8888)
+                .build()
+                .getAsBitmap(object : BitmapRequestListener {
+                    override fun onResponse(bitmap: Bitmap) {
+                        img.setImageBitmap(bitmap)
+                    }
+
+                    override fun onError(error: ANError) {
+                        Log.d("OnError", error.errorDetail.toString())
+                    }
+                })
     }
 }

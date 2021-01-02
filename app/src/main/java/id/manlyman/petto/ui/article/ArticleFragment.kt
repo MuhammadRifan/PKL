@@ -41,7 +41,11 @@ class ArticleFragment : Fragment(), OnItemClickListener {
             root.addArticle.visibility = View.VISIBLE
 
             root.addArticle.setOnClickListener {
-                startActivity(Intent(requireContext(), ActivityAddArticle::class.java))
+                if (config.getCustom("srtv", "") == "null" || config.getCustom("srtv", "") == "0") {
+                    Toast.makeText(requireContext(), "Mohon isi srtv pada halaman profil", Toast.LENGTH_LONG).show()
+                } else {
+                    startActivity(Intent(requireContext(), ActivityAddArticle::class.java))
+                }
             }
         } else {
             root.addArticle.visibility = View.GONE

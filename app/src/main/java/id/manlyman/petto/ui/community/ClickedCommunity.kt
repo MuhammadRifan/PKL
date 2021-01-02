@@ -1,13 +1,16 @@
 package id.manlyman.petto.ui.community
 
 import android.app.ProgressDialog
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.BitmapRequestListener
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import id.manlyman.petto.ApiEndPoint
 import id.manlyman.petto.R
@@ -40,9 +43,12 @@ class ClickedCommunity : AppCompatActivity() {
                 override fun onResponse(response: JSONObject?) {
                     loading.dismiss()
 
-                    namaKomunitas.text = response?.getString("nama_komunitas").toString()
-                    deskripsiFaskes.text = response?.getString("deskripsi_komunitas").toString()
-                    jamAC.text = response?.getString("kontak").toString()
+                    namaKomunitas.text = response?.getString("nama").toString()
+                    picture(response?.getString("picture").toString(), fotoKomunitas)
+                    deskripsiKomunitas.text = response?.getString("description").toString()
+                    alamatKomunitas.text = response?.getString("address").toString()
+                    kotaKomunitas.text = response?.getString("kota").toString()
+                    nomorKomunitas.text = response?.getString("phone").toString()
                 }
 
                 override fun onError(anError: ANError?) {
@@ -52,5 +58,22 @@ class ClickedCommunity : AppCompatActivity() {
                 }
 
             })
+    }
+
+    private fun picture(url: String?, img: ImageView){
+        AndroidNetworking.get(ApiEndPoint.Pictures + url)
+                .setTag("Foto")
+                .setPriority(Priority.MEDIUM)
+                .setBitmapConfig(Bitmap.Config.ARGB_8888)
+                .build()
+                .getAsBitmap(object : BitmapRequestListener {
+                    override fun onResponse(bitmap: Bitmap) {
+                        img.setImageBitmap(bitmap)
+                    }
+
+                    override fun onError(error: ANError) {
+                        Log.d("OnError", error.errorDetail.toString())
+                    }
+                })
     }
 }

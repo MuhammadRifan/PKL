@@ -1,7 +1,7 @@
 package id.manlyman.petto.ui.facility
 
 data class Facility (
-        val id:Int?,
+        val id:String?,
         val name:String?,
         val city:String?,
         val pict:String?,

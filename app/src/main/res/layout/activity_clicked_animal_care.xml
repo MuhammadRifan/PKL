@@ -25,44 +25,159 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="344dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="35dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="24dp"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/namaKomunitas"
+                        android:id="@+id/namaAC"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nama Penitipan Hewan"
+                        android:text="Nama Animal Care"
                         android:textColor="@color/black"
                         android:textSize="20sp" />
 
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/fotoKomunias"
+                    android:id="@+id/fotoAC"
                     android:layout_width="match_parent"
                     android:layout_height="194dp"
-                    android:layout_marginBottom="11dp"
                     tools:src="@tools:sample/backgrounds/scenic" />
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        tools:srcCompat="@mipmap/logo_ori_round" />
+
+                    <TextView
+                        android:id="@+id/alamatAC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="Jl. Kenangan no.1"
+                        android:textColor="@color/purple"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imghari"
+                        android:layout_width="wrap_content"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        tools:srcCompat="@mipmap/logo_ori" />
+
+                    <TextView
+                        android:id="@+id/hariBuka"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="Senin, Selasa, ..."
+                        android:textColor="@color/purple"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgJam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        tools:srcCompat="@mipmap/logo_ori" />
+
+                    <TextView
+                        android:id="@+id/jamAC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="08.00-20.00"
+                        android:textColor="@color/purple"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="30dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgKontak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        tools:srcCompat="@mipmap/logo_ori" />
+
+                    <TextView
+                        android:id="@+id/kontakAC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="082-331x-xxxx"
+                        android:textColor="@color/purple"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="16dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/fotoPaket"
-                        android:layout_width="100dp"
+                        android:layout_width="60dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_vertical"
-                        tools:src="@tools:sample/avatars" />
+                        android:layout_marginStart="16dp"
+                        tools:src="@mipmap/logo_ori" />
 
                     <LinearLayout
-                        android:layout_width="180dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -71,9 +186,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="1dp"
-                            android:text="Nama paket penitipan"
+                            android:text="Nama paket"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="20sp" />
 
                         <TextView
                             android:id="@+id/hargaPaket"
@@ -85,89 +200,6 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="53dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imgLocation"
-                        android:layout_width="14dp"
-                        android:layout_height="18dp"
-                        android:layout_weight="1"
-                        tools:srcCompat="@tools:sample/avatars" />
-
-                    <TextView
-                        android:id="@+id/alamatAC"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:text="Jl. Kenangan no.1"
-                        android:textColor="@color/purple"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imgJam"
-                        android:layout_width="14dp"
-                        android:layout_height="18dp"
-                        android:layout_weight="1"
-                        tools:srcCompat="@tools:sample/avatars" />
-
-                    <TextView
-                        android:id="@+id/jamAC"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:text="08.00-20.00"
-                        android:textColor="@color/purple"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="30dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imgKontak"
-                        android:layout_width="14dp"
-                        android:layout_height="18dp"
-                        android:layout_weight="1"
-                        tools:srcCompat="@tools:sample/avatars" />
-
-                    <TextView
-                        android:id="@+id/kontakAC"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:text="082-331x-xxxx"
-                        android:textColor="@color/purple"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/googleMap"
-                    android:layout_width="match_parent"
-                    android:layout_height="246dp"
-                    android:layout_marginBottom="22dp"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

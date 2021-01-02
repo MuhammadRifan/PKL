@@ -75,7 +75,7 @@ class ShopFragment : Fragment(), OnItemClickListener {
 
                             for (i in 0 until jsonArray?.length()!!) {
                                 val jsonObject = jsonArray.optJSONObject(i)
-                                arrayList.add(Facility(jsonObject.getInt("id"),
+                                arrayList.add(Facility(jsonObject.getString("id"),
                                     jsonObject.getString("nama"),
                                     jsonObject.getString("city"),
                                     jsonObject.getString("picture"),

@@ -276,7 +276,11 @@ class AccountFragment : Fragment() {
         piew?.acNoTelp?.setText(Config.getCustom("phone", ""))
 
         if (Config.getCustom("level", "") == "1") {
-            piew?.acSRTV?.setText(Config.getCustom("srtv", ""))
+            if (Config.getCustom("srtv", "") == "null") {
+                piew?.acSRTV?.setText("0")
+            } else {
+                piew?.acSRTV?.setText(Config.getCustom("srtv", ""))
+            }
         }
 
         loading.dismiss()

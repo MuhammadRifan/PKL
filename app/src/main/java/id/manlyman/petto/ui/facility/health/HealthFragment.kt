@@ -40,14 +40,14 @@ class HealthFragment : Fragment(), OnItemClickListener {
             view.addHealth.visibility = View.VISIBLE
 
             view.addHealth.setOnClickListener {
-                startActivity(Intent(requireContext(), ActivityAddHealth::class.java))
+                if (config.getCustom("srtv", "") == "null" || config.getCustom("srtv", "") == "0") {
+                    Toast.makeText(requireContext(), "Mohon isi srtv pada halaman profil", Toast.LENGTH_LONG).show()
+                } else {
+                    startActivity(Intent(requireContext(), ActivityAddHealth::class.java))
+                }
             }
         } else {
             view.addHealth.visibility = View.GONE
-        }
-
-        view.addHealth.setOnClickListener {
-            startActivity(Intent(requireContext(), ActivityAddHealth::class.java))
         }
 
         return view
@@ -55,7 +55,7 @@ class HealthFragment : Fragment(), OnItemClickListener {
 
     override fun onItemClicked(facility: Facility) {
         val intent = Intent(requireContext(), ClickedHealth::class.java)
-        intent.putExtra("ID", facility.id.toString())
+        intent.putExtra("ID", facility.id)
         startActivity(intent)
 
 //        Toast.makeText(requireContext(), "ID : ${facility.id}", Toast.LENGTH_LONG)
@@ -88,7 +88,7 @@ class HealthFragment : Fragment(), OnItemClickListener {
 
                             for (i in 0 until jsonArray!!.length()) {
                                 val jsonObject = jsonArray.optJSONObject(i)
-                                arrayList.add(Facility(jsonObject.getInt("sip"),
+                                arrayList.add(Facility(jsonObject.getString("sip"),
                                     jsonObject.getString("nama"),
                                     jsonObject.getString("city"),
                                     jsonObject.getString("picture"),

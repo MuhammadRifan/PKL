@@ -57,13 +57,13 @@ class Holder(view: View) : RecyclerView.ViewHolder(view){
         if (buka == 1) {
             btn.setBackgroundColor(bukaCol)
             btn.text = "Buka"
-
-            btn.setOnClickListener {
-                clickListener.onItemClicked(facility)
-            }
         } else {
             btn.setBackgroundColor(tutupCol)
             btn.text = "Tutup"
+        }
+
+        btn.setOnClickListener {
+            clickListener.onItemClicked(facility)
         }
     }
 }

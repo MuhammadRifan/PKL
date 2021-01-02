@@ -27,44 +27,55 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="344dp"
-                    android:layout_height="70dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/namaKomunitas"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/judulArtikel"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="18dp"
                         android:text="Judul Artikel"
                         android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/penulisArtikel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Donald"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tanggalArtikel"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
                         android:text="20-20-2020"
+                        android:textAlignment="viewEnd"
                         android:textSize="14sp" />
 
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/fotoKomunias"
+                    android:id="@+id/fotoArtikel"
                     android:layout_width="match_parent"
                     android:layout_height="194dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <TextView
-                    android:id="@+id/deskripsiFaskes"
-                    android:layout_width="312dp"
+                    android:id="@+id/isiArtikel"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_gravity="center"
-                    android:textSize="14sp"
+                    android:layout_margin="16dp"
+                    android:text="     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     android:textColor="@color/black"
-                    android:text="     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -73,24 +84,26 @@
 
                     <TextView
                         android:id="@+id/seeAlso"
-                        android:layout_width="312dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
                         android:text="See Also :"
                         android:textColor="@color/purple"
                         android:textSize="14sp" />
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="360dp"
-                        android:layout_height="88dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
                             android:orientation="horizontal">
 
                             <ImageView
