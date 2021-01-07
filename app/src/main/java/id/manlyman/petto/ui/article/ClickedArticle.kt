@@ -23,7 +23,7 @@ class ClickedArticle : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clicked_article)
         val sessionId = intent.getStringExtra("ID")
-        Toast.makeText(this, sessionId, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, sessionId, Toast.LENGTH_SHORT).show()
 
         Load(sessionId.toString())
     }

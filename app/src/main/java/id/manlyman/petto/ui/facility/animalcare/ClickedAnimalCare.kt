@@ -22,7 +22,6 @@ class ClickedAnimalCare : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clicked_animal_care)
         val sessionId = intent.getStringExtra("ID")
-        Toast.makeText(this, sessionId, Toast.LENGTH_SHORT).show()
 
         Load(sessionId.toString())
     }

@@ -23,7 +23,6 @@ class ClickedCommunity : AppCompatActivity() {
         setContentView(R.layout.activity_clicked_community)
 
         val sessionId = intent.getStringExtra("ID")
-        Toast.makeText(this, sessionId, Toast.LENGTH_SHORT).show()
 
         Load(sessionId.toString())
     }
@@ -62,18 +61,18 @@ class ClickedCommunity : AppCompatActivity() {
 
     private fun picture(url: String?, img: ImageView){
         AndroidNetworking.get(ApiEndPoint.Pictures + url)
-                .setTag("Foto")
-                .setPriority(Priority.MEDIUM)
-                .setBitmapConfig(Bitmap.Config.ARGB_8888)
-                .build()
-                .getAsBitmap(object : BitmapRequestListener {
-                    override fun onResponse(bitmap: Bitmap) {
-                        img.setImageBitmap(bitmap)
-                    }
+            .setTag("Foto")
+            .setPriority(Priority.MEDIUM)
+            .setBitmapConfig(Bitmap.Config.ARGB_8888)
+            .build()
+            .getAsBitmap(object : BitmapRequestListener {
+                override fun onResponse(bitmap: Bitmap) {
+                    img.setImageBitmap(bitmap)
+                }
 
-                    override fun onError(error: ANError) {
-                        Log.d("OnError", error.errorDetail.toString())
-                    }
-                })
+                override fun onError(error: ANError) {
+                    Log.d("OnError", error.errorDetail.toString())
+                }
+            })
     }
 }

@@ -373,7 +373,6 @@ class AccountFragment : Fragment() {
                 override fun onError(anError: ANError?) {
                     loading.dismiss()
                     Log.d("OnError", anError?.errorDetail?.toString()!!)
-                    Log.d("OnError","Bromance")
                     Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
                 }
 
@@ -423,7 +422,6 @@ class AccountFragment : Fragment() {
                                 override fun onError(anError: ANError?) {
                                     loading.dismiss()
                                     Log.d("OnError", anError?.errorDetail?.toString()!!)
-                                    Log.d("OnError","Brodor")
                                     Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
                                 }
 

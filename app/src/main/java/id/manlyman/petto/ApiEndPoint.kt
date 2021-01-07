@@ -19,6 +19,7 @@ class ApiEndPoint {
         val AddAC = SERVER + "?p=AddAC"
         val AddHealth = SERVER + "?p=AddHealth"
         val AddCommunity = SERVER + "?p=AddCommunity"
+        val UpdateCommunity = SERVER + "?p=UpdateCommunity"
         val Find_ID = SERVER + "?p=findID"
     }
 }

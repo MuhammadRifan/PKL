@@ -14,8 +14,11 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import id.manlyman.petto.ApiEndPoint
+import id.manlyman.petto.FConfig
 import id.manlyman.petto.R
+import kotlinx.android.synthetic.main.activity_clicked_article.*
 import kotlinx.android.synthetic.main.fragment_community.*
 import kotlinx.android.synthetic.main.fragment_community.view.*
 import org.json.JSONObject
@@ -33,9 +36,10 @@ class CommunityFragment : Fragment(), OnItemClickListener {
         root.cRecyclerView.setHasFixedSize(true)
         root.cRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        root.addCommunity.setOnClickListener {
-            startActivity(Intent(requireContext(), ActivityAddCommunity::class.java))
-        }
+        val config = FConfig(requireContext())
+        val uname = config.getCustom("uname", "")
+
+        cekKomu(uname, root.addCommunity)
 
         return root
     }
@@ -98,6 +102,37 @@ class CommunityFragment : Fragment(), OnItemClickListener {
                         Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
                     }
                 })
+    }
+
+    private fun cekKomu(ID: String, Btn: FloatingActionButton){
+        AndroidNetworking.post(ApiEndPoint.ReadByID)
+            .addBodyParameter("table", "komunitas")
+            .addBodyParameter("id", ID)
+            .addBodyParameter("idname", "owner")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("message")?.contains("ada")!!) {
+                        val intent = Intent(requireContext(), ActivityAddCommunity::class.java)
+                        intent.putExtra("ID", response.getString("id"))
+
+                        Btn.setImageResource(android.R.drawable.ic_menu_edit)
+                        Btn.setOnClickListener {
+                            startActivity(intent)
+                        }
+                    } else {
+                        Btn.setImageResource(android.R.drawable.ic_input_add)
+                        Btn.setOnClickListener {
+                            startActivity(Intent(requireContext(), ActivityAddCommunity::class.java))
+                        }
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                }
+            })
     }
 
     override fun onResume() {
