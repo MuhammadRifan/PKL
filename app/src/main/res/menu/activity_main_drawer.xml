@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_akun_saya" />
         <item
+            android:id="@+id/nav_artikel"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Artikel Saya" />
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_keluar" />

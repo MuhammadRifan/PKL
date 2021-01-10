@@ -408,15 +408,38 @@
                 android:layout_width="139dp"
                 android:layout_height="56dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/purple"
-                android:text="Tambahkan"
+                android:text="Tambah"
+                android:textColor="@color/white"
+                app:cornerRadius="50dp"
+                app:layout_constraintBottom_toTopOf="@+id/btnHapusHealth"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nomorHealth" />
+
+            <Button
+                android:id="@+id/btnHapusHealth"
+                android:layout_width="139dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="@color/Tutup"
+                android:text="Hapus"
                 android:textColor="@color/white"
                 app:cornerRadius="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomorHealth" />
+                app:layout_constraintTop_toBottomOf="@id/btnTambahHealth" />
+
+            <TextView
+                android:id="@+id/oldSIP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="x"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

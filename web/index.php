@@ -44,6 +44,9 @@
         case 'AddCommunity':
             AddCommunity();
             break;
+        case 'UpdateCommunity':
+            UpdateCommunity();
+            break;
         default:
             echo json_encode(array('message'=>'Connection Not Found!'));
             break;
@@ -403,6 +406,34 @@
                 echo json_encode(array('message' => 'Komunitas berhasil dibuat'));
             }else{
                 echo json_encode(array('message' => 'Komunitas gagal dibuat'));
+            }
+        }
+    }
+
+    function UpdateCommunity() {
+        $id = $_POST['id'];
+        $nama = $_POST['nama'];
+        $des = $_POST['deskripsi'];
+        $alamat = $_POST['alamat'];
+        $kota = $_POST['kota'];
+        $phone = $_POST['phone'];
+        $picture = $_POST['picture'];
+
+        if(!$nama || !$des || !$alamat || !$kota || !$phone){
+            echo json_encode(array('message' => 'Form ada yang kosong'));
+        }else{
+            if ($picture == "") {
+                $sql = "nama = '$nama', description = '$des', address = '$alamat', kota = '$kota', phone = '$phone' WHERE id = $id";
+            } else {
+                $sql = "nama = '$nama', description = '$des', address = '$alamat', kota = '$kota', phone = '$phone', picture = '$picture' WHERE id = $id";
+            }
+
+            if(update_custom("komunitas", $sql)){
+                $result = find_by_id("komunitas", "id", $id) -> fetch();
+                $result['message'] = "Update komunitas berhasil";
+                echo json_encode($result);
+            }else{
+                echo json_encode(array('message' => 'Update komunitas gagal'));
             }
         }
     }

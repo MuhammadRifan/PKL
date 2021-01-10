@@ -2,14 +2,18 @@ package id.manlyman.petto.ui.community
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
@@ -40,12 +44,17 @@ class ActivityAddCommunity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_community)
 
-        val sessionId = intent.getStringExtra("ID")
+        var sessionId = ""
+        sessionId = intent.getStringExtra("ID").toString()
 
-        if (sessionId!!.isEmpty()) {
+        if (sessionId == "null") {
+            supportActionBar?.title = "Tambah Komunitas"
+            btnHapusKomunitas.visibility = View.GONE
             btnTambahKomunitas.text = "Tambah"
         } else {
             Load(sessionId)
+            supportActionBar?.title = "Edit Komunitas"
+            btnHapusKomunitas.visibility = View.VISIBLE
             btnTambahKomunitas.text = "Simpan"
         }
 
@@ -77,14 +86,14 @@ class ActivityAddCommunity : AppCompatActivity() {
                 error++
             }
 
-            if (imageFile == null && sessionId.isEmpty()) {
+            if (imageFile == null && sessionId == "null") {
                 Toast.makeText(this, "Mohon masukkan foto", Toast.LENGTH_LONG).show()
                 error++
             }
 
             if (error == 0) {
-                if (sessionId.isEmpty()) {
-                    AddArticle(imageFile!!)
+                if (sessionId == "null") {
+                    addKomu(imageFile!!)
                 } else {
                     if (pict == 0) {
                         UpdateWoImage(sessionId)
@@ -93,7 +102,25 @@ class ActivityAddCommunity : AppCompatActivity() {
                         pict = 0
                     }
                 }
+            } else {
+                Toast.makeText(this, "Form tidak lengkap", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        btnHapusKomunitas.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.apply {
+                setPositiveButton("Ok" ) { dialog, id ->
+                    delete(sessionId)
+                }
+                setNegativeButton("Cancel" ) { dialog, id -> }
+            }
+            // Set other dialog properties
+            builder.setMessage("Apa anda yakin ?")
+                    .setTitle("Hapus Komunitas")
+
+            // Create the AlertDialog
+            builder.create().show()
         }
 
         choosePict.setOnClickListener {
@@ -137,6 +164,16 @@ class ActivityAddCommunity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && data != null) {
 
@@ -158,7 +195,7 @@ class ActivityAddCommunity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun AddArticle(file: File) {
+    private fun addKomu(file: File) {
         val Config = FConfig(this)
         val loading = ProgressDialog(this)
         loading.setTitle("Adding Community ...")
@@ -177,33 +214,33 @@ class ActivityAddCommunity : AppCompatActivity() {
                     override fun onResponse(response: String) {
                         if (!response.contains("Error") && !response.contains("Gagal") && !response.contains("File")) {
                             AndroidNetworking.post(ApiEndPoint.AddCommunity)
-                                    .addBodyParameter("owner", Config.getCustom("uname", ""))
-                                    .addBodyParameter("nama", txtNamaKomunitas.text.toString())
-                                    .addBodyParameter("deskripsi", txtDeskripsiKomunitas.text.toString())
-                                    .addBodyParameter("alamat", txtAlamatKomunitas.text.toString())
-                                    .addBodyParameter("kota", txtKotaKomunitas.text.toString())
-                                    .addBodyParameter("phone", txtNomorKomunitas.text.toString())
-                                    .addBodyParameter("picture", response)
-                                    .setPriority(Priority.MEDIUM)
-                                    .build()
-                                    .getAsJSONObject(object : JSONObjectRequestListener {
-                                        override fun onResponse(response: JSONObject?) {
-                                            if (response?.getString("message")?.contains("berhasil")!!) {
-                                                loading.setMessage("Saving data ...")
-                                                startActivity(Intent(applicationContext, HomeActivity::class.java))
-                                            }
-
-                                            Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_LONG).show()
-                                            loading.dismiss()
+                                .addBodyParameter("owner", Config.getCustom("uname", ""))
+                                .addBodyParameter("nama", txtNamaKomunitas.text.toString())
+                                .addBodyParameter("deskripsi", txtDeskripsiKomunitas.text.toString())
+                                .addBodyParameter("alamat", txtAlamatKomunitas.text.toString())
+                                .addBodyParameter("kota", txtKotaKomunitas.text.toString())
+                                .addBodyParameter("phone", txtNomorKomunitas.text.toString())
+                                .addBodyParameter("picture", response)
+                                .setPriority(Priority.MEDIUM)
+                                .build()
+                                .getAsJSONObject(object : JSONObjectRequestListener {
+                                    override fun onResponse(response: JSONObject?) {
+                                        if (response?.getString("message")?.contains("berhasil")!!) {
+                                            loading.setMessage("Saving data ...")
+                                            startActivity(Intent(applicationContext, HomeActivity::class.java))
                                         }
 
-                                        override fun onError(anError: ANError?) {
-                                            loading.dismiss()
-                                            Log.d("OnError", anError?.errorDetail?.toString()!!)
-                                            Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_LONG).show()
-                                        }
+                                        Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_LONG).show()
+                                        loading.dismiss()
+                                    }
 
-                                    })
+                                    override fun onError(anError: ANError?) {
+                                        loading.dismiss()
+                                        Log.d("OnError", anError?.errorDetail?.toString()!!)
+                                        Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_LONG).show()
+                                    }
+
+                                })
                         } else {
                             loading.dismiss()
                             Toast.makeText(applicationContext, response, Toast.LENGTH_LONG).show()
@@ -212,11 +249,7 @@ class ActivityAddCommunity : AppCompatActivity() {
 
                     override fun onError(anError: ANError) {
                         loading.dismiss()
-                        Toast.makeText(
-                                applicationContext,
-                                "Error : " + anError.message,
-                                Toast.LENGTH_LONG
-                        ).show()
+                        Toast.makeText(applicationContext,"Error : " + anError.message,Toast.LENGTH_LONG).show()
                     }
                 })
     }
@@ -268,6 +301,35 @@ class ActivityAddCommunity : AppCompatActivity() {
                 override fun onError(error: ANError) {
                     Log.d("OnError", error.errorDetail.toString())
                 }
+            })
+    }
+
+    private fun delete(ID: String){
+        val loading = ProgressDialog(this)
+        loading.setTitle("Deleting ...")
+        loading.show()
+
+        AndroidNetworking.post(ApiEndPoint.Delete)
+            .addBodyParameter("id", ID)
+            .addBodyParameter("idname", "id")
+            .addBodyParameter("table", "komunitas")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("message")?.contains("berhasil")!!) {
+                        startActivity(Intent(applicationContext, HomeActivity::class.java))
+                    }
+                    loading.dismiss()
+                    Toast.makeText(this@ActivityAddCommunity, response.getString("message"), Toast.LENGTH_LONG).show()
+                }
+
+                override fun onError(anError: ANError?) {
+                    loading.dismiss()
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                    Toast.makeText(this@ActivityAddCommunity, "Connection Error", Toast.LENGTH_LONG).show()
+                }
+
             })
     }
 

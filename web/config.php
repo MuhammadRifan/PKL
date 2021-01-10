@@ -20,6 +20,15 @@
         return $result;
     }
 
+    function update_custom($db, $sql){
+        global $connect;
+
+        $result = $connect -> prepare("UPDATE $db SET $sql");
+        $result -> execute();
+
+        return $result;
+    }
+
     function find_by_id($db, $idname, $id){
         global $connect;
 

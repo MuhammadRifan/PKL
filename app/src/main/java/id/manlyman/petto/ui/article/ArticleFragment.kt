@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article.view.*
 import org.json.JSONObject
 
-
 class ArticleFragment : Fragment(), OnItemClickListener {
 
     var arrayList = ArrayList<Article>()
@@ -69,48 +68,48 @@ class ArticleFragment : Fragment(), OnItemClickListener {
         loading.show()
 
         AndroidNetworking.post(ApiEndPoint.Read)
-                .addBodyParameter("table", "artikel")
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(object : JSONObjectRequestListener {
-                    override fun onResponse(response: JSONObject?) {
-                        if (response?.getString("result").toString() == "Data kosong") {
-                            loading.dismiss()
+            .addBodyParameter("table", "artikel")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("result").toString() == "Data kosong") {
+                        loading.dismiss()
 
-                            aEmpty.visibility = View.VISIBLE
-                            aRecyclerView.visibility = View.GONE
-                        } else {
-                            aEmpty.visibility = View.GONE
-                            aRecyclerView.visibility = View.VISIBLE
+                        aEmpty.visibility = View.VISIBLE
+                        aRecyclerView.visibility = View.GONE
+                    } else {
+                        aEmpty.visibility = View.GONE
+                        aRecyclerView.visibility = View.VISIBLE
 
-                            arrayList.clear()
-                            val jsonArray = response?.optJSONArray("result")
+                        arrayList.clear()
+                        val jsonArray = response?.optJSONArray("result")
 
-                            for (i in 0 until jsonArray?.length()!!) {
-                                val jsonObject = jsonArray.optJSONObject(i)
-                                arrayList.add(Article(jsonObject.getInt("id"),
-                                    jsonObject.getString("penulis"),
-                                    jsonObject.getString("judul"),
-                                    jsonObject.getString("isi"),
-                                    jsonObject.getString("tanggal"),
-                                    jsonObject.getString("picture")))
+                        for (i in 0 until jsonArray?.length()!!) {
+                            val jsonObject = jsonArray.optJSONObject(i)
+                            arrayList.add(Article(jsonObject.getInt("id"),
+                                jsonObject.getString("penulis"),
+                                jsonObject.getString("judul"),
+                                jsonObject.getString("isi"),
+                                jsonObject.getString("tanggal"),
+                                jsonObject.getString("picture")))
 
-                                if (jsonArray.length() - 1 == i) {
-                                    loading.dismiss()
-                                    val adapter = AdapterArticle(this@ArticleFragment, arrayList)
-                                    adapter.notifyDataSetChanged()
-                                    aRecyclerView.adapter = adapter
-                                }
+                            if (jsonArray.length() - 1 == i) {
+                                loading.dismiss()
+                                val adapter = AdapterArticle(this@ArticleFragment, arrayList)
+                                adapter.notifyDataSetChanged()
+                                aRecyclerView.adapter = adapter
                             }
                         }
                     }
+                }
 
-                    override fun onError(anError: ANError?) {
-                        loading.dismiss()
-                        Log.d("OnError", anError?.errorDetail?.toString()!!)
-                        Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
-                    }
-                })
+                override fun onError(anError: ANError?) {
+                    loading.dismiss()
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                    Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
+                }
+            })
     }
 
     override fun onResume() {

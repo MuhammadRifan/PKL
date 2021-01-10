@@ -3,6 +3,7 @@ package id.manlyman.petto
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -33,13 +34,16 @@ class HomeActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_akun, R.id.nav_logout
+                R.id.nav_home, R.id.nav_akun, R.id.nav_artikel, R.id.nav_logout
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         val config = FConfig(this)
+
+        val menu: Menu = navView.menu
+        menu.findItem(R.id.nav_artikel).isVisible = config.getCustom("level", "") == "1"
 
         val header: View = navView.getHeaderView(0)
         val userProfilePic: ANImageView = header.findViewById(R.id.userProfilePic)
@@ -55,7 +59,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
+//         Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.home, menu)
         return true
     }
@@ -63,6 +67,21 @@ class HomeActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.myToko -> {
+                Toast.makeText(this, "Halu1", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.myServis -> {
+                Toast.makeText(this, "Halu2", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onResume() {

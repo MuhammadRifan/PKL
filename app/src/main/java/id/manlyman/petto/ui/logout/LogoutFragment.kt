@@ -23,7 +23,7 @@ class LogoutFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_setting, container, false)
+        val root = inflater.inflate(R.layout.fragment_logout, container, false)
         Logout()
         return root
     }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,16 @@ class ClickedArticle : AppCompatActivity() {
 //        Toast.makeText(this, sessionId, Toast.LENGTH_SHORT).show()
 
         Load(sessionId.toString())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun Load(ID: String){

@@ -21,6 +21,16 @@
         android:label="@string/menu_akun_saya"
         tools:layout="@layout/fragment_akun" >
         <action
+            android:id="@+id/action_nav_akun_to_nav_artikel"
+            app:destination="@id/nav_artikel" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_artikel"
+        android:name="id.manlyman.petto.ui.myarticle.MyArticle"
+        android:label="Artikel Saya"
+        tools:layout="@layout/fragment_my_article" >
+        <action
             android:id="@+id/action_nav_akun_to_nav_logout"
             app:destination="@id/nav_logout" />
     </fragment>

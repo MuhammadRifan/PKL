@@ -4,22 +4,27 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.BitmapRequestListener
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import id.manlyman.petto.*
 import kotlinx.android.synthetic.main.activity_add_shop.*
-import kotlinx.android.synthetic.main.activity_add_shop.choosePict
 import org.json.JSONObject
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
@@ -29,6 +34,7 @@ import java.util.*
 
 class ActivityAddShop : AppCompatActivity() {
     private var imageFile: File? = null
+    var pict = 0
 
     companion object {
         private const val IMAGE_PICK_CODE = 999
@@ -39,8 +45,20 @@ class ActivityAddShop : AppCompatActivity() {
         setContentView(R.layout.activity_add_shop)
 
         val mcurrentTime = Calendar.getInstance()
-        val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-        val minute = mcurrentTime[Calendar.MINUTE]
+        var hour: Int
+        var minute: Int
+        val sessionId = intent.getStringExtra("ID").toString()
+
+        if (sessionId == "null") {
+            supportActionBar?.title = "Tambah Toko"
+            btnHapusToko.visibility = View.GONE
+            btnTambahToko.text = "Tambah"
+        } else {
+            load(sessionId)
+            supportActionBar?.title = "Edit Toko"
+            btnHapusToko.visibility = View.VISIBLE
+            btnTambahToko.text = "Simpan"
+        }
 
         btnTambahToko.setOnClickListener {
             var error = 0
@@ -61,12 +79,12 @@ class ActivityAddShop : AppCompatActivity() {
             }
 
             if (!cbTSenin.isChecked &&
-                    !cbTSelasa.isChecked &&
-                    !cbTRabu.isChecked &&
-                    !cbTKamis.isChecked &&
-                    !cbTJumat.isChecked &&
-                    !cbTSabtu.isChecked &&
-                    !cbTMinggu.isChecked) {
+                !cbTSelasa.isChecked &&
+                !cbTRabu.isChecked &&
+                !cbTKamis.isChecked &&
+                !cbTJumat.isChecked &&
+                !cbTSabtu.isChecked &&
+                !cbTMinggu.isChecked) {
                 Toast.makeText(this, "Mohon pilih hari buka", Toast.LENGTH_SHORT).show()
                 error++
             }
@@ -86,13 +104,22 @@ class ActivityAddShop : AppCompatActivity() {
                 error++
             }
 
-            if (imageFile == null) {
+            if (imageFile == null && sessionId == "null") {
                 Toast.makeText(this, "Mohon masukan foto", Toast.LENGTH_LONG).show()
                 error++
             }
 
             if (error == 0) {
-                addShop(imageFile!!)
+                if (sessionId == "null") {
+                    addShop(imageFile!!)
+                } else {
+                    if (pict == 0) {
+                        UpdateWoImage(sessionId)
+                    } else {
+                        UpdateWiImage(sessionId, imageFile!!)
+                        pict = 0
+                    }
+                }
             } else {
                 Toast.makeText(this, "Form tidak lengkap", Toast.LENGTH_SHORT).show()
             }
@@ -100,6 +127,15 @@ class ActivityAddShop : AppCompatActivity() {
         }
 
         txtbukaToko.setOnClickListener {
+            if (txtbukaToko.text.toString().isNotEmpty()) {
+                val buka = txtbukaToko.text.toString().split(":")
+                hour = buka[0].toInt()
+                minute = buka[1].toInt()
+            } else {
+                hour = mcurrentTime[Calendar.HOUR_OF_DAY]
+                minute = mcurrentTime[Calendar.MINUTE]
+            }
+
             val mTimePicker: TimePickerDialog
             mTimePicker = TimePickerDialog(this,
                 { timePicker, selectedHour, selectedMinute ->
@@ -109,12 +145,37 @@ class ActivityAddShop : AppCompatActivity() {
         }
 
         txttutupToko.setOnClickListener {
+            if (txttutupToko.text.toString().isNotEmpty()) {
+                val tutup = txttutupToko.text.toString().split(":")
+                hour = tutup[0].toInt()
+                minute = tutup[1].toInt()
+            } else {
+                hour = mcurrentTime[Calendar.HOUR_OF_DAY]
+                minute = mcurrentTime[Calendar.MINUTE]
+            }
+
             val mTimePicker: TimePickerDialog
             mTimePicker = TimePickerDialog(this,
                     { timePicker, selectedHour, selectedMinute ->
                         fixTime(selectedHour.toString(), selectedMinute.toString(), txttutupToko)
                     }, hour, minute, true)
             mTimePicker.show()
+        }
+
+        btnHapusToko.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.apply {
+                setPositiveButton("Ok" ) { dialog, id ->
+                    delete(sessionId)
+                }
+                setNegativeButton("Cancel" ) { dialog, id -> }
+            }
+            // Set other dialog properties
+            builder.setMessage("Apa anda yakin ?")
+                    .setTitle("Hapus Fasilitas Kesehatan")
+
+            // Create the AlertDialog
+            builder.create().show()
         }
 
         choosePict.setOnClickListener {
@@ -158,6 +219,16 @@ class ActivityAddShop : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && data != null) {
 
@@ -167,6 +238,7 @@ class ActivityAddShop : AppCompatActivity() {
                 if (selectedImageUri != null) {
                     shopPict.setImageURI(selectedImageUri)
                     imageFile = File(selectedImageUri.path.toString())
+                    pict = 1
                 }
 
             } catch (e: FileNotFoundException) {
@@ -206,66 +278,261 @@ class ActivityAddShop : AppCompatActivity() {
         loading.show()
 
         AndroidNetworking.upload(ApiEndPoint.Upload)
+            .addMultipartFile("image", file)
+            .addMultipartParameter("folder","img_toko")
+            .setPriority(Priority.HIGH)
+            .build()
+            .setUploadProgressListener { bytesUploaded, totalBytes -> // do anything with progress
+                loading.setMessage("Uploading image (" + (((bytesUploaded / totalBytes) * 100)-20).toString() + "/100)")
+            }
+            .getAsString(object : StringRequestListener {
+                override fun onResponse(response: String) {
+                    if (!response.contains("Error") && !response.contains("Gagal") && !response.contains("File")) {
+                        AndroidNetworking.post(ApiEndPoint.AddShop)
+                            .addBodyParameter("owner", config.getCustom("uname", ""))
+                            .addBodyParameter("nama", txtnamaToko.text.toString())
+                            .addBodyParameter("address", txtalamatToko.text.toString())
+                            .addBodyParameter("city", txtKotaToko.text.toString())
+                            .addBodyParameter("phone", txtnomorToko.text.toString())
+                            .addBodyParameter("picture", response)
+                            .addBodyParameter("h1", cbTMinggu.isChecked.toString())
+                            .addBodyParameter("h2", cbTSenin.isChecked.toString())
+                            .addBodyParameter("h3", cbTSelasa.isChecked.toString())
+                            .addBodyParameter("h4", cbTRabu.isChecked.toString())
+                            .addBodyParameter("h5", cbTKamis.isChecked.toString())
+                            .addBodyParameter("h6", cbTJumat.isChecked.toString())
+                            .addBodyParameter("h7", cbTSabtu.isChecked.toString())
+                            .addBodyParameter("buka", txtbukaToko.text.toString())
+                            .addBodyParameter("tutup", txttutupToko.text.toString())
+                            .setPriority(Priority.MEDIUM)
+                            .build()
+                            .getAsJSONObject(object : JSONObjectRequestListener {
+                                override fun onResponse(response: JSONObject?) {
+                                    if (response?.getString("message")?.contains("berhasil")!!) {
+                                        loading.setMessage("Saving data (100/100)")
+                                        startActivity(Intent(applicationContext, HomeActivity::class.java))
+                                    }
+
+                                    Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_LONG).show()
+                                    loading.dismiss()
+                                }
+
+                                override fun onError(anError: ANError?) {
+                                    loading.dismiss()
+                                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                                    Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_LONG).show()
+                                }
+
+                            })
+                    } else {
+                        loading.dismiss()
+                        Toast.makeText(applicationContext, response, Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onError(anError: ANError) {
+                    loading.dismiss()
+                    Toast.makeText(
+                            applicationContext,
+                            "Error : " + anError.message,
+                            Toast.LENGTH_LONG
+                    ).show()
+                }
+            })
+    }
+
+    private fun load(ID: String){
+        val loading = ProgressDialog(this)
+        loading.setMessage("Loading data...")
+        loading.show()
+        pict = 0
+
+        AndroidNetworking.post(ApiEndPoint.ReadByID)
+            .addBodyParameter("table", "toko")
+            .addBodyParameter("id", ID)
+            .addBodyParameter("idname", "id")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    loading.dismiss()
+
+                    picture(response?.getString("picture").toString(), shopPict)
+                    txtnamaToko.setText(response?.getString("nama").toString())
+                    txtalamatToko.setText(response?.getString("address").toString())
+                    txtKotaToko.setText(response?.getString("city").toString())
+                    txtbukaToko.setText(response?.getString("jam_buka").toString())
+                    txttutupToko.setText(response?.getString("jam_tutup").toString())
+                    txtnomorToko.setText(response?.getString("phone").toString())
+
+                    if (response?.getString("hari_buka2").toString() != "0") cbTSenin.isChecked = true
+                    if (response?.getString("hari_buka3").toString() != "0") cbTSelasa.isChecked = true
+                    if (response?.getString("hari_buka4").toString() != "0") cbTRabu.isChecked = true
+                    if (response?.getString("hari_buka5").toString() != "0") cbTKamis.isChecked = true
+                    if (response?.getString("hari_buka6").toString() != "0") cbTJumat.isChecked = true
+                    if (response?.getString("hari_buka7").toString() != "0") cbTSabtu.isChecked = true
+                    if (response?.getString("hari_buka1").toString() != "0") cbTMinggu.isChecked = true
+                }
+
+                override fun onError(anError: ANError?) {
+                    loading.dismiss()
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                    Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_LONG).show()
+                }
+            })
+    }
+
+    private fun picture(url: String, img: ImageView){
+        AndroidNetworking.get(ApiEndPoint.Pictures + url)
+            .setTag("Foto")
+            .setPriority(Priority.MEDIUM)
+            .setBitmapConfig(Bitmap.Config.ARGB_8888)
+            .build()
+            .getAsBitmap(object : BitmapRequestListener {
+                override fun onResponse(bitmap: Bitmap) {
+                    img.setImageBitmap(bitmap)
+                }
+
+                override fun onError(error: ANError) {
+                    Log.d("OnError", error.errorDetail.toString())
+                }
+            })
+    }
+
+    private fun delete(ID: String){
+        val loading = ProgressDialog(this)
+        loading.setTitle("Deleting ...")
+        loading.show()
+
+        AndroidNetworking.post(ApiEndPoint.Delete)
+            .addBodyParameter("id", ID)
+            .addBodyParameter("idname", "id")
+            .addBodyParameter("table", "toko")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("message")?.contains("berhasil")!!) {
+                        finish()
+                    }
+                    loading.dismiss()
+                    Toast.makeText(this@ActivityAddShop, response.getString("message"), Toast.LENGTH_LONG).show()
+                }
+
+                override fun onError(anError: ANError?) {
+                    loading.dismiss()
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                    Toast.makeText(this@ActivityAddShop, "Connection Error", Toast.LENGTH_LONG).show()
+                }
+
+            })
+    }
+
+    private fun UpdateWoImage(ID: String){
+        val loading = ProgressDialog(this)
+        loading.setTitle("Updating ...")
+        loading.setMessage("Saving data ...")
+        loading.show()
+
+        AndroidNetworking.post(ApiEndPoint.UpdateShop)
+            .addBodyParameter("id", ID)
+            .addBodyParameter("nama", txtnamaToko.text.toString())
+            .addBodyParameter("address", txtalamatToko.text.toString())
+            .addBodyParameter("city", txtKotaToko.text.toString())
+            .addBodyParameter("phone", txtnomorToko.text.toString())
+            .addBodyParameter("picture", "")
+            .addBodyParameter("h1", cbTMinggu.isChecked.toString())
+            .addBodyParameter("h2", cbTSenin.isChecked.toString())
+            .addBodyParameter("h3", cbTSelasa.isChecked.toString())
+            .addBodyParameter("h4", cbTRabu.isChecked.toString())
+            .addBodyParameter("h5", cbTKamis.isChecked.toString())
+            .addBodyParameter("h6", cbTJumat.isChecked.toString())
+            .addBodyParameter("h7", cbTSabtu.isChecked.toString())
+            .addBodyParameter("buka", txtbukaToko.text.toString())
+            .addBodyParameter("tutup", txttutupToko.text.toString())
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("message")?.contains("berhasil")!!) {
+                        loading.setMessage("Saving data ...")
+                        load(response.getString("id"))
+                    }
+                    loading.dismiss()
+                    Toast.makeText(this@ActivityAddShop, response.getString("message"), Toast.LENGTH_LONG).show()
+                }
+
+                override fun onError(anError: ANError?) {
+                    loading.dismiss()
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                    Toast.makeText(this@ActivityAddShop, "Connection Error", Toast.LENGTH_LONG).show()
+                }
+
+            })
+    }
+
+    private fun UpdateWiImage(ID: String, file: File) {
+        val loading = ProgressDialog(this)
+        loading.setTitle("Updating ...")
+        loading.setMessage("Uploading image (0/100)")
+        loading.show()
+
+        AndroidNetworking.upload(ApiEndPoint.Upload)
                 .addMultipartFile("image", file)
-                .addMultipartParameter("folder","img_toko")
+                .addMultipartParameter("folder", "img_toko")
                 .setPriority(Priority.HIGH)
                 .build()
                 .setUploadProgressListener { bytesUploaded, totalBytes -> // do anything with progress
-                    loading.setMessage("Uploading image (" + (((bytesUploaded / totalBytes) * 100)-20).toString() + "/100)")
+                    loading.setMessage("Uploading image (" + ((bytesUploaded / totalBytes) * 100).toString() + "/100)")
                 }
                 .getAsString(object : StringRequestListener {
                     override fun onResponse(response: String) {
                         if (!response.contains("Error") && !response.contains("Gagal") && !response.contains("File")) {
-                            AndroidNetworking.post(ApiEndPoint.AddShop)
-                                    .addBodyParameter("owner", config.getCustom("uname", ""))
-                                    .addBodyParameter("nama", txtnamaToko.text.toString())
-                                    .addBodyParameter("address", txtalamatToko.text.toString())
-                                    .addBodyParameter("city", txtKotaToko.text.toString())
-                                    .addBodyParameter("phone", txtnomorToko.text.toString())
-                                    .addBodyParameter("picture", response)
-                                    .addBodyParameter("h1", cbTMinggu.isChecked.toString())
-                                    .addBodyParameter("h2", cbTSenin.isChecked.toString())
-                                    .addBodyParameter("h3", cbTSelasa.isChecked.toString())
-                                    .addBodyParameter("h4", cbTRabu.isChecked.toString())
-                                    .addBodyParameter("h5", cbTKamis.isChecked.toString())
-                                    .addBodyParameter("h6", cbTJumat.isChecked.toString())
-                                    .addBodyParameter("h7", cbTSabtu.isChecked.toString())
-                                    .addBodyParameter("buka", txtbukaToko.text.toString())
-                                    .addBodyParameter("tutup", txttutupToko.text.toString())
-                                    .setPriority(Priority.MEDIUM)
-                                    .build()
-                                    .getAsJSONObject(object : JSONObjectRequestListener {
-                                        override fun onResponse(response: JSONObject?) {
-                                            if (response?.getString("message")?.contains("berhasil")!!) {
-                                                loading.setMessage("Saving data (100/100)")
-                                                startActivity(Intent(applicationContext, HomeActivity::class.java))
-                                            }
-
-                                            Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_LONG).show()
-                                            loading.dismiss()
+                            AndroidNetworking.post(ApiEndPoint.UpdateShop)
+                                .addBodyParameter("id", ID)
+                                .addBodyParameter("nama", txtnamaToko.text.toString())
+                                .addBodyParameter("address", txtalamatToko.text.toString())
+                                .addBodyParameter("city", txtKotaToko.text.toString())
+                                .addBodyParameter("phone", txtnomorToko.text.toString())
+                                .addBodyParameter("picture", response)
+                                .addBodyParameter("h1", cbTMinggu.isChecked.toString())
+                                .addBodyParameter("h2", cbTSenin.isChecked.toString())
+                                .addBodyParameter("h3", cbTSelasa.isChecked.toString())
+                                .addBodyParameter("h4", cbTRabu.isChecked.toString())
+                                .addBodyParameter("h5", cbTKamis.isChecked.toString())
+                                .addBodyParameter("h6", cbTJumat.isChecked.toString())
+                                .addBodyParameter("h7", cbTSabtu.isChecked.toString())
+                                .addBodyParameter("buka", txtbukaToko.text.toString())
+                                .addBodyParameter("tutup", txttutupToko.text.toString())
+                                .setPriority(Priority.MEDIUM)
+                                .build()
+                                .getAsJSONObject(object : JSONObjectRequestListener {
+                                    override fun onResponse(response: JSONObject?) {
+                                        if (response?.getString("message")?.contains("berhasil")!!) {
+                                            loading.setMessage("Saving data ...")
+                                            load(response.getString("id"))
                                         }
+                                        loading.dismiss()
+                                        Toast.makeText(this@ActivityAddShop, response.getString("message"), Toast.LENGTH_LONG).show()
+                                    }
 
-                                        override fun onError(anError: ANError?) {
-                                            loading.dismiss()
-                                            Log.d("OnError", anError?.errorDetail?.toString()!!)
-                                            Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_LONG).show()
-                                        }
-
-                                    })
+                                    override fun onError(anError: ANError?) {
+                                        loading.dismiss()
+                                        Log.d("OnError", anError?.errorDetail?.toString()!!)
+                                        Toast.makeText(this@ActivityAddShop, "Connection Error", Toast.LENGTH_LONG).show()
+                                    }
+                                })
                         } else {
                             loading.dismiss()
-                            Toast.makeText(applicationContext, response, Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@ActivityAddShop, response, Toast.LENGTH_LONG).show()
                         }
                     }
 
                     override fun onError(anError: ANError) {
                         loading.dismiss()
-                        Toast.makeText(
-                                applicationContext,
-                                "Error : " + anError.message,
-                                Toast.LENGTH_LONG
-                        ).show()
+                        Toast.makeText(this@ActivityAddShop, "Error : " + anError.message, Toast.LENGTH_LONG).show()
                     }
                 })
     }
+
 }

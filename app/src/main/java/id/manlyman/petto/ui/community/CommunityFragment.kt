@@ -48,10 +48,6 @@ class CommunityFragment : Fragment(), OnItemClickListener {
         val intent = Intent(requireContext(), ClickedCommunity::class.java)
         intent.putExtra("ID", community.id.toString())
         startActivity(intent)
-
-//        Toast.makeText(requireContext(), "ID : ${community.id}", Toast.LENGTH_LONG)
-//                .show()
-//        Log.i("USER_", community.id.toString())
     }
 
     private fun loadCommunity(){
@@ -105,6 +101,8 @@ class CommunityFragment : Fragment(), OnItemClickListener {
     }
 
     private fun cekKomu(ID: String, Btn: FloatingActionButton){
+        val intent = Intent(requireContext(), ActivityAddCommunity::class.java)
+
         AndroidNetworking.post(ApiEndPoint.ReadByID)
             .addBodyParameter("table", "komunitas")
             .addBodyParameter("id", ID)
@@ -114,18 +112,14 @@ class CommunityFragment : Fragment(), OnItemClickListener {
             .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
                     if (response?.getString("message")?.contains("ada")!!) {
-                        val intent = Intent(requireContext(), ActivityAddCommunity::class.java)
-                        intent.putExtra("ID", response.getString("id"))
-
                         Btn.setImageResource(android.R.drawable.ic_menu_edit)
-                        Btn.setOnClickListener {
-                            startActivity(intent)
-                        }
+                        intent.putExtra("ID", response.getString("id"))
                     } else {
                         Btn.setImageResource(android.R.drawable.ic_input_add)
-                        Btn.setOnClickListener {
-                            startActivity(Intent(requireContext(), ActivityAddCommunity::class.java))
-                        }
+                    }
+
+                    Btn.setOnClickListener {
+                        startActivity(intent)
                     }
                 }
 

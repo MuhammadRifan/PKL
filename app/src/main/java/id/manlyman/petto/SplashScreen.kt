@@ -64,10 +64,10 @@ class SplashScreen : AppCompatActivity() {
                             Config.setCustom("srtv", response.getString("srtv").toString())
                             Config.setCustom("level", response.getString("level").toString())
 
-                            Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_SHORT).show()
                             startActivity(Intent(applicationContext, HomeActivity::class.java))
                         } else {
-                            Toast.makeText(applicationContext, "Login gagal silahkan login kembali", Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext, "Login gagal silahkan login kembali", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(applicationContext, Login::class.java))
                             Config.delCustom()
                         }

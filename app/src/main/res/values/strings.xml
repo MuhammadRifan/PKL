@@ -24,4 +24,6 @@
     <string name="title_facility">Facility</string>
     <string name="title_community">Community</string>
     <string name="title_adopt_breed">Adopt &amp; Breed</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

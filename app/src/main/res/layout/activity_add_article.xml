@@ -75,7 +75,7 @@
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
                     android:paddingBottom="5dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/bText"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,7 +107,7 @@
                     android:paddingEnd="1dp"
                     android:paddingBottom="5dp"
                     android:singleLine="false"
-                    android:textColor="@color/black"
+                    android:textColor="@color/bText"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,15 +116,30 @@
                 android:layout_width="139dp"
                 android:layout_height="56dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/purple"
                 android:text="Tambahkan"
                 android:textColor="@color/white"
                 app:cornerRadius="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btnHapusArtikel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/artikelText" />
+
+            <Button
+                android:id="@+id/btnHapusArtikel"
+                android:layout_width="139dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="@color/Tutup"
+                android:text="HAPUS"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:cornerRadius="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnTambahArtikel" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

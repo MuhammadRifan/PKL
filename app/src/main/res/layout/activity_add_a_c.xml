@@ -339,15 +339,29 @@
                 android:layout_width="139dp"
                 android:layout_height="56dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/purple"
-                android:text="Tambahkan"
+                android:text="Tambah"
+                android:textColor="@color/white"
+                app:cornerRadius="50dp"
+                app:layout_constraintBottom_toTopOf="@+id/btnHapusAC"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nomorAC" />
+
+            <Button
+                android:id="@+id/btnHapusAC"
+                android:layout_width="139dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="@color/Tutup"
+                android:text="Hapus"
                 android:textColor="@color/white"
                 app:cornerRadius="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomorAC" />
+                app:layout_constraintTop_toBottomOf="@+id/btnTambahAC" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

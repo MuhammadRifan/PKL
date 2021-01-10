@@ -30,7 +30,6 @@ import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.io.FileNotFoundException
 
-
 class AccountFragment : Fragment() {
     private var imageFile: File? = null
     var piew: View? = null

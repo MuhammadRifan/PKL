@@ -63,7 +63,7 @@ class Login : AppCompatActivity() {
                 override fun onResponse(response: JSONObject?) {
                     loading.dismiss()
 
-                    Toast.makeText(applicationContext, response?.getString("message"), Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, response?.getString("message"), Toast.LENGTH_SHORT).show()
 
                     if (response?.getString("message")?.contains("berhasil")!!) {
                         val Config = FConfig(applicationContext)
