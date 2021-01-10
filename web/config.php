@@ -5,7 +5,12 @@
     function select($db){
         global $connect;
 
-        $result = $connect -> prepare("SELECT * FROM $db");
+        if ($db == "artikel") {
+            $result = $connect -> prepare("SELECT * FROM $db ORDER BY tanggal ASC, id DESC");
+        } else {
+            $result = $connect -> prepare("SELECT * FROM $db ORDER BY nama ASC");
+        }
+
         $result -> execute();
 
         return $result;
@@ -13,6 +18,10 @@
 
     function select_custom($db, $sql){
         global $connect;
+
+        if ($db == "artikel") {
+            $sql .= " ORDER BY judul ASC";
+        }
 
         $result = $connect -> prepare("SELECT * FROM $db WHERE $sql");
         $result -> execute();
@@ -44,7 +53,7 @@
 
         $result = $connect -> prepare("DELETE FROM $db WHERE $idname=?");
         $result -> bindParam(1, $id);
-        $result -> execute();
+        return $result -> execute();
     }
 
     function insertPengguna($satu, $dua, $tiga, $empat, $lima, $enam){

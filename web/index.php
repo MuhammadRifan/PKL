@@ -11,6 +11,12 @@
         case 'ReadByID':
             ReadByID();
             break;
+        case 'ReadCostum':
+            ReadCostum();
+            break;
+        case 'Delete':
+            Deletes();
+            break;
         case 'Login':
             Login();
             break;
@@ -29,17 +35,29 @@
         case 'AddArticle':
             AddArticle();
             break;
+        case 'UpdateArticle':
+            UpdateArticle();
+            break;
         case 'CekOldPass':
             CekOldPass();
             break;
         case 'AddShop':
             AddShop();
             break;
+        case 'UpdateShop':
+            UpdateShop();
+            break;
         case 'AddAC':
             AddAC();
             break;
+        case 'UpdateAC':
+            UpdateAC();
+            break;
         case 'AddHealth':
             AddHealth();
+            break;
+        case 'UpdateHealth':
+            UpdateHealth();
             break;
         case 'AddCommunity':
             AddCommunity();
@@ -81,7 +99,35 @@
         }else{
             echo json_encode(array('message' => 'Data tidak ditemukan'));
         }
+    }
 
+    function ReadCostum() {
+        $table = $_POST['table'];
+        $column = $_POST['column'];
+        $value = $_POST['value'];
+
+        $query = select_custom($table, "$column = '$value'");
+        while($row = $query -> fetch()){
+            $result[] = $row;
+        }
+
+        if (isset($result)) {
+            echo json_encode(array('result' => $result));
+        } else {
+            echo json_encode(array('result' => 'Data kosong'));
+        }
+    }
+
+    function Deletes() {
+        $table = $_POST['table'];
+        $idname = $_POST['idname'];
+        $id = $_POST['id'];
+
+        if (delete($table, $idname, $id)) {
+            echo json_encode(array('message' => 'Data berhasil dihapus'));
+        }else{
+            echo json_encode(array('message' => 'Data gagal dihapus'));
+        }
     }
 
     function Login() {
@@ -91,23 +137,20 @@
         if ( !$email || !$pass) {
             echo json_encode(array('message' => 'Form ada yang kosong'));
         } else {
-            $query = select("pengguna");
-            $id = null;
-            while ($row = $query -> fetch()) {
-                if ($row['email'] == $email && (password_verify($pass, $row['pass']) || $pass == $row['pass'])) {
-                    $id = $row['username'];
-                }
-            }
+            $result = find_by_id("pengguna", "email", $email) -> fetch();
 
-            if ($id != null) {
-                $result = find_by_id("pengguna", "username", $id) -> fetch();
-                if ($result['level'] == 1) {
-                    $result['message'] = "Login dokter berhasil";
+            if (!empty($result)) {
+                if (password_verify($pass, $result['pass']) || $pass == $result['pass']) {
+                    if ($result['level'] == 1) {
+                        $result['message'] = "Login dokter berhasil";
+                    } else {
+                        $result['message'] = "Login pengguna berhasil";
+                    }
+
+                    echo json_encode($result);
                 } else {
-                    $result['message'] = "Login pengguna berhasil";
+                    echo json_encode(array('message' => 'Email atau Password Salah'));
                 }
-
-                echo json_encode($result);
             } else {
                 echo json_encode(array('message' => 'Email atau Password Salah'));
             }
@@ -258,6 +301,31 @@
         }
     }
 
+    function UpdateArticle() {
+        $id = $_POST['id'];
+        $judul = $_POST['judul'];
+        $isi = $_POST['isi'];
+        $picture = $_POST['picture'];
+
+        if(!$judul || !$isi){
+            echo json_encode(array('message' => 'Form ada yang kosong'));
+        }else{
+            if ($picture == "") {
+                $sql = "judul = '$judul', isi = '$isi' WHERE id = $id";
+            } else {
+                $sql = "judul = '$judul', isi = '$isi', picture = '$picture' WHERE id = $id";
+            }
+
+            if(update_custom("artikel", $sql)){
+                $result = find_by_id("artikel", "id", $id) -> fetch();
+                $result['message'] = "Update artikel berhasil";
+                echo json_encode($result);
+            }else{
+                echo json_encode(array('message' => 'Update artikel gagal'));
+            }
+        }
+    }
+
     function AddShop() {
         $owner = $_POST['owner'];
         $nama = $_POST['nama'];
@@ -297,7 +365,79 @@
             } else {
                 echo json_encode(array('message' => 'Form ada yang kosong'));
             }
+        }
+    }
 
+    function UpdateShop() {
+        $id = $_POST['id'];
+        $nama = $_POST['nama'];
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $phone = $_POST['phone'];
+        $picture = $_POST['picture'];
+        $h1 = $_POST['h1'];
+        $h2 = $_POST['h2'];
+        $h3 = $_POST['h3'];
+        $h4 = $_POST['h4'];
+        $h5 = $_POST['h5'];
+        $h6 = $_POST['h6'];
+        $h7 = $_POST['h7'];
+        $jb = $_POST['buka'];
+        $jt = $_POST['tutup'];
+
+        if(!$nama || !$address || !$city || !$phone || !$jb || !$jt){
+            echo json_encode(array('message' => 'Form ada yang kosong1'));
+        } else {
+            if ($h1 || $h2 || $h3 || $h4 || $h5 || $h6 || $h7) {
+                $h1 = ($h1 == "true") ? 1 : 0;
+                $h2 = ($h2 == "true") ? 2 : 0;
+                $h3 = ($h3 == "true") ? 3 : 0;
+                $h4 = ($h4 == "true") ? 4 : 0;
+                $h5 = ($h5 == "true") ? 5 : 0;
+                $h6 = ($h6 == "true") ? 6 : 0;
+                $h7 = ($h7 == "true") ? 7 : 0;
+
+                if ($picture == "") {
+                    $sql = "nama = '$nama',
+                    address = '$address',
+                    city = '$city',
+                    phone = '$phone',
+                    hari_buka1 = $h1,
+                    hari_buka2 = $h2,
+                    hari_buka3 = $h3,
+                    hari_buka4 = $h4,
+                    hari_buka5 = $h5,
+                    hari_buka6 = $h6,
+                    hari_buka7 = $h7,
+                    jam_buka = '$jb',
+                    jam_tutup = '$jt' WHERE id = $id";
+                } else {
+                    $sql = "nama = '$nama',
+                    address = '$address',
+                    city = '$city',
+                    phone = '$phone',
+                    picture = '$picture',
+                    hari_buka1 = $h1,
+                    hari_buka2 = $h2,
+                    hari_buka3 = $h3,
+                    hari_buka4 = $h4,
+                    hari_buka5 = $h5,
+                    hari_buka6 = $h6,
+                    hari_buka7 = $h7,
+                    jam_buka = '$jb',
+                    jam_tutup = '$jt' WHERE id = $id";
+                }
+
+                if(update_custom("toko", $sql)){
+                    $result = find_by_id("toko", "id", $id) -> fetch();
+                    $result['message'] = "Update toko berhasil";
+                    echo json_encode($result);
+                }else{
+                    echo json_encode(array('message' => 'Update toko gagal'));
+                }
+            } else {
+                echo json_encode(array('message' => 'Form ada yang kosong2'));
+            }
         }
     }
 
@@ -344,6 +484,79 @@
         }
     }
 
+    function UpdateAC() {
+        $id = $_POST['id'];
+        $nama = $_POST['nama'];
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $phone = $_POST['phone'];
+        $picture = $_POST['picture'];
+        $h1 = $_POST['h1'];
+        $h2 = $_POST['h2'];
+        $h3 = $_POST['h3'];
+        $h4 = $_POST['h4'];
+        $h5 = $_POST['h5'];
+        $h6 = $_POST['h6'];
+        $h7 = $_POST['h7'];
+        $jb = $_POST['buka'];
+        $jt = $_POST['tutup'];
+
+        if(!$nama || !$address || !$city || !$phone || !$jb || !$jt){
+            echo json_encode(array('message' => 'Form ada yang kosong1'));
+        } else {
+            if ($h1 || $h2 || $h3 || $h4 || $h5 || $h6 || $h7) {
+                $h1 = ($h1 == "true") ? 1 : 0;
+                $h2 = ($h2 == "true") ? 2 : 0;
+                $h3 = ($h3 == "true") ? 3 : 0;
+                $h4 = ($h4 == "true") ? 4 : 0;
+                $h5 = ($h5 == "true") ? 5 : 0;
+                $h6 = ($h6 == "true") ? 6 : 0;
+                $h7 = ($h7 == "true") ? 7 : 0;
+
+                if ($picture == "") {
+                    $sql = "nama = '$nama',
+                    address = '$address',
+                    city = '$city',
+                    phone = '$phone',
+                    hari_buka1 = $h1,
+                    hari_buka2 = $h2,
+                    hari_buka3 = $h3,
+                    hari_buka4 = $h4,
+                    hari_buka5 = $h5,
+                    hari_buka6 = $h6,
+                    hari_buka7 = $h7,
+                    jam_buka = '$jb',
+                    jam_tutup = '$jt' WHERE id = $id";
+                } else {
+                    $sql = "nama = '$nama',
+                    address = '$address',
+                    city = '$city',
+                    phone = '$phone',
+                    picture = '$picture',
+                    hari_buka1 = $h1,
+                    hari_buka2 = $h2,
+                    hari_buka3 = $h3,
+                    hari_buka4 = $h4,
+                    hari_buka5 = $h5,
+                    hari_buka6 = $h6,
+                    hari_buka7 = $h7,
+                    jam_buka = '$jb',
+                    jam_tutup = '$jt' WHERE id = $id";
+                }
+
+                if(update_custom("animalcare", $sql)){
+                    $result = find_by_id("animalcare", "id", $id) -> fetch();
+                    $result['message'] = "Update animal care berhasil";
+                    echo json_encode($result);
+                }else{
+                    echo json_encode(array('message' => 'Update animal care gagal'));
+                }
+            } else {
+                echo json_encode(array('message' => 'Form ada yang kosong2'));
+            }
+        }
+    }
+
     function AddHealth() {
         $sip = $_POST['sip'];
         $owner = $_POST['owner'];
@@ -378,14 +591,93 @@
 
                 $sql = "($sip, '$owner', '$nama', '$deskripsi', '$address', '$city', '$phone', '$picture', $h1, $h2, $h3, $h4, $h5, $h6, $h7, '$jb', '$jt')";
                 if(insertCustom("faskes", $sql)){
-                    echo json_encode(array('message' => 'Tambah animal care berhasil'));
+                    echo json_encode(array('message' => 'Tambah fasilitas kesehatan berhasil'));
                 }else{
-                    echo json_encode(array('message' => 'Tambah animal care gagal'));
+                    echo json_encode(array('message' => 'Tambah fasilitas kesehatan gagal'));
                 }
             } else {
                 echo json_encode(array('message' => 'Form ada yang kosong'));
             }
 
+        }
+    }
+
+    function UpdateHealth() {
+        $oldsip = $_POST['siplama'];
+        $sip = $_POST['sip'];
+        $nama = $_POST['nama'];
+        $deskripsi = $_POST['deskripsi'];
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $phone = $_POST['phone'];
+        $picture = $_POST['picture'];
+        $h1 = $_POST['h1'];
+        $h2 = $_POST['h2'];
+        $h3 = $_POST['h3'];
+        $h4 = $_POST['h4'];
+        $h5 = $_POST['h5'];
+        $h6 = $_POST['h6'];
+        $h7 = $_POST['h7'];
+        $jb = $_POST['buka'];
+        $jt = $_POST['tutup'];
+
+        if(!$sip || !$nama || !$deskripsi || !$address || !$city || !$phone || !$jb || !$jt){
+            echo json_encode(array('message' => 'Form ada yang kosong1'));
+        } else {
+            if ($h1 || $h2 || $h3 || $h4 || $h5 || $h6 || $h7) {
+                $h1 = ($h1 == "true") ? 1 : 0;
+                $h2 = ($h2 == "true") ? 2 : 0;
+                $h3 = ($h3 == "true") ? 3 : 0;
+                $h4 = ($h4 == "true") ? 4 : 0;
+                $h5 = ($h5 == "true") ? 5 : 0;
+                $h6 = ($h6 == "true") ? 6 : 0;
+                $h7 = ($h7 == "true") ? 7 : 0;
+
+                if ($picture == "") {
+                    $sql = "sip = '$sip',
+                    nama = '$nama',
+                    description = '$deskripsi',
+                    address = '$address',
+                    city = '$city',
+                    phone = '$phone',
+                    hari_buka1 = $h1,
+                    hari_buka2 = $h2,
+                    hari_buka3 = $h3,
+                    hari_buka4 = $h4,
+                    hari_buka5 = $h5,
+                    hari_buka6 = $h6,
+                    hari_buka7 = $h7,
+                    jam_buka = '$jb',
+                    jam_tutup = '$jt' WHERE sip = $oldsip";
+                } else {
+                    $sql = "sip = '$sip',
+                    nama = '$nama',
+                    description = '$deskripsi',
+                    address = '$address',
+                    city = '$city',
+                    phone = '$phone',
+                    picture = '$picture',
+                    hari_buka1 = $h1,
+                    hari_buka2 = $h2,
+                    hari_buka3 = $h3,
+                    hari_buka4 = $h4,
+                    hari_buka5 = $h5,
+                    hari_buka6 = $h6,
+                    hari_buka7 = $h7,
+                    jam_buka = '$jb',
+                    jam_tutup = '$jt' WHERE sip = $oldsip";
+                }
+
+                if(update_custom("faskes", $sql)){
+                    $result = find_by_id("faskes", "sip", $sip) -> fetch();
+                    $result['message'] = "Update fasilitas kesehatan berhasil";
+                    echo json_encode($result);
+                }else{
+                    echo json_encode(array('message' => 'Update fasilitas kesehatan gagal'));
+                }
+            } else {
+                echo json_encode(array('message' => 'Form ada yang kosong2'));
+            }
         }
     }
 
@@ -401,7 +693,7 @@
         if(!$owner || !$nama || !$des || !$alamat || !$kota || !$phone || !$picture){
             echo json_encode(array('message' => 'Form ada yang kosong'));
         }else{
-            $sql = "(NULL, '$owner', '$nama', '$des', '$alamat', '$kota', $phone, '$picture')";
+            $sql = "(NULL, '$owner', '$nama', '$des', '$alamat', '$kota', '$phone', '$picture')";
             if(insertCustom("komunitas", $sql)){
                 echo json_encode(array('message' => 'Komunitas berhasil dibuat'));
             }else{
@@ -437,42 +729,4 @@
             }
         }
     }
-
-    if ($page == "deleteyy") {
-        $id = $_POST['id'];
-
-        if( !$id ){
-            echo json_encode(array('message'=>'required field is empty.'));
-        }else{
-            $query = find_by_id("test", "id", $id);
-            $result = $query -> rowCount();
-
-            if($result == 1){
-                delete("test", $id);
-                echo json_encode(array('message'=>'delete berhasil.'));
-            }else{
-                echo json_encode(array('message'=>'delete gagal.'));
-            }
-        }
-    } else if ($page == "findID") {
-        $id = $_POST['id'];
-
-        if( !$id ){
-            echo json_encode(array('message'=>'required field is empty.'));
-        }else{
-            $query = find_by_id("test", "id", $id);
-            $result = $query -> rowCount();
-
-            if($result == 1){
-                echo json_encode($query -> fetch());
-            }else{
-                echo json_encode(array('message'=>'ID tidak ditemukan'));
-            }
-        }
-    } else {
-        // echo json_encode(array('message'=>'Hello'));
-    }
-
-
-
 ?>
