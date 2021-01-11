@@ -83,7 +83,9 @@ class AnimalCareFragment : Fragment(), OnItemClickListener {
                                 jsonObject.getInt("hari_buka4"),
                                 jsonObject.getInt("hari_buka5"),
                                 jsonObject.getInt("hari_buka6"),
-                                jsonObject.getInt("hari_buka7")))
+                                jsonObject.getInt("hari_buka7"),
+                                jsonObject.getString("jam_buka"),
+                                jsonObject.getString("jam_tutup")))
 
                             if (jsonArray?.length() - 1 == i) {
                                 loading.dismiss()

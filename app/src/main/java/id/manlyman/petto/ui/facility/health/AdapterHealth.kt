@@ -37,25 +37,51 @@ class Holder(view: View) : RecyclerView.ViewHolder(view){
 
         var buka = 0
 
-        if (facility.h1 == dayNow) {
-            buka = 1
-        } else if (facility.h2 == dayNow) {
-            buka = 1
-        } else if (facility.h3 == dayNow) {
-            buka = 1
-        } else if (facility.h4 == dayNow) {
-            buka = 1
-        } else if (facility.h5 == dayNow) {
-            buka = 1
-        } else if (facility.h6 == dayNow) {
-            buka = 1
-        } else if (facility.h7 == dayNow) {
-            buka = 1
+        when {
+            facility.h1 == dayNow -> {
+                buka = 1
+            }
+            facility.h2 == dayNow -> {
+                buka = 1
+            }
+            facility.h3 == dayNow -> {
+                buka = 1
+            }
+            facility.h4 == dayNow -> {
+                buka = 1
+            }
+            facility.h5 == dayNow -> {
+                buka = 1
+            }
+            facility.h6 == dayNow -> {
+                buka = 1
+            }
+            facility.h7 == dayNow -> {
+                buka = 1
+            }
         }
 
         if (buka == 1) {
-            btn.setBackgroundColor(bukaCol)
-            btn.text = "Buka"
+            val hour = Calendar.getInstance()[Calendar.HOUR_OF_DAY]
+            val mnt = Calendar.getInstance()[Calendar.MINUTE]
+            var jamand = hour.toString()
+
+            if (mnt.toString().length == 1) jamand += "0$mnt"
+            else jamand += mnt.toString()
+
+            val jambuka = facility.buka.toString().split(":")
+            val bukadb = (jambuka[0] + jambuka[1]).toInt()
+
+            val jamtutup = facility.tutup.toString().split(":")
+            val tutupdb = (jamtutup[0] + jamtutup[1]).toInt()
+
+            if (jamand.toInt() in bukadb..tutupdb) {
+                btn.setBackgroundColor(bukaCol)
+                btn.text = "Buka"
+            } else {
+                btn.setBackgroundColor(tutupCol)
+                btn.text = "Tutup"
+            }
         } else {
             btn.setBackgroundColor(tutupCol)
             btn.text = "Tutup"
@@ -74,7 +100,7 @@ class AdapterHealth(private val itemClickListener: OnItemClickListener, private 
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val user = arrayList.get(position)
+        val user = arrayList[position]
         holder.bind(user, itemClickListener)
     }
 

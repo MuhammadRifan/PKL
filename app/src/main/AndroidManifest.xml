@@ -18,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Petto">
         <activity
+            android:name=".ui.facility.myshop.ActivityMyShop"
+            android:parentActivityName=".HomeActivity"/>
+        <activity
+            android:name=".ui.facility.paketproduk.ActivityFormPP"
+            android:parentActivityName=".HomeActivity"/>
+        <activity
             android:name=".ui.facility.shop.ActivityAddShop"
             android:parentActivityName=".HomeActivity" />
         <activity
@@ -34,7 +40,7 @@
             android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".Areyou"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait">

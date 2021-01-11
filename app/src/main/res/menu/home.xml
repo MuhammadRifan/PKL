@@ -7,6 +7,6 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/myServis"
-        android:title="My Services"
+        android:title="My Service"
         app:showAsAction="never" />
 </menu>

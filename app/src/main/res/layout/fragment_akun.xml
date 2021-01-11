@@ -18,15 +18,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.androidnetworking.widget.ANImageView
+            <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/acProfile"
-                android:layout_width="138dp"
-                android:layout_height="138dp"
-                android:layout_marginTop="64dp"
-                android:src="@drawable/ic_launcher_background"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="48dp"
+                app:civ_background_color="@color/teal_200"
+                app:civ_border_color="@color/purple"
+                app:civ_border_width="5dp"
+                app:civ_shadow="false"
+                app:civ_shadow_color="#7A7A7A"
+                app:civ_shadow_radius="5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/logo_ori_background" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/changePict"
@@ -34,8 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="100dp"
                 android:layout_marginTop="92dp"
+                android:backgroundTint="@color/purple_200"
                 android:clickable="true"
-                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@+id/acProfile"
                 app:layout_constraintTop_toTopOf="@+id/acProfile"
                 app:srcCompat="@android:drawable/ic_input_add" />
@@ -45,10 +51,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/acProfile">
@@ -77,7 +83,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/acNamaLayout">
@@ -106,7 +112,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/black"
                 app:helperText="Kosongi bila tidak perlu"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +142,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/black"
                 app:helperText="Kosongi bila tidak perlu"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -167,7 +173,7 @@
                 android:layout_marginEnd="32dp"
                 android:focusableInTouchMode="false"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/acConfirmPassLayout">
@@ -199,7 +205,7 @@
                 android:layout_marginEnd="32dp"
                 android:focusableInTouchMode="false"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/acNoTelpLayout">
@@ -230,7 +236,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="32dp"
-                android:backgroundTint="#9024B8"
+                android:backgroundTint="@color/Purpleee"
                 android:text="Edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

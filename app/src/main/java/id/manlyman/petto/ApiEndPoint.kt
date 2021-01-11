@@ -4,6 +4,7 @@ class ApiEndPoint {
     companion object {
 
         private val SERVER = "http://192.168.1.5/PKL/"
+//        private val SERVER = "http://pklpetto.000webhostapp.com/"
 //        private val SERVER = "http://localhost/Petto/web"
 //        private val SERVER = "http://10.0.2.2"
         val Register = SERVER + "?p=Register"
@@ -26,6 +27,9 @@ class ApiEndPoint {
         val UpdateHealth = SERVER + "?p=UpdateHealth"
         val AddCommunity = SERVER + "?p=AddCommunity"
         val UpdateCommunity = SERVER + "?p=UpdateCommunity"
+        val ReadPP = SERVER + "?p=ReadPP"
+        val AddPP = SERVER + "?p=AddPP"
+        val UpdatePP = SERVER + "?p=UpdatePP"
         val Find_ID = SERVER + "?p=findID"
     }
 }

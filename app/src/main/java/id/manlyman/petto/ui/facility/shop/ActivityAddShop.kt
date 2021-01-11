@@ -172,7 +172,7 @@ class ActivityAddShop : AppCompatActivity() {
             }
             // Set other dialog properties
             builder.setMessage("Apa anda yakin ?")
-                    .setTitle("Hapus Fasilitas Kesehatan")
+                    .setTitle("Hapus Toko")
 
             // Create the AlertDialog
             builder.create().show()
@@ -220,7 +220,7 @@ class ActivityAddShop : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 return true

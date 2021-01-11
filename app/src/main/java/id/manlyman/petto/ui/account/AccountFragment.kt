@@ -3,22 +3,26 @@ package id.manlyman.petto.ui.account
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.BitmapRequestListener
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
 import com.androidnetworking.widget.ANImageView
 import com.google.android.material.navigation.NavigationView
+import com.mikhaellopez.circularimageview.CircularImageView
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import id.manlyman.petto.ApiEndPoint
@@ -159,7 +163,6 @@ class AccountFragment : Fragment() {
         }
 
         cancel.setOnClickListener {
-            piew?.acProfile?.setImageUrl("")
             Data()
 
             edit.text = "Edit"
@@ -265,10 +268,7 @@ class AccountFragment : Fragment() {
         loading.show()
 
         val Config = FConfig(requireContext())
-
-        piew?.acProfile?.setDefaultImageResId(R.drawable.ic_launcher_background)
-        piew?.acProfile?.setErrorImageResId(R.drawable.ic_launcher_background)
-        piew?.acProfile?.setImageUrl(ApiEndPoint.Pictures + Config.getCustom("picture", ""))
+        picture(Config.getCustom("picture", ""), piew?.acProfile!!)
 
         piew?.acNama?.setText(Config.getCustom("uname", ""))
         piew?.acEmail?.setText(Config.getCustom("email", ""))
@@ -303,6 +303,23 @@ class AccountFragment : Fragment() {
         userEmail.text = Config.getCustom("email", "")
     }
 
+    private fun picture(url: String?, img: CircularImageView){
+        AndroidNetworking.get(ApiEndPoint.Pictures + url)
+            .setTag("Foto")
+            .setPriority(Priority.MEDIUM)
+            .setBitmapConfig(Bitmap.Config.ARGB_8888)
+            .build()
+            .getAsBitmap(object : BitmapRequestListener {
+                override fun onResponse(bitmap: Bitmap) {
+                    img.setImageBitmap(bitmap)
+                }
+
+                override fun onError(error: ANError) {
+                    Log.d("OnError", error.errorDetail.toString())
+                }
+            })
+    }
+
     private fun restoreBack(response: JSONObject){
         val Config = FConfig(requireContext())
         piew?.btnAcEdit?.text = "Edit"
@@ -335,7 +352,6 @@ class AccountFragment : Fragment() {
         Config.setCustom("phone", response.getString("phone").toString())
         Config.setCustom("picture", response.getString("picture").toString())
 
-        piew?.acProfile?.setImageUrl("")
         Data()
         changeNavHead()
     }

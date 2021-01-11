@@ -21,22 +21,22 @@ class Holder(view: View) : RecyclerView.ViewHolder(view){
     val edit = view.btnEdit
     val hps = view.btnHapus
 
-    fun bind(myartcl: myartcl, clickListener: OnItemClickListener)
+    fun bind(myArticle: MyArticle, clickListener: OnItemClickListener)
     {
-        judul.text = myartcl.judul
-        picture(myartcl.pict, fotoArti)
+        judul.text = myArticle.judul
+        picture(myArticle.pict, fotoArti)
 
         edit.setOnClickListener {
-            clickListener.onItemClicked(myartcl, 1)
+            clickListener.onItemClicked(myArticle, 1)
         }
 
         hps.setOnClickListener {
-            clickListener.onItemClicked(myartcl, 2)
+            clickListener.onItemClicked(myArticle, 2)
         }
     }
 }
 
-class AdapterMyArticle (private val itemClickListener: OnItemClickListener, private val arrayList: ArrayList<myartcl>) : RecyclerView.Adapter<Holder>() {
+class AdapterMyArticle (private val itemClickListener: OnItemClickListener, private val arrayList: ArrayList<MyArticle>) : RecyclerView.Adapter<Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.list_my_article,parent,false))
@@ -51,7 +51,7 @@ class AdapterMyArticle (private val itemClickListener: OnItemClickListener, priv
 }
 
 interface OnItemClickListener{
-    fun onItemClicked(myartcl: myartcl, sec: Int)
+    fun onItemClicked(myArticle: MyArticle, sec: Int)
 }
 
 private fun picture(url: String?, img: ImageView){

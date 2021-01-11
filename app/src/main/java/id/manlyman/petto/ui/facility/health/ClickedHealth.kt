@@ -22,13 +22,15 @@ class ClickedHealth : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clicked_health)
+        supportActionBar?.title = "Fasilitas Kesehatan"
+
         val sessionId = intent.getStringExtra("ID")
 
         Load(sessionId.toString())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 return true
@@ -99,18 +101,18 @@ class ClickedHealth : AppCompatActivity() {
 
     private fun picture(url: String?, img: ImageView){
         AndroidNetworking.get(ApiEndPoint.Pictures + url)
-                .setTag("Foto")
-                .setPriority(Priority.MEDIUM)
-                .setBitmapConfig(Bitmap.Config.ARGB_8888)
-                .build()
-                .getAsBitmap(object : BitmapRequestListener {
-                    override fun onResponse(bitmap: Bitmap) {
-                        img.setImageBitmap(bitmap)
-                    }
+            .setTag("Foto")
+            .setPriority(Priority.MEDIUM)
+            .setBitmapConfig(Bitmap.Config.ARGB_8888)
+            .build()
+            .getAsBitmap(object : BitmapRequestListener {
+                override fun onResponse(bitmap: Bitmap) {
+                    img.setImageBitmap(bitmap)
+                }
 
-                    override fun onError(error: ANError) {
-                        Log.d("OnError", error.errorDetail.toString())
-                    }
-                })
+                override fun onError(error: ANError) {
+                    Log.d("OnError", error.errorDetail.toString())
+                }
+            })
     }
 }

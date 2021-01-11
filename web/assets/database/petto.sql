@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 10, 2021 at 03:48 PM
+-- Generation Time: Jan 11, 2021 at 08:16 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -51,11 +51,11 @@ CREATE TABLE `animalcare` (
 --
 
 INSERT INTO `animalcare` (`id`, `owner`, `nama`, `address`, `city`, `phone`, `picture`, `hari_buka1`, `hari_buka2`, `hari_buka3`, `hari_buka4`, `hari_buka5`, `hari_buka6`, `hari_buka7`, `jam_buka`, `jam_tutup`) VALUES
-(16, 'dwikiaditama', 'Royal', 'Jl. Kutisari Sel. I No.20, Kutisari, Kec. Tenggilis Mejoyo, Kota SBY, Jawa Timur 60291', 'Surabaya', '081332825565', 'img_animalcare/Royal.jpg', 1, 2, 3, 4, 5, 6, 0, '08:00:00', '16:00:00'),
-(17, 'Bambang Gentolet', 'Duby', 'Jl. Rungkut Menanggal Harapan No.3, Rungkut Menanggal, Kec. Gn. Anyar, Kota SBY, Jawa Timur 60293', 'Surabaya', '087750408877', 'img_animalcare/duby.jpg', 1, 2, 3, 4, 5, 6, 7, '09:00:00', '20:00:00'),
-(18, 'fahmina', 'Cloe', 'Keputih, Sukolilo, Surabaya City, East Java 60111', 'Surabaya', '08178883188', 'img_animalcare/cloe.jpg', 1, 2, 3, 4, 5, 6, 0, '09:00:00', '21:00:00'),
-(19, 'jefriismail', 'Reiby', 'Jl. Brawijaya No.58, Sawunggaling, Kec. Wonokromo, Kota SBY, Jawa Timur 60242', 'Surabaya', '085707071253', 'img_animalcare/Reiby.jpg', 1, 2, 3, 4, 5, 6, 7, '8', '21:00:00'),
-(20, 'mrifandz', 'Aslan', 'Jl. Dr. Ir. H. Soekarno No.2j, Penjaringan Sari, Kec. Rungkut, Kota SBY, Jawa Timur 60293', 'Surabaya', '085648001800', 'img_animalcare/Aslan.jpg', 1, 2, 3, 4, 5, 6, 7, '07:00:00', '21:00:00');
+(16, 'dwikiaditama', 'Royal', 'Jl. Kutisari Sel. I No.20, Kutisari, Kec. Tenggilis Mejoyo, Kota SBY, Jawa Timur 60291', 'Surabaya', '081332825565', 'img_animalcare/Royal.jpg', 1, 2, 3, 4, 5, 6, 0, '08:00', '16:00'),
+(17, 'Bambang Gentolet', 'Duby', 'Jl. Rungkut Menanggal Harapan No.3, Rungkut Menanggal, Kec. Gn. Anyar, Kota SBY, Jawa Timur 60293', 'Surabaya', '087750408877', 'img_animalcare/duby.jpg', 1, 2, 3, 4, 5, 6, 7, '09:00', '12:00'),
+(18, 'fahmina', 'Cloe', 'Keputih, Sukolilo, Surabaya City, East Java 60111', 'Surabaya', '08178883188', 'img_animalcare/cloe.jpg', 1, 2, 3, 4, 5, 6, 0, '09:00', '21:00'),
+(19, 'jefriismail', 'Reiby', 'Jl. Brawijaya No.58, Sawunggaling, Kec. Wonokromo, Kota SBY, Jawa Timur 60242', 'Surabaya', '085707071253', 'img_animalcare/Reiby.jpg', 1, 2, 3, 4, 5, 6, 7, '08:00', '21:00'),
+(20, 'Ripani', 'Aslan', 'Jl. Dr. Ir. H. Soekarno No.2j, Penjaringan Sari, Kec. Rungkut, Kota SBY, Jawa Timur 60293', 'Surabaya', '085648001800', 'img_animalcare/Aslan.jpg', 1, 0, 3, 0, 5, 6, 0, '07:00', '21:00');
 
 -- --------------------------------------------------------
 
@@ -79,7 +79,7 @@ CREATE TABLE `artikel` (
 INSERT INTO `artikel` (`id`, `penulis`, `judul`, `isi`, `tanggal`, `picture`) VALUES
 (1, 'Ripani', 'Penghijauan', 'Penghijauan dibumi ini sekarang diperlukan karena akan membantu meringankan beban keluarga\r\n\r\nSiapa beban keluarga ? Ya kalian semua anjim', '30-12-2020', 'img_artikel/5fec61d4ca2c75.81808203.jpg'),
 (2, 'Ripani', 'Matsubishi', 'Jadi ini artikel mobil apa hewan ?', '10-01-2021', 'img_komunitas/5ffab6a6879bb3.83643192.jpg'),
-(3, 'Ripani', 'avasddfe', 'aasdadasdadasdas', '10-01-2021', 'img_artikel/5ffac3f059a546.38097454.jpg');
+(3, 'Ripani', 'avasddfe asodkaos koaksdoaksop kaopsdkaskdopa kasodkaop ', 'aasdadasdadasdas', '10-01-2021', 'img_artikel/5ffac3f059a546.38097454.jpg');
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,7 @@ CREATE TABLE `faskes` (
 --
 
 INSERT INTO `faskes` (`sip`, `owner`, `nama`, `description`, `address`, `city`, `phone`, `picture`, `hari_buka1`, `hari_buka2`, `hari_buka3`, `hari_buka4`, `hari_buka5`, `hari_buka6`, `hari_buka7`, `jam_buka`, `jam_tutup`) VALUES
-('32423423456', 'mrifandz', 'Hell to', 'Gausah Kesini Mahal Bro', 'Gading Martin', 'Sidoarjo', '678658956870', 'img_faskes/5fef122f1841d3.96186808.jpg', 1, 0, 0, 0, 5, 6, 7, '06:30', '23:00');
+('32423423456', 'Ripani', 'Hell to', 'Gausah Kesini Mahal Bro', 'Gading Martin', 'Sidoarjo', '678658956870', 'img_faskes/5fef122f1841d3.96186808.jpg', 1, 0, 0, 0, 5, 6, 7, '06:30', '23:00');
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,7 @@ CREATE TABLE `komunitas` (
 --
 
 INSERT INTO `komunitas` (`id`, `owner`, `nama`, `description`, `address`, `kota`, `phone`, `picture`) VALUES
-(1, 'Ripani', 'Komuka', 'Disini dilarang ngasi nomor', 'Sidoarjo Kota', 'Sidoarjo', '760783585675', 'img_komunitas/5ff89f890717b3.90003708.jpg');
+(1, 'mrifandz', 'Komuka', 'Disini dilarang ngasi nomor', 'Sidoarjo Kota', 'Sidoarjo', '076078358567', 'img_komunitas/5ff89f890717b3.90003708.jpg');
 
 -- --------------------------------------------------------
 
@@ -146,12 +146,24 @@ INSERT INTO `komunitas` (`id`, `owner`, `nama`, `description`, `address`, `kota`
 
 CREATE TABLE `paket` (
   `id` int(11) NOT NULL,
+  `animalcare` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
-  `picture` varchar(256) DEFAULT NULL,
-  `harga` float(32,2) NOT NULL,
-  `description` varchar(2048) DEFAULT NULL,
-  `animalcare` int(11) NOT NULL
+  `harga` double NOT NULL,
+  `picture` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `paket`
+--
+
+INSERT INTO `paket` (`id`, `animalcare`, `name`, `harga`, `picture`) VALUES
+(1, 20, 'Paket', 100000, 'img_paket/5ffb042307ff17.32254027.jpg'),
+(3, 20, 'Paket', 100000, 'img_paket/5ffb042307ff17.32254027.jpg'),
+(4, 20, 'Paket', 100000, 'img_paket/5ffb042307ff17.32254027.jpg'),
+(5, 20, 'Paket', 100000, 'img_paket/5ffb042307ff17.32254027.jpg'),
+(6, 20, 'Paket', 100000, 'img_paket/5ffb042307ff17.32254027.jpg'),
+(7, 20, 'Paket', 100000, 'img_paket/5ffb042307ff17.32254027.jpg'),
+(8, 20, 'Paket', 100000, 'img_paket/5ffb042307ff17.32254027.jpg');
 
 -- --------------------------------------------------------
 
@@ -189,18 +201,24 @@ INSERT INTO `pengguna` (`username`, `pass`, `email`, `phone`, `picture`, `srtv`,
 
 CREATE TABLE `produk` (
   `id` int(11) NOT NULL,
+  `toko` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `picture` varchar(256) DEFAULT NULL,
   `harga` double NOT NULL,
-  `toko` int(11) NOT NULL
+  `picture` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`id`, `name`, `picture`, `harga`, `toko`) VALUES
-(3, 'Produk 1', 'img_produk/5feada5d5d1e96.43318946.jpg', 450000, 17);
+INSERT INTO `produk` (`id`, `toko`, `name`, `harga`, `picture`) VALUES
+(3, 17, 'Produk', 4500000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
+(4, 17, 'Produk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
+(5, 17, 'Produk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
+(6, 17, 'Produk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
+(7, 17, 'Produk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
+(9, 1, 'Produk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
+(10, 17, 'Produk Baru blblblblblblb blblblblbblblb spdoasd kasopdkoaskdo pasda', 150000, 'img_produk/5ffc9b4a3ea664.08706235.jpg');
 
 -- --------------------------------------------------------
 
@@ -232,11 +250,11 @@ CREATE TABLE `toko` (
 --
 
 INSERT INTO `toko` (`id`, `owner`, `nama`, `address`, `city`, `phone`, `picture`, `hari_buka1`, `hari_buka2`, `hari_buka3`, `hari_buka4`, `hari_buka5`, `hari_buka6`, `hari_buka7`, `jam_buka`, `jam_tutup`) VALUES
-(1, 'jefriismail', 'Mitra Fauna Pet Shop', 'Jl. Raya Buncitan No.305, Dusun Kp. Baro, Buncitan, Kec. Sedati, Kabupaten Sidoarjo, Jawa Timur 61253', 'Sidoarjo', '0895320646517', 'img_toko/Mitra%20Fauna.jpg', 1, 2, 3, 4, 0, 6, 7, '07:00:00', '21:00:00'),
-(2, 'mrifandz', 'Yuri Pet Shop', 'Jl. Raya Sedati Gede No.6, Bono, Sedati Gede, Kec. Sedati, Kabupaten Sidoarjo, Jawa Timur 61253', 'Surabaya', '081332541456', 'img_toko/Yuri.jpg', 1, 2, 3, 4, 5, 6, 0, '09:00:00', '21:00:00'),
-(3, 'dwikiaditama', 'Dock 9 Pet Shop', 'No 214 Kecamatan Gedangan Sidoarjo, Jl. Ahmad Yani, Megersari, Gedangan, Kec. Sidoarjo, Kabupaten Sidoarjo, Jawa Timur 61254', 'Sidoarjo', '087856506005', 'img_toko/Dock9.jpg', 1, 2, 3, 4, 5, 0, 0, '09:00:00', '21:00:00'),
-(4, 'Bambang Gentolet', 'Mr. Gogon Pet Shop', 'Jalan Pandean, Pandean, Banjarkemantren, Kec. Buduran, Kabupaten Sidoarjo, Jawa Timur 61252', 'Surabaya', '085232606467', 'img_toko/gogon.jpg', 1, 2, 3, 4, 5, 6, 7, '08:00:00', '22:00:00'),
-(5, 'fahmina', 'Pussy Pet Shop', 'Jalan Anggrek 1C No. 7, Sritanjung, Wage, Kec. Taman, Kabupaten Sidoarjo, Jawa Timur 61257', 'Sidoarjo', '085733603975', 'img_toko/Pussy.jpg', 1, 2, 3, 4, 5, 0, 7, '07:00:00', '21:00:00'),
+(1, 'jefriismail', 'Mitra Fauna Pet Shop', 'Jl. Raya Buncitan No.305, Dusun Kp. Baro, Buncitan, Kec. Sedati, Kabupaten Sidoarjo, Jawa Timur 61253', 'Sidoarjo', '0895320646517', 'img_toko/Mitra%20Fauna.jpg', 1, 2, 3, 4, 0, 6, 7, '07:00', '21:00'),
+(2, 'mrifandz', 'Yuri Pet Shop', 'Jl. Raya Sedati Gede No.6, Bono, Sedati Gede, Kec. Sedati, Kabupaten Sidoarjo, Jawa Timur 61253', 'Surabaya', '081332541456', 'img_toko/Yuri.jpg', 1, 2, 3, 4, 5, 6, 0, '05:30', '20:00'),
+(3, 'dwikiaditama', 'Dock 9 Pet Shop', 'No 214 Kecamatan Gedangan Sidoarjo, Jl. Ahmad Yani, Megersari, Gedangan, Kec. Sidoarjo, Kabupaten Sidoarjo, Jawa Timur 61254', 'Sidoarjo', '087856506005', 'img_toko/Dock9.jpg', 1, 2, 3, 4, 5, 0, 0, '09:00', '21:00'),
+(4, 'Bambang Gentolet', 'Mr. Gogon Pet Shop', 'Jalan Pandean, Pandean, Banjarkemantren, Kec. Buduran, Kabupaten Sidoarjo, Jawa Timur 61252', 'Surabaya', '085232606467', 'img_toko/gogon.jpg', 1, 2, 3, 4, 5, 6, 7, '08:00', '22:00'),
+(5, 'fahmina', 'Pussy Pet Shop', 'Jalan Anggrek 1C No. 7, Sritanjung, Wage, Kec. Taman, Kabupaten Sidoarjo, Jawa Timur 61257', 'Sidoarjo', '085733603975', 'img_toko/Pussy.jpg', 1, 2, 3, 4, 5, 0, 7, '07:00', '21:00'),
 (17, 'Ripani', 'Refresh', 'Refresh Alamat', 'Sidoarjo', '087755565598', 'img_toko/5ffb181926d517.07314940.jpg', 1, 0, 3, 0, 5, 6, 0, '08:00', '19:30');
 
 --
@@ -279,7 +297,6 @@ ALTER TABLE `komunitas`
 --
 ALTER TABLE `paket`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`),
   ADD KEY `animalcare` (`animalcare`);
 
 --
@@ -314,13 +331,13 @@ ALTER TABLE `toko`
 -- AUTO_INCREMENT for table `animalcare`
 --
 ALTER TABLE `animalcare`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `artikel`
 --
 ALTER TABLE `artikel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `komunitas`
@@ -332,13 +349,13 @@ ALTER TABLE `komunitas`
 -- AUTO_INCREMENT for table `paket`
 --
 ALTER TABLE `paket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `toko`

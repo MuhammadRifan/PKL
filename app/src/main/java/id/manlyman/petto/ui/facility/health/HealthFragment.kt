@@ -79,7 +79,9 @@ class HealthFragment : Fragment(), OnItemClickListener {
                                 jsonObject.getInt("hari_buka4"),
                                 jsonObject.getInt("hari_buka5"),
                                 jsonObject.getInt("hari_buka6"),
-                                jsonObject.getInt("hari_buka7")))
+                                jsonObject.getInt("hari_buka7"),
+                                jsonObject.getString("jam_buka"),
+                                jsonObject.getString("jam_tutup")))
 
                             if (jsonArray.length() - 1 == i) {
                                 loading.dismiss()
@@ -113,7 +115,6 @@ class HealthFragment : Fragment(), OnItemClickListener {
                     if (response?.getString("message")?.contains("ada")!!) {
                         piew?.addHealth?.setImageResource(android.R.drawable.ic_menu_edit)
                         intent.putExtra("ID", response.getString("sip"))
-                        Toast.makeText(requireContext(), response.getString("sip").toString(), Toast.LENGTH_SHORT).show()
                     } else {
                         piew?.addHealth?.setImageResource(android.R.drawable.ic_input_add)
                     }

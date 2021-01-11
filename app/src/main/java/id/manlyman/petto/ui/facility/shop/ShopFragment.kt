@@ -22,6 +22,8 @@ import id.manlyman.petto.ui.facility.Facility
 import kotlinx.android.synthetic.main.fragment_shop.*
 import kotlinx.android.synthetic.main.fragment_shop.view.*
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ShopFragment : Fragment(), OnItemClickListener {
     var arrayList = ArrayList<Facility>()
@@ -83,7 +85,9 @@ class ShopFragment : Fragment(), OnItemClickListener {
                                 jsonObject.getInt("hari_buka4"),
                                 jsonObject.getInt("hari_buka5"),
                                 jsonObject.getInt("hari_buka6"),
-                                jsonObject.getInt("hari_buka7")))
+                                jsonObject.getInt("hari_buka7"),
+                                jsonObject.getString("jam_buka"),
+                                jsonObject.getString("jam_tutup")))
 
                             if (jsonArray.length() - 1 == i) {
                                 loading.dismiss()

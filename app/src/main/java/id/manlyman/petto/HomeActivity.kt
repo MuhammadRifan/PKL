@@ -1,10 +1,13 @@
 package id.manlyman.petto
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,8 +18,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.common.Priority
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.BitmapRequestListener
 import com.androidnetworking.widget.ANImageView
 import com.google.android.material.navigation.NavigationView
+import com.mikhaellopez.circularimageview.CircularImageView
+import id.manlyman.petto.ui.facility.myshop.ActivityMyShop
+import id.manlyman.petto.ui.facility.paketproduk.ActivityFormPP
 
 class HomeActivity : AppCompatActivity() {
 
@@ -46,13 +56,11 @@ class HomeActivity : AppCompatActivity() {
         menu.findItem(R.id.nav_artikel).isVisible = config.getCustom("level", "") == "1"
 
         val header: View = navView.getHeaderView(0)
-        val userProfilePic: ANImageView = header.findViewById(R.id.userProfilePic)
+        val userProfilePic: CircularImageView = header.findViewById(R.id.userProfilePic)
         val userName: TextView = header.findViewById(R.id.userName)
         val userEmail: TextView = header.findViewById(R.id.userEmail)
 
-        userProfilePic.setDefaultImageResId(R.mipmap.ic_launcher)
-        userProfilePic.setErrorImageResId(R.mipmap.ic_launcher)
-        userProfilePic.setImageUrl(ApiEndPoint.Pictures + config.getCustom("picture", ""))
+        picture(config.getCustom("picture", ""), userProfilePic)
 
         userName.text = config.getCustom("uname", "")
         userEmail.text = config.getCustom("email", "")
@@ -73,15 +81,36 @@ class HomeActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.myToko -> {
-                Toast.makeText(this, "Halu1", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ActivityMyShop::class.java)
+                intent.putExtra("TB", "toko")
+                startActivity(intent)
                 true
             }
             R.id.myServis -> {
-                Toast.makeText(this, "Halu2", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ActivityMyShop::class.java)
+                intent.putExtra("TB", "animalcare")
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun picture(url: String?, img: ImageView){
+        AndroidNetworking.get(ApiEndPoint.Pictures + url)
+            .setTag("Foto")
+            .setPriority(Priority.MEDIUM)
+            .setBitmapConfig(Bitmap.Config.ARGB_8888)
+            .build()
+            .getAsBitmap(object : BitmapRequestListener {
+                override fun onResponse(bitmap: Bitmap) {
+                    img.setImageBitmap(bitmap)
+                }
+
+                override fun onError(error: ANError) {
+                    Log.d("OnError", error.errorDetail.toString())
+                }
+            })
     }
 
     override fun onResume() {

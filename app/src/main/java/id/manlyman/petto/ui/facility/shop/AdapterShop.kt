@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.list_facility.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 class Holder(view: View) : RecyclerView.ViewHolder(view){
     val foto = view.fotoFC
     val nama = view.namaFC
@@ -55,8 +54,26 @@ class Holder(view: View) : RecyclerView.ViewHolder(view){
         }
 
         if (buka == 1) {
-            btn.setBackgroundColor(bukaCol)
-            btn.text = "Buka"
+            val hour = Calendar.getInstance()[Calendar.HOUR_OF_DAY]
+            val mnt = Calendar.getInstance()[Calendar.MINUTE]
+            var jamand = hour.toString()
+
+            if (mnt.toString().length == 1) jamand += "0$mnt"
+            else jamand += mnt.toString()
+
+            val jambuka = facility.buka.toString().split(":")
+            val bukadb = (jambuka[0] + jambuka[1]).toInt()
+
+            val jamtutup = facility.tutup.toString().split(":")
+            val tutupdb = (jamtutup[0] + jamtutup[1]).toInt()
+
+            if (jamand.toInt() in bukadb..tutupdb) {
+                btn.setBackgroundColor(bukaCol)
+                btn.text = "Buka"
+            } else {
+                btn.setBackgroundColor(tutupCol)
+                btn.text = "Tutup"
+            }
         } else {
             btn.setBackgroundColor(tutupCol)
             btn.text = "Tutup"

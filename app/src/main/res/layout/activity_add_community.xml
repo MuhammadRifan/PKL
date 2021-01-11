@@ -24,7 +24,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="60dp"
-                app:civ_background_color="@color/purple_200"
+                app:civ_background_color="@color/teal_200"
                 app:civ_border_color="@color/purple"
                 app:civ_border_width="5dp"
                 app:civ_shadow="false"
@@ -42,6 +42,7 @@
                 android:layout_marginStart="90dp"
                 android:layout_marginTop="90dp"
                 android:clickable="true"
+                app:backgroundTint="@color/purple_200"
                 app:layout_constraintStart_toStartOf="@+id/komunitasPict"
                 app:layout_constraintTop_toTopOf="@+id/komunitasPict"
                 app:srcCompat="@android:drawable/ic_input_add" />
@@ -54,11 +55,8 @@
                 android:layout_marginTop="60dp"
                 android:layout_marginEnd="32dp"
                 android:nextFocusDown="@id/alamatKomunitas"
-                android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
                 app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/komunitasPict">
@@ -74,8 +72,7 @@
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
                     android:paddingBottom="5dp"
-                    android:textColor="@color/bText"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/bText" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -86,11 +83,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:nextFocusUp="@id/nomorKomunitas"
-                android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
                 app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/namaKomunitas">
@@ -104,8 +98,7 @@
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
                     android:paddingBottom="5dp"
-                    android:textColor="@color/bText"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/bText" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -117,11 +110,8 @@
                 android:layout_marginEnd="32dp"
                 android:nextFocusUp="@id/namaKomunitas"
                 android:nextFocusDown="@id/artikelText"
-                android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
                 app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/deskripsiKomunitas">
@@ -137,8 +127,7 @@
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
                     android:paddingBottom="5dp"
-                    android:textColor="@color/bText"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/bText" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -149,11 +138,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:nextFocusUp="@id/nomorKomunitas"
-                android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
                 app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/alamatKomunitas">
@@ -169,8 +155,7 @@
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
                     android:paddingBottom="5dp"
-                    android:textColor="@color/bText"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/bText" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -182,11 +167,8 @@
                 android:layout_marginEnd="32dp"
                 android:nextFocusUp="@id/alamatKomunitas"
                 android:nextFocusDown="@id/deskripsiKomunitas"
-                android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
-                app:boxBackgroundMode="filled"
                 app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/kotaKomunitas">
@@ -202,8 +184,7 @@
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
                     android:paddingBottom="5dp"
-                    android:textColor="@color/bText"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/bText" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -212,8 +193,8 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/purple"
-                android:text="Tambahkan"
+                android:backgroundTint="@color/Purpleee"
+                android:text="Tambah"
                 android:textColor="@color/white"
                 app:cornerRadius="50dp"
                 app:layout_constraintBottom_toTopOf="@+id/btnHapusKomunitas"

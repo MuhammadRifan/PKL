@@ -9,8 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="104dp"
-        tools:layout_editor_absoluteY="245dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -29,17 +31,20 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/fotoProfilPengguna"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        tools:src="@tools:sample/avatars" />
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="8dp"
+                        app:civ_border="true"
+                        app:civ_border_color="@color/purple_200"
+                        app:civ_border_width="2dp"
+                        tools:src="@mipmap/logo_ori" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -71,7 +76,7 @@
                 <ImageView
                     android:id="@+id/fotoCommu"
                     android:layout_width="match_parent"
-                    android:layout_height="194dp"
+                    android:layout_height="200dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
@@ -93,8 +98,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:padding="8dp"
                     android:text="READ MORE >>"
                     android:textColor="@color/purple_500" />

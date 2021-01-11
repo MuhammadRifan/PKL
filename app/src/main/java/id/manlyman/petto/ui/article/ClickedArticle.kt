@@ -24,13 +24,13 @@ class ClickedArticle : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clicked_article)
         val sessionId = intent.getStringExtra("ID")
-//        Toast.makeText(this, sessionId, Toast.LENGTH_SHORT).show()
+        supportActionBar?.title = "Artikel"
 
         Load(sessionId.toString())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 return true

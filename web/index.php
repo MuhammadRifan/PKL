@@ -65,6 +65,15 @@
         case 'UpdateCommunity':
             UpdateCommunity();
             break;
+        case 'ReadPP':
+            ReadPP();
+            break;
+        case 'AddPP':
+            AddPP();
+            break;
+        case 'UpdatePP':
+            UpdatePP();
+            break;
         default:
             echo json_encode(array('message'=>'Connection Not Found!'));
             break;
@@ -726,6 +735,83 @@
                 echo json_encode($result);
             }else{
                 echo json_encode(array('message' => 'Update komunitas gagal'));
+            }
+        }
+    }
+
+    function ReadPP() {
+        $uname = $_POST['uname'];
+        $column = $_POST['column'];
+
+        if ($column == "toko") {
+            $table = "produk";
+        } else {
+            $table = "paket";
+        }
+
+        $resulta = find_by_id($column, "owner", $uname) -> fetch();
+
+        $query = select_custom($table, "$column = $resulta[0]");
+        while($row = $query -> fetch()){
+            $result[] = $row;
+        }
+
+        if (isset($result)) {
+            echo json_encode(array('result' => $result));
+        } else {
+            echo json_encode(array('result' => 'Data kosong'));
+        }
+    }
+
+    function AddPP() {
+        $tempat = $_POST['tempat'];
+        $uname = $_POST['uname'];
+        $nama = $_POST['nama'];
+        $harga = $_POST['harga'];
+        $picture = $_POST['picture'];
+
+        if(!$nama || !$harga || !$picture){
+            echo json_encode(array('message' => 'Form ada yang kosong'));
+        }else{
+            if ($tempat == "produk") {
+                $column = "toko";
+            } else {
+                $column = "animalcare";
+            }
+
+            $resulta = find_by_id($column, "owner", $uname) -> fetch();
+
+            $sql = "(NULL, $resulta[0], '$nama', $harga, '$picture')";
+            if(insertCustom($tempat, $sql)){
+                echo json_encode(array('message' => 'Tambah berhasil'));
+            }else{
+                echo json_encode(array('message' => 'Tambah gagal'));
+            }
+        }
+    }
+
+    function UpdatePP() {
+        $id = $_POST['id'];
+        $tmp = $_POST['tmp'];
+        $nama = $_POST['nama'];
+        $harga = $_POST['harga'];
+        $picture = $_POST['picture'];
+
+        if(!$nama || !$harga){
+            echo json_encode(array('message' => 'Form ada yang kosong'));
+        }else{
+            if ($picture == "") {
+                $sql = "name = '$nama', harga = $harga WHERE id = $id";
+            } else {
+                $sql = "name = '$nama', harga = $harga, picture = '$picture' WHERE id = $id";
+            }
+
+            if(update_custom($tmp, $sql)){
+                $result = find_by_id($tmp, "id", $id) -> fetch();
+                $result['message'] = "Update berhasil";
+                echo json_encode($result);
+            }else{
+                echo json_encode(array('message' => 'Update gagal'));
             }
         }
     }

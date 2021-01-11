@@ -88,17 +88,17 @@ class ActivityAddArticle : AppCompatActivity() {
 
         choosePict.setOnClickListener {
             if (EasyPermissions.hasPermissions(
-                            this, android.Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) && EasyPermissions.hasPermissions(
-                            this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) && EasyPermissions.hasPermissions(
-                            this, android.Manifest.permission.CAMERA
-                    ))
+                    this, android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ) && EasyPermissions.hasPermissions(
+                    this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) && EasyPermissions.hasPermissions(
+                    this, android.Manifest.permission.CAMERA
+                ))
             {
                 val picName = Uri.fromFile(
-                        File(
-                                externalCacheDir, "tmp_" + System.currentTimeMillis().toString() + ".jpg"
-                        )
+                    File(
+                        externalCacheDir, "tmp_" + System.currentTimeMillis().toString() + ".jpg"
+                    )
                 )
                 CropImage.activity()
                     .setGuidelines(CropImageView.Guidelines.ON)
@@ -109,26 +109,26 @@ class ActivityAddArticle : AppCompatActivity() {
                     .start(this)
             } else {
                 EasyPermissions.requestPermissions(
-                        this,
-                        "This application need your permission to access photo gallery.",
-                        IMAGE_PICK_CODE, android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    this,
+                    "This application need your permission to access photo gallery.",
+                    IMAGE_PICK_CODE, android.Manifest.permission.READ_EXTERNAL_STORAGE
                 )
                 EasyPermissions.requestPermissions(
-                        this,
-                        "This application need your permission to access photo gallery.",
-                        IMAGE_PICK_CODE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    this,
+                    "This application need your permission to access photo gallery.",
+                    IMAGE_PICK_CODE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
                 EasyPermissions.requestPermissions(
-                        this,
-                        "This application need your permission to access photo gallery.",
-                        IMAGE_PICK_CODE, android.Manifest.permission.CAMERA
+                    this,
+                    "This application need your permission to access photo gallery.",
+                    IMAGE_PICK_CODE, android.Manifest.permission.CAMERA
                 )
             }
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 return true
@@ -177,30 +177,30 @@ class ActivityAddArticle : AppCompatActivity() {
                 override fun onResponse(response: String) {
                     if (!response.contains("Error") && !response.contains("Gagal") && !response.contains("File")) {
                         AndroidNetworking.post(ApiEndPoint.AddArticle)
-                                .addBodyParameter("penulis", Config.getCustom("uname", ""))
-                                .addBodyParameter("judul", txtArtikelTitle.text.toString())
-                                .addBodyParameter("isi", txtArtikelText.text.toString())
-                                .addBodyParameter("foto", response)
-                                .setPriority(Priority.MEDIUM)
-                                .build()
-                                .getAsJSONObject(object : JSONObjectRequestListener {
-                                    override fun onResponse(response: JSONObject?) {
-                                        if (response?.getString("message")?.contains("berhasil")!!) {
-                                            loading.setMessage("Saving data (100/100)")
-                                            finish()
-                                        }
-
-                                        Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_LONG).show()
-                                        loading.dismiss()
+                            .addBodyParameter("penulis", Config.getCustom("uname", ""))
+                            .addBodyParameter("judul", txtArtikelTitle.text.toString())
+                            .addBodyParameter("isi", txtArtikelText.text.toString())
+                            .addBodyParameter("foto", response)
+                            .setPriority(Priority.MEDIUM)
+                            .build()
+                            .getAsJSONObject(object : JSONObjectRequestListener {
+                                override fun onResponse(response: JSONObject?) {
+                                    if (response?.getString("message")?.contains("berhasil")!!) {
+                                        loading.setMessage("Saving data (100/100)")
+                                        finish()
                                     }
 
-                                    override fun onError(anError: ANError?) {
-                                        loading.dismiss()
-                                        Log.d("OnError", anError?.errorDetail?.toString()!!)
-                                        Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_LONG).show()
-                                    }
+                                    Toast.makeText(applicationContext, response.getString("message"), Toast.LENGTH_LONG).show()
+                                    loading.dismiss()
+                                }
 
-                                })
+                                override fun onError(anError: ANError?) {
+                                    loading.dismiss()
+                                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                                    Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_LONG).show()
+                                }
+
+                            })
                     } else {
                         loading.dismiss()
                         Toast.makeText(applicationContext, response, Toast.LENGTH_LONG).show()

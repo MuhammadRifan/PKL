@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/nav_artikel"
-        android:name="id.manlyman.petto.ui.myarticle.MyArticle"
+        android:name="id.manlyman.petto.ui.myarticle.MyArticleFragment"
         android:label="Artikel Saya"
         tools:layout="@layout/fragment_my_article" >
         <action

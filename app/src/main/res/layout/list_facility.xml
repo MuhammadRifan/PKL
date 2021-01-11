@@ -9,12 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="104dp"
-        tools:layout_editor_absoluteY="245dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="88dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
@@ -27,23 +29,28 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
-                <ImageView
+                <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/fotoFC"
                     android:layout_width="60dp"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="16dp"
+                    app:civ_border="true"
+                    app:civ_border_color="@color/purple_200"
+                    app:civ_border_width="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@tools:sample/avatars" />
+                    tools:src="@mipmap/logo_ori" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -57,6 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
                         android:text="Nama penitipan"
+                        android:textColor="@color/bText"
                         android:textSize="18sp" />
 
                     <TextView

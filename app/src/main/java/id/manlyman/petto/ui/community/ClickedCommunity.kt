@@ -22,6 +22,7 @@ class ClickedCommunity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clicked_community)
+        supportActionBar?.title = "Komunitas"
 
         val sessionId = intent.getStringExtra("ID")
 
@@ -29,7 +30,7 @@ class ClickedCommunity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 return true

@@ -39,7 +39,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nama Fasilitas Kesehatan"
-                        android:textColor="@color/black"
+                        android:textColor="@color/bText"
                         android:textSize="20sp" />
 
                 </LinearLayout>
@@ -58,7 +58,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
                     android:text="     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                    android:textColor="@color/black"
+                    android:textColor="@color/bText"
                     android:textSize="14sp" />
 
                 <LinearLayout
@@ -84,7 +84,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:text="Jl. Kenangan no.1"
-                        android:textColor="@color/purple"
+                        android:textColor="@color/bText"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -111,7 +111,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:text="Senin, Selasa"
-                        android:textColor="@color/purple"
+                        android:textColor="@color/bText"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -138,7 +138,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:text="08.00-20.00"
-                        android:textColor="@color/purple"
+                        android:textColor="@color/bText"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -166,7 +166,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:text="12213.3231"
-                        android:textColor="@color/purple"
+                        android:textColor="@color/bText"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -195,7 +195,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:text="082-331x-xxxx"
-                        android:textColor="@color/purple"
+                        android:textColor="@color/bText"
                         android:textSize="14sp" />
 
                 </LinearLayout>

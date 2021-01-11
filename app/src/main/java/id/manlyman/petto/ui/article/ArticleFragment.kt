@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.fragment_article.view.*
 import org.json.JSONObject
 
 class ArticleFragment : Fragment(), OnItemClickListener {
-
     var arrayList = ArrayList<Article>()
 
     override fun onCreateView(

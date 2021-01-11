@@ -11,5 +11,7 @@ data class Facility (
         val h4:Int?,
         val h5:Int?,
         val h6:Int?,
-        val h7:Int?
+        val h7:Int?,
+        val buka:String?,
+        val tutup:String?
 )
