@@ -4,10 +4,9 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androidnetworking.AndroidNetworking
@@ -41,6 +40,19 @@ class ShopFragment : Fragment(), OnItemClickListener {
 
         cekToko(uname, view.addShop)
 
+        view.searchVW.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                view.searchVW.clearFocus()
+                loadSearch(query.toString())
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                loadSearch(newText.toString())
+                return false
+            }
+        })
+
         return view
     }
 
@@ -57,6 +69,65 @@ class ShopFragment : Fragment(), OnItemClickListener {
 
         AndroidNetworking.post(ApiEndPoint.Read)
             .addBodyParameter("table", "toko")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("result").toString() == "Data kosong") {
+                        loading.dismiss()
+
+                        sEmpty.visibility = View.VISIBLE
+                        sRecyclerView.visibility = View.GONE
+                    } else {
+                        sEmpty.visibility = View.GONE
+                        sRecyclerView.visibility = View.VISIBLE
+
+                        arrayList.clear()
+                        val jsonArray = response?.optJSONArray("result")
+
+                        for (i in 0 until jsonArray?.length()!!) {
+                            val jsonObject = jsonArray.optJSONObject(i)
+                            arrayList.add(Facility(jsonObject.getString("id"),
+                                jsonObject.getString("nama"),
+                                jsonObject.getString("city"),
+                                jsonObject.getString("picture"),
+                                jsonObject.getInt("hari_buka1"),
+                                jsonObject.getInt("hari_buka2"),
+                                jsonObject.getInt("hari_buka3"),
+                                jsonObject.getInt("hari_buka4"),
+                                jsonObject.getInt("hari_buka5"),
+                                jsonObject.getInt("hari_buka6"),
+                                jsonObject.getInt("hari_buka7"),
+                                jsonObject.getString("jam_buka"),
+                                jsonObject.getString("jam_tutup")))
+
+                            if (jsonArray.length() - 1 == i) {
+                                loading.dismiss()
+                                val adapter = AdapterShop(this@ShopFragment, arrayList)
+                                adapter.notifyDataSetChanged()
+                                sRecyclerView.adapter = adapter
+                            }
+                        }
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    loading.dismiss()
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                    Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
+                }
+            })
+    }
+
+    private fun loadSearch(value: String){
+        val loading = ProgressDialog(requireContext())
+        loading.setMessage("Loading...")
+        loading.show()
+
+        AndroidNetworking.post(ApiEndPoint.ReadSearch)
+            .addBodyParameter("table", "toko")
+            .addBodyParameter("column", "nama")
+            .addBodyParameter("value", value)
             .setPriority(Priority.MEDIUM)
             .build()
             .getAsJSONObject(object : JSONObjectRequestListener {

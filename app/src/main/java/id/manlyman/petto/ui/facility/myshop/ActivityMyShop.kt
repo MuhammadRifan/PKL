@@ -14,6 +14,7 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import id.manlyman.petto.ApiEndPoint
 import id.manlyman.petto.FConfig
 import id.manlyman.petto.R
@@ -32,14 +33,17 @@ class ActivityMyShop : AppCompatActivity(), OnItemClickListener {
 
         val TB = intent.getStringExtra("TB").toString()
 
-        if (TB == "toko") supportActionBar?.title = "My Shop"
-        else supportActionBar?.title = "My Service"
+        if (TB == "toko") {
+            supportActionBar?.title = "My Shop"
+            msEmpty.text = "Produk Kosong"
+        }
+        else {
+            supportActionBar?.title = "My Service"
+            msEmpty.text = "Paket Kosong"
+        }
 
         addProduk.setOnClickListener {
-            val intent = Intent(this, ActivityFormPP::class.java)
-            if (TB == "toko") intent.putExtra("TEMPAT", "produk")
-            else intent.putExtra("TEMPAT", "paket")
-            startActivity(intent)
+            cekPP(TB, addProduk)
         }
     }
 
@@ -163,6 +167,32 @@ class ActivityMyShop : AppCompatActivity(), OnItemClickListener {
                     loading.dismiss()
                     Log.d("OnError", anError?.errorDetail?.toString()!!)
                     Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_LONG).show()
+                }
+            })
+    }
+
+    private fun cekPP(TB: String, Btn: FloatingActionButton){
+        val config = FConfig(this)
+        val intent = Intent(this, ActivityFormPP::class.java)
+
+        AndroidNetworking.post(ApiEndPoint.CekPP)
+            .addBodyParameter("column", TB)
+            .addBodyParameter("uname", config.getCustom("uname", ""))
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("result")?.contains("Ada")!!) {
+                        if (TB == "toko") intent.putExtra("TEMPAT", "produk")
+                        else intent.putExtra("TEMPAT", "paket")
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(applicationContext, "Anda tidak memiliki $TB", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
                 }
             })
     }

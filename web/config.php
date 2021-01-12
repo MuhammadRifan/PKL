@@ -29,6 +29,29 @@
         return $result;
     }
 
+    function select_also($db, $sql){
+        global $connect;
+
+        $result = $connect -> prepare("SELECT * FROM $db WHERE $sql");
+        $result -> execute();
+
+        return $result;
+    }
+
+    function select_search($db, $sql){
+        global $connect;
+
+        if ($db == "artikel") {
+            $result = $connect -> prepare("SELECT * FROM $db WHERE $sql ORDER BY judul ASC");
+        } else {
+            $result = $connect -> prepare("SELECT * FROM $db WHERE $sql ORDER BY nama ASC");
+        }
+
+        $result -> execute();
+
+        return $result;
+    }
+
     function update_custom($db, $sql){
         global $connect;
 
@@ -108,26 +131,4 @@
         $result = $connect -> prepare("INSERT INTO $table VALUES $sql");
         return $result -> execute();
     }
-
-    // function insertDokter($db, $satu, $dua, $tiga){
-    //   global $connect;
-    //
-    //   $result = $connect -> prepare("INSERT INTO $db VALUES(NULL,?,?,?,1)");
-    //   $result -> bindParam(1, $satu);
-    //   $result -> bindParam(2, $dua);
-    //   $result -> bindParam(3, $tiga);
-    //   return $result -> execute();
-    // }
-
-    // function updateDokter($db, $satu, $dua, $tiga, $id, $sql){
-    //   global $connect;
-    //
-    //   $result = $connect -> prepare("UPDATE $db SET $sql WHERE id=?");
-    //   $result -> bindParam(1, $satu);
-    //   $result -> bindParam(2, $dua);
-    //   $result -> bindParam(3, $tiga);
-    //   $result -> bindParam(4, $id);
-    //   return $result -> execute();
-    // }
-
 ?>

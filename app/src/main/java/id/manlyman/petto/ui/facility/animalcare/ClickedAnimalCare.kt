@@ -110,7 +110,7 @@ class ClickedAnimalCare : AppCompatActivity() {
         loading.setMessage("Loading...")
         loading.show()
 
-        AndroidNetworking.post(ApiEndPoint.ReadCostum)
+        AndroidNetworking.post(ApiEndPoint.ReadCustom)
                 .addBodyParameter("table", "paket")
                 .addBodyParameter("column", "animalcare")
                 .addBodyParameter("value", ID)

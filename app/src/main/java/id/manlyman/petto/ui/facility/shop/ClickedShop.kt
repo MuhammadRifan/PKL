@@ -113,7 +113,7 @@ class ClickedShop : AppCompatActivity() {
         loading.setMessage("Loading...")
         loading.show()
 
-        AndroidNetworking.post(ApiEndPoint.ReadCostum)
+        AndroidNetworking.post(ApiEndPoint.ReadCustom)
             .addBodyParameter("table", "produk")
             .addBodyParameter("column", "toko")
             .addBodyParameter("value", ID)

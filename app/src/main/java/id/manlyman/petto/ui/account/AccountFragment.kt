@@ -291,14 +291,11 @@ class AccountFragment : Fragment() {
         val Config = FConfig(requireContext())
 
         val header: View = navView!!.getHeaderView(0)
-        val userProfilePic: ANImageView = header.findViewById(R.id.userProfilePic)
+        val userProfilePic: CircularImageView = header.findViewById(R.id.userProfilePic)
         val userName: TextView = header.findViewById(R.id.userName)
         val userEmail: TextView = header.findViewById(R.id.userEmail)
 
-        userProfilePic.setDefaultImageResId(R.mipmap.ic_launcher)
-        userProfilePic.setErrorImageResId(R.mipmap.ic_launcher)
-        userProfilePic.setImageUrl(ApiEndPoint.Pictures + Config.getCustom("picture", ""))
-
+        picture(Config.getCustom("picture", ""), userProfilePic)
         userName.text = Config.getCustom("uname", "")
         userEmail.text = Config.getCustom("email", "")
     }

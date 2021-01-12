@@ -62,7 +62,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Petto.NoActionBar" />
         <activity
-            android:name=".ui.article.ClickedArticle"
+            android:name=".ui.article.clickedartikel.ClickedArticle"
             android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".ui.community.ClickedCommunity"

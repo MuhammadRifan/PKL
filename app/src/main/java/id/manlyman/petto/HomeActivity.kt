@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -27,6 +28,7 @@ import com.google.android.material.navigation.NavigationView
 import com.mikhaellopez.circularimageview.CircularImageView
 import id.manlyman.petto.ui.facility.myshop.ActivityMyShop
 import id.manlyman.petto.ui.facility.paketproduk.ActivityFormPP
+import id.manlyman.petto.ui.logout.LogoutFragment
 
 class HomeActivity : AppCompatActivity() {
 
@@ -54,6 +56,29 @@ class HomeActivity : AppCompatActivity() {
 
         val menu: Menu = navView.menu
         menu.findItem(R.id.nav_artikel).isVisible = config.getCustom("level", "") == "1"
+
+        menu.findItem(R.id.nav_logout).setOnMenuItemClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.apply {
+                setPositiveButton("Ok" ) { dialog, id ->
+                    val Config = FConfig(applicationContext)
+                    Config.delCustom()
+
+                    Toast.makeText(applicationContext, "Logout berhasil", Toast.LENGTH_LONG).show()
+                    val intent = Intent(applicationContext, Login::class.java)
+                    startActivity(intent)
+                }
+                setNegativeButton("Cancel" ) { dialog, id -> }
+            }
+            // Set other dialog properties
+            builder.setMessage("Apa anda yakin ?")
+                    .setTitle("Keluar akun")
+
+            // Create the AlertDialog
+            builder.create().show()
+
+            true
+        }
 
         val header: View = navView.getHeaderView(0)
         val userProfilePic: CircularImageView = header.findViewById(R.id.userProfilePic)

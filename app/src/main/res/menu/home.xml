@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/myToko"
+        android:icon="@drawable/ic_home"
         android:title="My Shop"
         app:showAsAction="never" />
     <item

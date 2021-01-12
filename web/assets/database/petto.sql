@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 11, 2021 at 08:16 PM
+-- Generation Time: Jan 12, 2021 at 09:56 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -55,7 +55,7 @@ INSERT INTO `animalcare` (`id`, `owner`, `nama`, `address`, `city`, `phone`, `pi
 (17, 'Bambang Gentolet', 'Duby', 'Jl. Rungkut Menanggal Harapan No.3, Rungkut Menanggal, Kec. Gn. Anyar, Kota SBY, Jawa Timur 60293', 'Surabaya', '087750408877', 'img_animalcare/duby.jpg', 1, 2, 3, 4, 5, 6, 7, '09:00', '12:00'),
 (18, 'fahmina', 'Cloe', 'Keputih, Sukolilo, Surabaya City, East Java 60111', 'Surabaya', '08178883188', 'img_animalcare/cloe.jpg', 1, 2, 3, 4, 5, 6, 0, '09:00', '21:00'),
 (19, 'jefriismail', 'Reiby', 'Jl. Brawijaya No.58, Sawunggaling, Kec. Wonokromo, Kota SBY, Jawa Timur 60242', 'Surabaya', '085707071253', 'img_animalcare/Reiby.jpg', 1, 2, 3, 4, 5, 6, 7, '08:00', '21:00'),
-(20, 'Ripani', 'Aslan', 'Jl. Dr. Ir. H. Soekarno No.2j, Penjaringan Sari, Kec. Rungkut, Kota SBY, Jawa Timur 60293', 'Surabaya', '085648001800', 'img_animalcare/Aslan.jpg', 1, 0, 3, 0, 5, 6, 0, '07:00', '21:00');
+(20, 'mrifandz', 'Aslan', 'Jl. Dr. Ir. H. Soekarno No.2j, Penjaringan Sari, Kec. Rungkut, Kota SBY, Jawa Timur 60293', 'Surabaya', '085648001800', 'img_animalcare/Aslan.jpg', 1, 0, 3, 0, 5, 6, 0, '07:00', '21:00');
 
 -- --------------------------------------------------------
 
@@ -191,7 +191,7 @@ INSERT INTO `pengguna` (`username`, `pass`, `email`, `phone`, `picture`, `srtv`,
 ('fahmina', '$2y$10$SHqkEv6LipgnuilxKFfQKeJbID5idszm5kCupkA31DskhTzXLSJBK', 'fahminugroho23@gmail.com', '082142632504', 'img_user/fahmi.jpg', '2.05.005865.03.2016.005792', 1),
 ('jefriismail', '$2y$10$ca8JfEz1a6T/r5dtykuN.uBIiFWfXSx/iwgSeLIuKyg7zrU4QzKQW', 'jefriismail99@gmail.com', '087855630276', 'img_user/jefri.jpg', '2.05.005865.03.2016.005789', 0),
 ('mrifandz', '$2y$10$SGt73Yxgbkml0PcOpKArk.yEi4qNnt47cEMgflUQStEpHOfEd3a5.', 'muhammadrifan153@gmail.com', '087755565590', 'img_user/rifan.jpg', '2.05.005865.03.2016.005790', 1),
-('Ripani', '$2y$10$cVXmJaEXIgHry371P/R1q.OJwZbfkaFsUYZVtPPsP6dEvRYPJZWqm', 'Rifan@gmail.com', '087765748390', 'img_user/5fed6bcf57fd41.67012351.jpg', '1000237456324', 1);
+('Ripani', '$2y$10$cVXmJaEXIgHry371P/R1q.OJwZbfkaFsUYZVtPPsP6dEvRYPJZWqm', 'Rifan@gmail.com', '087765748390', 'img_user/5ffddb76af9d92.28385884.jpg', '1000237456324', 1);
 
 -- --------------------------------------------------------
 
@@ -214,11 +214,12 @@ CREATE TABLE `produk` (
 INSERT INTO `produk` (`id`, `toko`, `name`, `harga`, `picture`) VALUES
 (3, 17, 'Produk', 4500000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
 (4, 17, 'Produk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
-(5, 17, 'Produk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
+(5, 17, 'AProduk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
 (6, 17, 'Produk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
 (7, 17, 'Produk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
 (9, 1, 'Produk', 5000000, 'img_produk/5feada5d5d1e96.43318946.jpg'),
-(10, 17, 'Produk Baru blblblblblblb blblblblbblblb spdoasd kasopdkoaskdo pasda', 150000, 'img_produk/5ffc9b4a3ea664.08706235.jpg');
+(10, 17, 'Produk Baru blblblblblblb blblblblbblblb spdoasd kasopdkoaskdo pasda', 150000, 'img_produk/5ffc9b4a3ea664.08706235.jpg'),
+(11, 17, 'wqeqeqw', 32424234, 'img_produk/5ffdbd492990d7.47508202.jpg');
 
 -- --------------------------------------------------------
 
@@ -349,13 +350,13 @@ ALTER TABLE `komunitas`
 -- AUTO_INCREMENT for table `paket`
 --
 ALTER TABLE `paket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `toko`

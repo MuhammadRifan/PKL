@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple"
+    android:background="@color/Purpleee"
     android:focusableInTouchMode="true">
 
     <ImageView
@@ -28,7 +28,7 @@
         android:layout_marginEnd="32dp"
         android:nextFocusDown="@id/txtPassLayout"
         android:textColorHint="@color/white"
-        app:boxBackgroundColor="@color/purple"
+        app:boxBackgroundColor="@color/Purpleee"
         app:boxBackgroundMode="filled"
         app:boxStrokeColor="@color/white"
         app:hintTextColor="#FFFFFF"
@@ -47,8 +47,9 @@
             android:paddingStart="1dp"
             android:paddingEnd="1dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/kuninghijau"
-            android:textColorHint="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textColorLink="@color/bText" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -61,12 +62,14 @@
         android:nextFocusUp="@id/categoryAC"
         android:nextFocusDown="@id/btnLogin"
         android:textColorHint="@color/white"
-        app:boxBackgroundColor="@color/purple"
+        app:boxBackgroundColor="@color/Purpleee"
         app:boxStrokeColor="@color/white"
         app:hintTextColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryAC">
+        app:layout_constraintTop_toBottomOf="@+id/categoryAC"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#FFFFFF">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtPass"
@@ -78,8 +81,9 @@
             android:paddingStart="1dp"
             android:paddingEnd="1dp"
             android:paddingBottom="8dp"
-            android:textColor="@color/kuninghijau"
-            android:textColorHint="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textColorLink="@color/bText" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

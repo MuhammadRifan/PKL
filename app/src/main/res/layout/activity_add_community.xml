@@ -95,6 +95,8 @@
                     android:layout_height="match_parent"
                     android:hint="Deskripsi komunitas"
                     android:inputType="textMultiLine|text"
+                    android:maxLength="2048"
+                    android:maxLines="5"
                     android:paddingStart="1dp"
                     android:paddingEnd="1dp"
                     android:paddingBottom="5dp"

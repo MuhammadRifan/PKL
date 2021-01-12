@@ -105,7 +105,7 @@ class MyArticleFragment : Fragment(), OnItemClickListener {
         loading.setMessage("Loading...")
         loading.show()
 
-        AndroidNetworking.post(ApiEndPoint.ReadCostum)
+        AndroidNetworking.post(ApiEndPoint.ReadCustom)
             .addBodyParameter("table", "artikel")
             .addBodyParameter("column", "penulis")
             .addBodyParameter("value", uname)

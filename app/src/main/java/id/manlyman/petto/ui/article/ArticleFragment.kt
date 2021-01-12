@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import id.manlyman.petto.ApiEndPoint
 import id.manlyman.petto.FConfig
 import id.manlyman.petto.R
+import id.manlyman.petto.ui.article.clickedartikel.ClickedArticle
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article.view.*
 import org.json.JSONObject
@@ -49,6 +51,19 @@ class ArticleFragment : Fragment(), OnItemClickListener {
             root.addArticle.visibility = View.GONE
         }
 
+        root.searchVW.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                root.searchVW.clearFocus()
+                loadSearch(query.toString())
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                loadSearch(newText.toString())
+                return false
+            }
+        })
+
         return root
     }
 
@@ -56,9 +71,6 @@ class ArticleFragment : Fragment(), OnItemClickListener {
         val intent = Intent(requireContext(), ClickedArticle::class.java)
         intent.putExtra("ID", article.id.toString())
         startActivity(intent)
-
-//        Toast.makeText(requireContext(), "ID : ${article.id}", Toast.LENGTH_LONG).show()
-//        Log.i("USER_", article.judul.toString())
     }
 
     private fun loadArticle(){
@@ -92,6 +104,58 @@ class ArticleFragment : Fragment(), OnItemClickListener {
                                 jsonObject.getString("isi"),
                                 jsonObject.getString("tanggal"),
                                 jsonObject.getString("picture")))
+
+                            if (jsonArray.length() - 1 == i) {
+                                loading.dismiss()
+                                val adapter = AdapterArticle(this@ArticleFragment, arrayList)
+                                adapter.notifyDataSetChanged()
+                                aRecyclerView.adapter = adapter
+                            }
+                        }
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    loading.dismiss()
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                    Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
+                }
+            })
+    }
+
+    private fun loadSearch(value: String){
+        val loading = ProgressDialog(requireContext())
+        loading.setMessage("Loading...")
+        loading.show()
+
+        AndroidNetworking.post(ApiEndPoint.ReadSearch)
+            .addBodyParameter("table", "artikel")
+            .addBodyParameter("column", "judul")
+            .addBodyParameter("value", value)
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("result").toString() == "Data kosong") {
+                        loading.dismiss()
+
+                        aEmpty.visibility = View.VISIBLE
+                        aRecyclerView.visibility = View.GONE
+                    } else {
+                        aEmpty.visibility = View.GONE
+                        aRecyclerView.visibility = View.VISIBLE
+
+                        arrayList.clear()
+                        val jsonArray = response?.optJSONArray("result")
+
+                        for (i in 0 until jsonArray?.length()!!) {
+                            val jsonObject = jsonArray.optJSONObject(i)
+                            arrayList.add(Article(jsonObject.getInt("id"),
+                                    jsonObject.getString("penulis"),
+                                    jsonObject.getString("judul"),
+                                    jsonObject.getString("isi"),
+                                    jsonObject.getString("tanggal"),
+                                    jsonObject.getString("picture")))
 
                             if (jsonArray.length() - 1 == i) {
                                 loading.dismiss()

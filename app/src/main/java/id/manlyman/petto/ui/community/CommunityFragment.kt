@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +42,19 @@ class CommunityFragment : Fragment(), OnItemClickListener {
 
         cekKomu(uname, root.addCommunity)
 
+        root.searchVW.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                root.searchVW.clearFocus()
+                loadSearch(query.toString())
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                loadSearch(newText.toString())
+                return false
+            }
+        })
+
         return root
     }
 
@@ -56,48 +70,100 @@ class CommunityFragment : Fragment(), OnItemClickListener {
         loading.show()
 
         AndroidNetworking.post(ApiEndPoint.Read)
-                .addBodyParameter("table", "komunitas")
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(object : JSONObjectRequestListener {
-                    override fun onResponse(response: JSONObject?) {
-                        if (response?.getString("result").toString() == "Data kosong") {
-                            loading.dismiss()
+            .addBodyParameter("table", "komunitas")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("result").toString() == "Data kosong") {
+                        loading.dismiss()
 
-                            cEmpty.visibility = View.VISIBLE
-                            cRecyclerView.visibility = View.GONE
-                        } else {
-                            cEmpty.visibility = View.GONE
-                            cRecyclerView.visibility = View.VISIBLE
+                        cEmpty.visibility = View.VISIBLE
+                        cRecyclerView.visibility = View.GONE
+                    } else {
+                        cEmpty.visibility = View.GONE
+                        cRecyclerView.visibility = View.VISIBLE
 
-                            arrayList.clear()
-                            val jsonArray = response?.optJSONArray("result")
+                        arrayList.clear()
+                        val jsonArray = response?.optJSONArray("result")
 
-                            for (i in 0 until jsonArray?.length()!!) {
-                                val jsonObject = jsonArray?.optJSONObject(i)
-                                arrayList.add(Community(jsonObject.getInt("id"),
-                                        jsonObject.getString("owner"),
-                                        jsonObject.getString("nama"),
-                                        jsonObject.getString("description"),
-                                        jsonObject.getString("kota"),
-                                        jsonObject.getString("picture")))
+                        for (i in 0 until jsonArray?.length()!!) {
+                            val jsonObject = jsonArray?.optJSONObject(i)
+                            arrayList.add(Community(jsonObject.getInt("id"),
+                                    jsonObject.getString("owner"),
+                                    jsonObject.getString("nama"),
+                                    jsonObject.getString("description"),
+                                    jsonObject.getString("kota"),
+                                    jsonObject.getString("picture")))
 
-                                if (jsonArray?.length() - 1 == i) {
-                                    loading.dismiss()
-                                    val adapter = AdapterCommunity(this@CommunityFragment, arrayList)
-                                    adapter.notifyDataSetChanged()
-                                    cRecyclerView.adapter = adapter
-                                }
+                            if (jsonArray?.length() - 1 == i) {
+                                loading.dismiss()
+                                val adapter = AdapterCommunity(this@CommunityFragment, arrayList)
+                                adapter.notifyDataSetChanged()
+                                cRecyclerView.adapter = adapter
                             }
                         }
                     }
+                }
 
-                    override fun onError(anError: ANError?) {
+                override fun onError(anError: ANError?) {
+                    loading.dismiss()
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                    Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
+                }
+            })
+    }
+
+    private fun loadSearch(value: String){
+        val loading = ProgressDialog(requireContext())
+        loading.setMessage("Loading...")
+        loading.show()
+
+        AndroidNetworking.post(ApiEndPoint.ReadSearch)
+            .addBodyParameter("table", "komunitas")
+            .addBodyParameter("column", "nama")
+            .addBodyParameter("value", value)
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("result").toString() == "Data kosong") {
                         loading.dismiss()
-                        Log.d("OnError", anError?.errorDetail?.toString()!!)
-                        Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
+
+                        cEmpty.visibility = View.VISIBLE
+                        cRecyclerView.visibility = View.GONE
+                    } else {
+                        cEmpty.visibility = View.GONE
+                        cRecyclerView.visibility = View.VISIBLE
+
+                        arrayList.clear()
+                        val jsonArray = response?.optJSONArray("result")
+
+                        for (i in 0 until jsonArray?.length()!!) {
+                            val jsonObject = jsonArray?.optJSONObject(i)
+                            arrayList.add(Community(jsonObject.getInt("id"),
+                                    jsonObject.getString("owner"),
+                                    jsonObject.getString("nama"),
+                                    jsonObject.getString("description"),
+                                    jsonObject.getString("kota"),
+                                    jsonObject.getString("picture")))
+
+                            if (jsonArray?.length() - 1 == i) {
+                                loading.dismiss()
+                                val adapter = AdapterCommunity(this@CommunityFragment, arrayList)
+                                adapter.notifyDataSetChanged()
+                                cRecyclerView.adapter = adapter
+                            }
+                        }
                     }
-                })
+                }
+
+                override fun onError(anError: ANError?) {
+                    loading.dismiss()
+                    Log.d("OnError", anError?.errorDetail?.toString()!!)
+                    Toast.makeText(requireContext(), "Connection Error", Toast.LENGTH_LONG).show()
+                }
+            })
     }
 
     private fun cekKomu(ID: String, Btn: FloatingActionButton){

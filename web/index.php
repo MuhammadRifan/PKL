@@ -11,8 +11,14 @@
         case 'ReadByID':
             ReadByID();
             break;
-        case 'ReadCostum':
-            ReadCostum();
+        case 'ReadCustom':
+            ReadCustom();
+            break;
+        case 'ReadArtiRand':
+            ReadArtiRand();
+            break;
+        case 'ReadSearch':
+            ReadSearch();
             break;
         case 'Delete':
             Deletes();
@@ -65,6 +71,9 @@
         case 'UpdateCommunity':
             UpdateCommunity();
             break;
+        case 'CekPP':
+            CekPP();
+            break;
         case 'ReadPP':
             ReadPP();
             break;
@@ -92,7 +101,6 @@
         } else {
             echo json_encode(array('result' => 'Data kosong'));
         }
-
     }
 
     function ReadByID() {
@@ -110,7 +118,7 @@
         }
     }
 
-    function ReadCostum() {
+    function ReadCustom() {
         $table = $_POST['table'];
         $column = $_POST['column'];
         $value = $_POST['value'];
@@ -127,12 +135,50 @@
         }
     }
 
+    function ReadArtiRand() {
+        $table = $_POST['table'];
+        $column = $_POST['column'];
+        $value = $_POST['value'];
+
+        $query = select_also($table, "$column != $value ORDER BY RAND() LIMIT 3");
+        while($row = $query -> fetch()){
+            $result[] = $row;
+        }
+
+        if (isset($result)) {
+            echo json_encode(array('result' => $result));
+        } else {
+            echo json_encode(array('result' => 'Data kosong'));
+        }
+    }
+
+    function ReadSearch() {
+        $table = $_POST['table'];
+        $column = $_POST['column'];
+        $value = $_POST['value'];
+
+        $query = select_search($table, "$column LIKE '%$value%'");
+        while($row = $query -> fetch()){
+            $result[] = $row;
+        }
+
+        if (isset($result)) {
+            echo json_encode(array('result' => $result));
+        } else {
+            echo json_encode(array('result' => 'Data kosong'));
+        }
+    }
+
     function Deletes() {
         $table = $_POST['table'];
         $idname = $_POST['idname'];
         $id = $_POST['id'];
 
+        $result = find_by_id($table, $idname, $id) -> fetch();
+        $gambar = $result['pictures'];
+
         if (delete($table, $idname, $id)) {
+            unlink('./assets/images/'.$gambar);
             echo json_encode(array('message' => 'Data berhasil dihapus'));
         }else{
             echo json_encode(array('message' => 'Data gagal dihapus'));
@@ -736,6 +782,19 @@
             }else{
                 echo json_encode(array('message' => 'Update komunitas gagal'));
             }
+        }
+    }
+
+    function CekPP() {
+        $uname = $_POST['uname'];
+        $column = $_POST['column'];
+
+        $result = find_by_id($column, "owner", $uname) -> fetch();
+
+        if (!empty($result)) {
+            echo json_encode(array('result' => 'Ada'));
+        } else {
+            echo json_encode(array('result' => 'Tidak'));
         }
     }
 
